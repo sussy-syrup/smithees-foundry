@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_anvil",
+  "textures": {
+    "top": "theforge:block/repair_anvil_top",
+    "body": "theforge:block/repair_anvil"
+  }
+}

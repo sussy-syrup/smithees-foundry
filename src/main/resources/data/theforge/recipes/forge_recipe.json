@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SiS",
+    "iIi",
+    "iii"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stone_bricks"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+	"I": {
+		"item": "minecraft:iron_block"
+	}
+  },
+  "result": {
+    "item": "theforge:forge_block",
+    "count": 1
+  }
+}

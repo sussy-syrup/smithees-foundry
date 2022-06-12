@@ -1,0 +1,60 @@
+{
+  "block.theforge.forge_block": "Forge",
+  "block.theforge.part_bench_block": "Part Bench (%d)",
+  "block.theforge.repair_anvil_block": "Repair Anvil",
+
+  "item.theforge.pickaxehead": "%d Pickaxe Head",
+  "item.theforge.toolhandle": "%d Tool Handle",
+  "item.theforge.toolbinding": "%d Tool Binder",
+  "item.theforge.axehead": "%d Axe Head",
+  "item.theforge.hoehead": "%d Hoe Head",
+  "item.theforge.shovelhead": "%d Shovel Head",
+  "item.theforge.swordguard": "%d Sword Guard",
+  "item.theforge.swordblade": "%d Sword Blade",
+
+  "item.theforge.forge_block": "Forge Block",
+
+  "item.theforge.forge_pickaxe": "Pickaxe",
+  "item.theforge.forge_axe": "Axe",
+  "item.theforge.forge_hoe": "Hoe",
+  "item.theforge.forge_shovel": "Shovel",
+  "item.theforge.forge_sword": "Sword",
+  "item.theforge.crude_chisel": "Crude Chisel",
+
+  "material.theforge.wood.adj": "Wooden",
+  "material.theforge.stone.adj": "Stone",
+  "material.theforge.flint.adj": "Flint",
+  "material.theforge.iron.adj": "Iron",
+  "material.theforge.copper.adj": "Copper",
+  "material.theforge.diamond.adj": "Diamond",
+  "material.theforge.netherite.adj": "Netherite",
+
+  "tool.theforge.durability": "durability: %d",
+  "tool.theforge.miningspeed": "mining speed: %d",
+  "tool.theforge.mininglevel": "mining level: %d",
+
+  "wood.theforge.oak": "Oak",
+  "wood.theforge.jungle": "Jungle",
+  "wood.theforge.spruce": "Spruce",
+  "wood.theforge.dark_oak": "Dark Oak",
+  "wood.theforge.birch": "Birch",
+
+  "theforge.trait.regrowth": "Regrowth",
+  "theforge.trait.brittle": "Brittle",
+  "theforge.trait.crude": "Crude",
+  "theforge.trait.growth": "Growth",
+  "theforge.trait.primal": "Primal",
+  "theforge.trait.magnetic1": "Magnetic I",
+  "theforge.trait.magnetic2": "Magnetic II",
+  "theforge.trait.corroding": "Corroding",
+  "theforge.trait.mundane": "Mundane",
+  "theforge.trait.ancient": "Ancient",
+
+  "theforge.container.forge": "Forge",
+  "theforge.container.partbench": "Part Bench",
+  "theforge.container.repairanvil": "Repair Anvil",
+
+  "itemGroup.theforge.parts": "Tool Parts",
+  "itemGroup.theforge.items": "The Forge (Items)",
+  "itemGroup.theforge.blocks": "The Forge (Blocks)"
+}
