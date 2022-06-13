@@ -3,7 +3,7 @@ package com.sussysyrup.theforge.registry;
 import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
 import com.sussysyrup.theforge.api.itemgroup.ItemGroups;
-import com.sussysyrup.theforge.api.model.ForgeToolTypeModelRegistry;
+import com.sussysyrup.theforge.api.client.model.ForgeToolTypeModelRegistry;
 import com.sussysyrup.theforge.api.recipe.ForgeToolRecipeRegistry;
 import com.sussysyrup.theforge.client.model.toolmodels.*;
 import com.sussysyrup.theforge.items.*;

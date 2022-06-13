@@ -15,6 +15,8 @@ import net.minecraft.util.Identifier;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -59,9 +61,31 @@ public class Util {
         return "wood." + Main.MODID + "." + wood;
     }
 
-    //TODO MAKE THIS A REGISTRY PROCESS TO ALLOW OVERRIDES
     @Environment(EnvType.CLIENT)
-    public static BufferedInputStream openImageStream(Identifier id)  {
+    public static BufferedImage getImageFromID(Identifier identifier)
+    {
+        return getImageFromStream(openBufferedInputStream(identifier));
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static BufferedImage getImageFromStream(BufferedInputStream stream)
+    {
+        if(stream != null)
+        {
+            try {
+                BufferedImage image = ImageIO.read(stream);
+                stream.close();
+                return image;
+            } catch (Exception e)
+            {
+                Main.LOGGER.error(e.toString());
+            }
+        }
+        return null;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static BufferedInputStream openBufferedInputStream(Identifier id)  {
         BufferedInputStream inputStream = new BufferedInputStream(PreLaunch.classLoader.getResourceAsStream(ResourceType.CLIENT_RESOURCES.getDirectory() + "/" + id.getNamespace() + "/" + id.getPath()));
         if (inputStream != null) {
             return inputStream;
@@ -71,12 +95,10 @@ public class Util {
     }
 
     @Environment(EnvType.CLIENT)
-    public static BufferedInputStream colourise(BufferedInputStream imageInputStream, Material material)
+    public static BufferedInputStream colourise(BufferedImage image, Material material)
     {
         try
         {
-            BufferedImage image = ImageIO.read(imageInputStream);
-            imageInputStream.close();
             Color colour;
             Map map = material.getColourMapping();
 
@@ -171,5 +193,14 @@ public class Util {
         return stringList;
     }
 
+    @Environment(EnvType.CLIENT)
+    public static BufferedImage copyImage(BufferedImage bi)
+    {
+        ColorModel cm = bi.getColorModel();
+        boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+        WritableRaster raster = bi.copyData(null);
+
+        return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+    }
 }
 

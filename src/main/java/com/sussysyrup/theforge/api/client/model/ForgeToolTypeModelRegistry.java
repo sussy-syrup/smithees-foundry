@@ -1,4 +1,4 @@
-package com.sussysyrup.theforge.api.model;
+package com.sussysyrup.theforge.api.client.model;
 
 import com.sussysyrup.theforge.client.model.toolmodels.IToolTypeModel;
 import net.fabricmc.api.EnvType;

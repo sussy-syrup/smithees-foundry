@@ -75,26 +75,26 @@ public class MaterialRegistry {
     {
         registerTraits();
 
-        ForgeMaterialRegistry.registerMaterial("wood", new Material("wood", false, false, MiningLevels.WOOD, 59, 1F, 2, 0.0F,
+        ForgeMaterialRegistry.registerMaterial("wood", new Material("wood", false, MiningLevels.WOOD, 59, 1F, 2, 0.0F,
                 createTraitsList(GROWTH_TRAIT), createTraitsList(REGROWTH_TRAIT), createTraitsList(REGROWTH_TRAIT), createTraitsList(GROWTH_TRAIT)));
 
-        ForgeMaterialRegistry.registerMaterial("stone", new Material("stone", false, false, MiningLevels.STONE, 131, 0.2F, 4, 1.0F,
+        ForgeMaterialRegistry.registerMaterial("stone", new Material("stone", false, MiningLevels.STONE, 131, 0.2F, 4, 1.0F,
                 createTraitsList(BRITTLE_TRAIT, CRUDE_TRAIT), createTraitsList(BRITTLE_TRAIT), createTraitsList(BRITTLE_TRAIT), createTraitsList(CRUDE_TRAIT)));
 
-        ForgeMaterialRegistry.registerMaterial("flint", new Material("flint", false, false, MiningLevels.STONE, 112, 1.2F, 3.5F, 0.8F,
+        ForgeMaterialRegistry.registerMaterial("flint", new Material("flint", false, MiningLevels.STONE, 112, 1.2F, 3.5F, 0.8F,
                 createTraitsList(CRUDE_TRAIT, PRIMAL_TRAIT), createTraitsList(BRITTLE_TRAIT), createTraitsList(BRITTLE_TRAIT), createTraitsList(CRUDE_TRAIT)));
 
-        ForgeMaterialRegistry.registerMaterial("iron", new Material("iron", false, true, MiningLevels.IRON, 250, 1.05F, 6F, 2.0F,
+        ForgeMaterialRegistry.registerMaterial("iron", new Material("iron", true, MiningLevels.IRON, 250, 1.05F, 6F, 2.0F,
                 createTraitsList(MAGNETIC1_TRAIT), createTraitsList(), createTraitsList(), createTraitsList(MAGNETIC1_TRAIT)));
 
-        ForgeMaterialRegistry.registerMaterial("copper", new Material("copper", false, true, MiningLevels.IRON, 125, 0.8F, 4.2F, 1.5F,
+        ForgeMaterialRegistry.registerMaterial("copper", new Material("copper", true, MiningLevels.IRON, 125, 0.8F, 4.2F, 1.5F,
                 createTraitsList(MAGNETIC2_TRAIT, CORRODING_TRAIT), createTraitsList(CORRODING_TRAIT), createTraitsList(CORRODING_TRAIT), createTraitsList(MAGNETIC2_TRAIT)));
 
         //Use of diamond should be allowed but always discouraged
-        ForgeMaterialRegistry.registerMaterial("diamond", new Material("diamond", false, false, MiningLevels.DIAMOND, 1561, 1.3F, 8F, 3.0F,
+        ForgeMaterialRegistry.registerMaterial("diamond", new Material("diamond", false, MiningLevels.DIAMOND, 1561, 1.3F, 8F, 3.0F,
                 createTraitsList(MUNDANE_TRAIT), createTraitsList(BRITTLE_TRAIT, MUNDANE_TRAIT), createTraitsList(MUNDANE_TRAIT), createTraitsList(MUNDANE_TRAIT)));
 
-        ForgeMaterialRegistry.registerMaterial("netherite", new Material("netherite", false, true, MiningLevels.NETHERITE, 2031, 0.9F, 9F, 4.0F,
+        ForgeMaterialRegistry.registerMaterial("netherite", new Material("netherite", true, MiningLevels.NETHERITE, 2031, 0.9F, 9F, 4.0F,
                 createTraitsList(), createTraitsList(ANCIENT_TRAIT), createTraitsList(), createTraitsList(ANCIENT_TRAIT)));
 
         ForgeMaterialRegistry.registerPreMaterialResource(WOOD_TAG, WOOD);

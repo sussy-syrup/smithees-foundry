@@ -25,6 +25,8 @@ public class Client implements ClientModInitializer {
         BlocksRegistry.clientInit();
 
         EventRegistry.clientInit();
+
+        TextureRegistry.init();
     }
 
 }

@@ -3,7 +3,7 @@ package com.sussysyrup.theforge.client.model;
 import com.mojang.datafixers.util.Pair;
 import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
-import com.sussysyrup.theforge.api.model.ForgeToolTypeModelRegistry;
+import com.sussysyrup.theforge.api.client.model.ForgeToolTypeModelRegistry;
 import com.sussysyrup.theforge.api.item.ToolItem;
 import net.fabricmc.fabric.api.renderer.v1.model.FabricBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;

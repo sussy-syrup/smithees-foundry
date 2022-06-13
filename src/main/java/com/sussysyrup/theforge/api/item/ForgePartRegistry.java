@@ -99,11 +99,6 @@ public class ForgePartRegistry {
 
                 partNames.add(id);
                 partCategory.add(prePartCategory.get(prePartNames.indexOf(partName)));
-
-                if(material.isCustomResources())
-                {
-                    customResourcesIdentifiers.add(id);
-                }
             }
         }
     }

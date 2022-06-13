@@ -18,8 +18,6 @@ public class Material {
 
     private String name;
 
-    private boolean customResources;
-
     private Map<Color, Color> colourMap = Map.of(new Color(0, 0, 0), new Color(0, 0, 0),
             new Color(43, 43, 43), new Color(43, 43, 43),
             new Color(85, 85 ,75), new Color(85, 85 ,75),
@@ -30,11 +28,10 @@ public class Material {
 
     private HashMap<String, List<TraitContainer>> partTraitsMap = new HashMap<>();
 
-    public Material(String name, boolean customResources, boolean metal, int miningLevel, int durability, float durabilityMultiplier, float miningSpeed, float damage,
+    public Material(String name, boolean metal, int miningLevel, int durability, float durabilityMultiplier, float miningSpeed, float damage,
                     List<TraitContainer> headTraits, List<TraitContainer> bindingTraits, List<TraitContainer> handleTraits, List<TraitContainer> extraTraits)
     {
         this.name = name;
-        this.customResources = customResources;
         this.miningSpeed = miningSpeed;
         this.miningLevel = miningLevel;
         this.durability = durability;
@@ -50,10 +47,6 @@ public class Material {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isCustomResources() {
-        return customResources;
     }
 
     public Map<Color, Color> getColourMapping() {
