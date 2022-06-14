@@ -1,0 +1,28 @@
+{
+  "name": "Introduction",
+  "icon": "minecraft:writable_book",
+  "category": "theforge:intro_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Congratulations on crafting this guide, you will do much more crafting. Begin by crafting the crude chisel and the part bench. The wood used in the part bench can be of any supported type as long as the log and planks are the same."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "theforge:crude_chisel",
+      "recipe2": "theforge:oak_part_bench_block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Now that you have made the essentials it is time to place wood, or another material of your choice, into the top slot and the chisel into the chisel slot. The parts you can afford with the materials inserted will appear. You may now craft the forge to make use of your parts. You can find the correct parts (along with a description of said tool) for your tool in the tools category."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "theforge:forge"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Insert the parts into their respective slots within the tool forge. Congratulations! You now have your own modular tool with the traits of its material(s). Browse through the materials category to learn more."
+    }
+  ]
+}

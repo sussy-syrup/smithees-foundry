@@ -16,7 +16,6 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

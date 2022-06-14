@@ -1,0 +1,10 @@
+{
+  "name": "Tool Worker's Guide",
+  "landing_text": "An extensive guide to material working with tools",
+  "version": 1,
+  "creative_tab": "theforge.items",
+  "show_progress": false,
+  "book_texture": "patchouli:textures/gui/book_red.png",
+  "model": "theforge:tool_book",
+  "filler_texture": "theforge:patchouli/tool_page_filler.png"
+}

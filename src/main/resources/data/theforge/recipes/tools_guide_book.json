@@ -1,0 +1,15 @@
+{
+  "type": "patchouli:shapeless_book_recipe",
+  "ingredients": [
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "minecraft:book"
+    }
+  ],
+  "book": "theforge:forge_guide_tool"
+}

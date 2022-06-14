@@ -183,7 +183,6 @@ public abstract class ToolItem extends Item {
 
         if(stack.getNbt()== null)
         {
-            tooltip.add(new LiteralText("MALFORMED TOOL").formatted(Formatting.BOLD).formatted(Formatting.RED));
             return;
         }
 

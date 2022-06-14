@@ -60,6 +60,8 @@ public class PartItem extends Item {
             tooltip.add(trait.getTraitTranslation().formatted(trait.getFormatting()));
         }
 
+        tooltip.add(new TranslatableText("part.theforge.cost", ForgePartRegistry.getPartCost(partName)));
+
         super.appendTooltip(stack, world, tooltip, context);
     }
 }

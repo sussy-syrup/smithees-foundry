@@ -33,6 +33,8 @@
   "tool.theforge.miningspeed": "mining speed: %d",
   "tool.theforge.mininglevel": "mining level: %d",
 
+  "part.theforge.cost": "Material Value: %d",
+
   "wood.theforge.oak": "Oak",
   "wood.theforge.jungle": "Jungle",
   "wood.theforge.spruce": "Spruce",

@@ -1,0 +1,18 @@
+{
+  "name": "Diamond",
+  "icon": "theforge:diamond_pickaxehead",
+  "category": "theforge:material_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "theforge:diamond_pickaxehead",
+      "title": "Diamond",
+      "text": "Mining Level: Diamond (3) $(br2)Mining Speed: 8 $(br2)Base Durability: 1561 $(br2)Durability Multiplier: 1.3 $(br2)Attack Damage: +3"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Traits",
+      "text": "$(8)Mundane: $()$(br)The tool is typical and boring which discourages use. $(br2)$(8)Brittle: $()$(br)The tool is brittle and is not durable."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Hoe",
+  "icon": "theforge:forge_hoe",
+  "category": "theforge:tool_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "theforge:forge_hoe",
+      "title": "Hoe",
+      "text": "Requirements: Hoe Head, Tool Binding, Tool Handle."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Description",
+      "text": "The hoe mines hoe-mineable blocks and tills the ground so you can grow your crops."
+    }
+  ]
+}
