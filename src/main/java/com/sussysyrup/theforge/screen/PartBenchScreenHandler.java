@@ -188,9 +188,12 @@ public class PartBenchScreenHandler extends ScreenHandler {
         if(id == 1)
         {
             List<String> partNames = ForgePartRegistry.getPrePartNames();
-            if(!(18 + outputShift == partNames.size()) && !(18 + outputShift > partNames.size() + 5))
+
+            int outputShiftPost = 18 + outputShift + 6;
+
+            if(outputShiftPost < partNames.size() - 2)
             {
-                outputShift += 6;
+                outputShift +=6;
             }
         }
 

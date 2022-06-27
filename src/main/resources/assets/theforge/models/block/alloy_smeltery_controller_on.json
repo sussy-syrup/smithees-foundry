@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "theforge:block/reinforced_bricks",
+    "front": "theforge:block/alloy_smeltery_controller_on",
+    "side": "theforge:block/reinforced_bricks"
+  }
+}

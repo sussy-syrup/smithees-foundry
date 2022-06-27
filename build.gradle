@@ -40,6 +40,10 @@ dependencies {
 	modImplementation "vazkii.patchouli:Patchouli:1.18.2-70-FABRIC"
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/theforge.accesswidener")
+}
+
 processResources {
 	inputs.property "version", project.version
 

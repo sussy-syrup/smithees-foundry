@@ -1,6 +1,7 @@
 package com.sussysyrup.theforge;
 
 import com.sussysyrup.theforge.api.block.ForgePartBenchRegistry;
+import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.api.item.ForgePartRegistry;
 import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
 import com.sussysyrup.theforge.registry.*;
@@ -19,6 +20,9 @@ public class Client implements ClientModInitializer {
         ForgePartRegistry.clientInit();
         ForgeToolRegistry.itemRenderingInit();
         ForgePartBenchRegistry.clientInit();
+
+        ForgeMoltenFluidRegistry.clientInit();
+        FluidRegistry.clientInit();
 
         //PROCESSING
         ItemsRegistry.clientInit();

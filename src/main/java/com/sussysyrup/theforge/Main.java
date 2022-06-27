@@ -1,7 +1,7 @@
 package com.sussysyrup.theforge;
 
 import com.sussysyrup.theforge.api.block.ForgePartBenchRegistry;
-import com.sussysyrup.theforge.api.trait.ForgeTraitRegistry;
+import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.registry.*;
 import com.sussysyrup.theforge.api.item.ForgePartRegistry;
 import com.sussysyrup.theforge.util.Cache;
@@ -38,6 +38,8 @@ public class Main implements ModInitializer {
 		//Makes all the necessary calls for ForgePartBenchRegistry. multiple calls like this can exist as long as its before ForgePartBenchRegistry
 		PartBenchRegistry.init();
 
+		//Fluids
+		FluidRegistry.init();
 	}
 
 	private static void processing()
@@ -45,6 +47,9 @@ public class Main implements ModInitializer {
 
 		//Depends on Materials Existing
 		ForgePartRegistry.init();
+
+		//Depends on Materials Existing
+		ForgeMoltenFluidRegistry.init();
 
 		//Depends on ForgePartRegistry to define part benches first
 		ForgePartBenchRegistry.init();

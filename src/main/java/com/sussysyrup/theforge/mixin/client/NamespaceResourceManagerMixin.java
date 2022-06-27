@@ -2,6 +2,8 @@ package com.sussysyrup.theforge.mixin.client;
 
 import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.client.texture.ForgeGrayTextureRegistry;
+import com.sussysyrup.theforge.api.fluid.FluidProperties;
+import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.api.material.ForgeMaterialRegistry;
 import com.sussysyrup.theforge.util.Util;
 import net.minecraft.resource.*;
@@ -71,38 +73,90 @@ public abstract class NamespaceResourceManagerMixin {
         String[] string_parts = identifier.getPath().split("/");
 
         if(!string_parts[0].equals("textures")) return;
-        if(!string_parts[1].equals("item")) return;
 
         String[] parsing = string_parts[2].split("_");
 
-        if(parsing[0].equals("partitem"))
-        {
-            String material = parsing[1];
-            String toolPart = parsing[2];
+        if(string_parts[1].equals("item")) {
+            if (parsing[0].equals("partitem")) {
+                String material = parsing[1];
+                String toolPart = parsing[2];
 
-            Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + string_parts[1] + "/" + toolPart);
+                Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + string_parts[1] + "/" + toolPart);
 
-            BufferedImage gray = ForgeGrayTextureRegistry.getItemTexture(toolPart.replaceAll(".png", ""));
+                BufferedImage gray = ForgeGrayTextureRegistry.getTexture(toolPart.replaceAll(".png", ""));
 
-            cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, Util.colourise(gray, ForgeMaterialRegistry.getMaterial(material)),null));
-            return;
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, Util.colourise(gray, ForgeMaterialRegistry.getMaterial(material)), null));
+                return;
+            }
+
+            if (parsing[0].equals("partrender")) {
+                String material = parsing[1];
+                String toolType = parsing[2];
+                String toolPart = parsing[3];
+
+                Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "tool" + "/" + toolType + "/" + toolPart);
+
+                BufferedImage gray = ForgeGrayTextureRegistry.getTexture(toolType + "_" + toolPart.replaceAll(".png", ""));
+
+                BufferedInputStream outputStream = Util.colourise(gray, ForgeMaterialRegistry.getMaterial(material));
+
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, null));
+                return;
+            }
+            if(parsing[0].equals("fluidbucket"))
+            {
+                String fluidName = parsing[1] + "_" +parsing[2].replaceAll(".png", "");
+
+                Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + parsing[0] + parsing[1] + parsing[2]);
+
+                BufferedImage gray = ForgeGrayTextureRegistry.getTexture("fluidbucket");
+
+                FluidProperties properties = ForgeMoltenFluidRegistry.getFluidProperties(fluidName);
+
+                BufferedInputStream outputStream = Util.colourise(gray, properties);
+
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, null));
+                return;
+            }
         }
 
-        if(parsing[0].equals("partrender"))
-        {
-            String material = parsing[1];
-            String toolType = parsing[2];
-            String toolPart = parsing[3];
+        if(string_parts[1].equals("block")) {
 
-            Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "tool" + "/" + toolType + "/" + toolPart);
+            if (parsing[0].equals("moltenstill")) {
 
-            BufferedImage gray = ForgeGrayTextureRegistry.getItemTexture(toolType + "_" + toolPart.replaceAll(".png", ""));
+                String key = (parsing[1] + "_" + parsing[2]).replaceAll(".png", "");
 
-            BufferedInputStream outputStream = Util.colourise(gray, ForgeMaterialRegistry.getMaterial(material));
+                Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "fluid" + "/" + parsing[2]);
 
-            cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream,null));
-            return;
+                FluidProperties properties = ForgeMoltenFluidRegistry.getFluidProperties(key);
+
+                BufferedImage gray = ForgeGrayTextureRegistry.getTexture("molten_metal_still");
+
+                BufferedInputStream outputStream = Util.colourise(gray, properties);
+
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, Util.createStillFluidMeta()));
+                return;
+            }
+
+            if (parsing[0].equals("moltenflow")) {
+
+                String key = (parsing[1] + "_" + parsing[2]).replaceAll(".png", "");
+
+                Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "fluid" + "/" + parsing[2]);
+
+                FluidProperties properties = ForgeMoltenFluidRegistry.getFluidProperties(key);
+
+                BufferedImage gray = ForgeGrayTextureRegistry.getTexture("molten_metal_flow");
+
+                BufferedInputStream outputStream = Util.colourise(gray, properties);
+
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, Util.createFlowFluidMeta()));
+                return;
+            }
+
         }
+
+        //TODO return resourceImp with metaInputStream from shadow$getMetadataPath
 
         return;
     }

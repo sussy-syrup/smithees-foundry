@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "theforge:forge_block",
-    "theforge:repair_anvil_block"
+    "theforge:repair_anvil_block",
+    "theforge:reinforced_bricks"
   ]
 }

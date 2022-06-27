@@ -16,6 +16,7 @@ public class Material {
     private float durabilityMultiplier;
     private float damage;
 
+    private String fluidID;
     private String name;
 
     private Map<Color, Color> colourMap = Map.of(new Color(0, 0, 0), new Color(0, 0, 0),
@@ -28,7 +29,7 @@ public class Material {
 
     private HashMap<String, List<TraitContainer>> partTraitsMap = new HashMap<>();
 
-    public Material(String name, boolean metal, int miningLevel, int durability, float durabilityMultiplier, float miningSpeed, float damage,
+    public Material(String name, boolean metal, String fluidID, int miningLevel, int durability, float durabilityMultiplier, float miningSpeed, float damage,
                     List<TraitContainer> headTraits, List<TraitContainer> bindingTraits, List<TraitContainer> handleTraits, List<TraitContainer> extraTraits)
     {
         this.name = name;
@@ -38,6 +39,8 @@ public class Material {
         this.durabilityMultiplier = durabilityMultiplier;
         this.damage = damage;
         this.metal = metal;
+
+        this.fluidID = fluidID;
 
         partTraitsMap.put("head", headTraits);
         partTraitsMap.put("binding", bindingTraits);
@@ -94,5 +97,9 @@ public class Material {
 
     public boolean isMetal() {
         return metal;
+    }
+
+    public String getFluidID() {
+        return fluidID;
     }
 }

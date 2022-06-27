@@ -11,25 +11,25 @@ import java.util.HashMap;
 @Environment(EnvType.CLIENT)
 public class ForgeGrayTextureRegistry {
 
-    private static HashMap<String, BufferedImage> itemTextureMap = new HashMap<>();
+    private static HashMap<String, BufferedImage> textureMap = new HashMap<>();
 
-    public static boolean itemTextureMapContains(String name)
+    public static boolean textureMapContains(String name)
     {
-        return itemTextureMap.containsKey(name);
+        return textureMap.containsKey(name);
     }
 
-    public static BufferedImage getItemTexture(String name)
+    public static BufferedImage getTexture(String name)
     {
-        return Util.copyImage(itemTextureMap.get(name));
+        return Util.copyImage(textureMap.get(name));
     }
 
-    public static void registerItemTexture(String name, Identifier resourceID)
+    public static void registerTexture(String name, Identifier resourceID)
     {
-        itemTextureMap.put(name, Util.getImageFromID(resourceID));
+        textureMap.put(name, Util.getImageFromID(resourceID));
     }
 
-    public static void removeItemTexture(String name)
+    public static void removeTexture(String name)
     {
-        itemTextureMap.remove(name);
+        textureMap.remove(name);
     }
 }

@@ -2,6 +2,7 @@
   "block.theforge.forge_block": "Forge",
   "block.theforge.part_bench_block": "Part Bench (%d)",
   "block.theforge.repair_anvil_block": "Repair Anvil",
+  "block.theforge.reinforced_bricks": "Reinforced Bricks",
 
   "item.theforge.pickaxehead": "%d Pickaxe Head",
   "item.theforge.toolhandle": "%d Tool Handle",
@@ -20,6 +21,7 @@
   "item.theforge.forge_shovel": "Shovel",
   "item.theforge.forge_sword": "Sword",
   "item.theforge.crude_chisel": "Crude Chisel",
+  "item.theforge.fluidbucket": "%d Bucket",
 
   "material.theforge.wood.adj": "Wooden",
   "material.theforge.stone.adj": "Stone",
@@ -28,6 +30,10 @@
   "material.theforge.copper.adj": "Copper",
   "material.theforge.diamond.adj": "Diamond",
   "material.theforge.netherite.adj": "Netherite",
+
+  "fluid.theforge.molten_iron": "Molten Iron",
+  "fluid.theforge.molten_copper": "Molten Copper",
+  "fluid.theforge.molten_netherite": "Molten Netherite",
 
   "tool.theforge.durability": "durability: %d",
   "tool.theforge.miningspeed": "mining speed: %d",
@@ -55,6 +61,7 @@
   "theforge.container.forge": "Forge",
   "theforge.container.partbench": "Part Bench",
   "theforge.container.repairanvil": "Repair Anvil",
+  "theforge.container.alloysmeltery": "",
 
   "itemGroup.theforge.parts": "Tool Parts",
   "itemGroup.theforge.items": "The Forge (Items)",

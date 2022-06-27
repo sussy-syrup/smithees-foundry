@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.PreLaunch;
+import com.sussysyrup.theforge.api.fluid.FluidProperties;
 import com.sussysyrup.theforge.api.material.Material;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,6 +40,27 @@ public class Util {
                 "  \"parent\": \"minecraft:item/generated" + "\",\n" +
                 "  \"textures\": {\n" +
                 "    \"layer0\": \"theforge:item/" + type + "_" + itemID + "\"\n" +
+                "  }\n" +
+                "}";
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static String createBucketJsonString(String itemID)
+    {
+        return "{\n" +
+                "  \"parent\": \"minecraft:item/generated" + "\",\n" +
+                "  \"textures\": {\n" +
+                "    \"layer0\": \"theforge:item/" +  itemID + "\"\n" +
+                "  }\n" +
+                "}";
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static String createFluidJsonString(String name)
+    {
+        return "{\n" +
+                "  \"textures\": {\n" +
+                "    \"particle\": \"theforge:"+ "block/moltenstill_"+name +"\"\n" +
                 "  }\n" +
                 "}";
     }
@@ -131,6 +153,109 @@ public class Util {
             Main.LOGGER.error(e.toString());
         }
         return null;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static BufferedInputStream colourise(BufferedImage image, FluidProperties properties)
+    {
+        try
+        {
+            Color colour;
+            Map map = properties.getColourMapping();
+
+            for(int y = 0; y < image.getHeight(); y++)
+            {
+                for(int x = 0; x < image.getWidth(); x++)
+                {
+                    int pixel = image.getRGB(x,y);
+                    if( (pixel>>24) == 0x00 ) {
+                        continue;
+                    }
+                    colour = new Color(pixel);
+
+                    if(map.containsKey(colour)) {
+                        colour = (Color) map.get(colour);
+                    }
+
+                    image.setRGB(x, y, colour.getRGB());
+                }
+            }
+
+            ByteArrayOutputStream imageByteStream = new ByteArrayOutputStream();
+            ImageIO.write(image,"png", imageByteStream);
+            InputStream imageOutputStream = new ByteArrayInputStream(imageByteStream.toByteArray());
+
+            return new BufferedInputStream(imageOutputStream);
+        }
+        catch (Exception e)
+        {
+            Main.LOGGER.error(e.toString());
+        }
+        return null;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static InputStream createStillFluidMeta()
+    {
+        String toStream = "{\n" +
+                "  \"animation\": {\n" +
+                "    \"frametime\": 2,\n" +
+                "    \"frames\": [\n" +
+                "      0,\n" +
+                "      1,\n" +
+                "      2,\n" +
+                "      3,\n" +
+                "      4,\n" +
+                "      5,\n" +
+                "      6,\n" +
+                "      7,\n" +
+                "      8,\n" +
+                "      9,\n" +
+                "      10,\n" +
+                "      11,\n" +
+                "      12,\n" +
+                "      13,\n" +
+                "      14,\n" +
+                "      15,\n" +
+                "      16,\n" +
+                "      17,\n" +
+                "      18,\n" +
+                "      19,\n" +
+                "      18,\n" +
+                "      17,\n" +
+                "      16,\n" +
+                "      15,\n" +
+                "      14,\n" +
+                "      13,\n" +
+                "      12,\n" +
+                "      11,\n" +
+                "      10,\n" +
+                "      9,\n" +
+                "      8,\n" +
+                "      7,\n" +
+                "      6,\n" +
+                "      5,\n" +
+                "      4,\n" +
+                "      3,\n" +
+                "      2,\n" +
+                "      1\n" +
+                "    ]\n" +
+                "  }\n" +
+                "}";
+
+        return new ByteArrayInputStream(toStream.getBytes());
+    }
+
+    @Environment(EnvType.CLIENT)
+    public static InputStream createFlowFluidMeta()
+    {
+        String toStream = "{\n" +
+                "  \"animation\": {\n" +
+                "    \"frametime\": 3\n" +
+                "  }\n" +
+                "}\n";
+
+        return new ByteArrayInputStream(toStream.getBytes());
     }
 
     public static JsonObject createShapedRecipeJson(ArrayList<Character> keys, ArrayList<Identifier> items, ArrayList<String> type, ArrayList<String> pattern, Identifier output) {

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "theforge:block/reinforced_bricks"
+    }
+  }
+}
