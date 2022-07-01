@@ -31,6 +31,7 @@ public class FluidUtil {
         }
 
         compound.put("fluidvariants", nbtList);
+        compound.putLong("maxamount", storage.maxCapacity);
 
         return compound;
     }
@@ -50,5 +51,6 @@ public class FluidUtil {
 
             storage.views.add(storageView);
         }
+        storage.maxCapacity = compound.getLong("maxamount");
     }
 }

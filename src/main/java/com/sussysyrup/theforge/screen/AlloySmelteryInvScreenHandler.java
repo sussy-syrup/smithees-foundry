@@ -2,6 +2,7 @@ package com.sussysyrup.theforge.screen;
 
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
 import com.sussysyrup.theforge.registry.ModScreenHandlerRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -12,14 +13,18 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
+import org.jetbrains.annotations.Nullable;
 
-public class AlloySmelteryInvScreenHandler extends ScreenHandler {
+public class AlloySmelteryInvScreenHandler extends ScreenHandler implements ExtendedScreenHandlerFactory {
 
     private final Inventory inventory;
     private final PlayerInventory playerInventory;
 
-    public int pageShift;
+    public int pageShift = 0;
 
     private AlloySmelteryControllerBlockEntity be;
 
@@ -195,6 +200,7 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler {
             {
                 pageShift -= 1;
             }
+            calculateSlots();
         }
         if(id == 1)
         {
@@ -204,15 +210,35 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler {
            {
                pageShift +=1;
            }
+            calculateSlots();
         }
-
-        calculateSlots();
+        if(id == 2)
+        {
+            player.openHandledScreen(this);
+        }
 
         return super.onButtonClick(player, id);
     }
 
     public AlloySmelteryControllerBlockEntity getBlockEntity() {
         return be;
+    }
+
+    @Override
+    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
+        buf.writeBlockPos(be.getPos());
+        buf.writeBlockPos(be.getPos());
+    }
+
+    @Override
+    public Text getDisplayName() {
+        return new TranslatableText("theforge.container.alloysmeltery");
+    }
+
+    @Nullable
+    @Override
+    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
+        return new AlloySmelteryFluidScreenHandler(syncId, inv, be);
     }
 
 

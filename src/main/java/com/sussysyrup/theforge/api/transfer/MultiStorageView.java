@@ -20,7 +20,7 @@ public class MultiStorageView<T extends TransferVariant<?>> implements StorageVi
     @Override
     public long extract(T resource, long maxAmount, TransactionContext transaction) {
 
-        setCapacity(capacity - maxAmount);
+        amount = amount - maxAmount;
 
         return maxAmount;
     }
@@ -45,8 +45,7 @@ public class MultiStorageView<T extends TransferVariant<?>> implements StorageVi
         return capacity;
     }
 
-    public void setCapacity(long capacityIn)
-    {
-        capacity = capacityIn;
+    public void setAmount(long l) {
+        amount = l;
     }
 }

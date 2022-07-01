@@ -15,6 +15,8 @@ import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -24,11 +26,13 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
 
     private static final Identifier WIDGETS = new Identifier(Main.MODID, "textures/gui/widgets.png");
     private static boolean buttonUp = false;
-    private static boolean buttonDown = true;
+    private static boolean buttonDown = false;
+    private static boolean buttonFluid = false;
     private final AlloySmelteryControllerBlockEntity be;
 
-    private TexturedButtonWidget buttonDownWidget = new TexturedButtonWidget(this.width / 2, this.height / 4, 18, 18, 18, 0, 18, WIDGETS, 64, 64, button -> buttonDown = true);
-    private TexturedButtonWidget buttonUpWidget = new TexturedButtonWidget(this.width / 4, this.height / 4, 18, 18, 0, 0, 18, WIDGETS, 64, 64, button -> buttonUp = true);
+    private TexturedButtonWidget buttonDownWidget = new TexturedButtonWidget(-500, -500, 18, 18, 18, 0, 18, WIDGETS, 256, 256, button -> buttonDown = true);
+    private TexturedButtonWidget buttonUpWidget = new TexturedButtonWidget(-500, -500, 18, 18, 0, 0, 18, WIDGETS, 256, 256, button -> buttonUp = true);
+    private TexturedButtonWidget buttonFluidWidget = new TexturedButtonWidget(-500, -500, 28, 30, 27, 36, 30, WIDGETS, 256, 256, button -> buttonFluid = true);
 
     public AlloySmelteryInvScreen(AlloySmelteryInvScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -49,6 +53,7 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
         SmelteryResource smelteryResource;
         FluidProperties fluidProperties;
         int unitSize;
+        Item item;
 
         int x1;
         int y1;
@@ -57,9 +62,21 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
 
         for(int i = be.itemPageShift * 21; i < be.smeltTicks.size(); i++)
         {
+            item = be.itemInventory.getStack(i).getItem();
             if(verticalStep > 2)
             {
                 break;
+            }
+            if(be.itemInventory.getStack(i).equals(ItemStack.EMPTY))
+            {
+                sideStep++;
+                if(sideStep > 6)
+                {
+                    sideStep =0;
+                    verticalStep++;
+                }
+
+                continue;
             }
             if(be.smeltTicks.get(i) == 0)
             {
@@ -68,7 +85,7 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
                 RenderSystem.setShaderTexture(0, WIDGETS);
                 x1 = x + 31;
                 y1 = y + 17;
-                drawTexture(matrices, x1 + (sideStep * 20), y1 + (verticalStep * 18), 36, 1, 2, 16, 64, 64);
+                drawTexture(matrices, x1 + (sideStep * 20), y1 + (verticalStep * 18), 36, 1, 2, 16, 256, 256);
                 sideStep++;
                 if(sideStep > 6)
                 {
@@ -77,10 +94,27 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
                 }
                 continue;
             }
+            if(be.smeltTicks.get(i) > 0)
+            {
+                RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+                RenderSystem.setShaderTexture(0, WIDGETS);
+                x1 = x + 31;
+                y1 = y + 17;
 
-            smelteryResource = ForgeSmelteryResourceRegistry.getSmelteryResource(be.itemInventory.getStack(i).getItem());
-            fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
-            cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
+                smelteryResource = ForgeSmelteryResourceRegistry.getSmelteryResource(item);
+                fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
+                cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
+                unitSize = Math.round((((float) be.smeltTicks.get(i)) / ((float) cookTime)) * 16F);
+
+                drawTexture(matrices, x1 + (sideStep * 20), y1 + (verticalStep * 18) + 16 - unitSize, 38, 1 + 16 - unitSize, 2, unitSize, 256, 256);
+                sideStep++;
+                if(sideStep > 6)
+                {
+                    sideStep =0;
+                    verticalStep++;
+                }
+            }
         }
     }
 
@@ -95,6 +129,12 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
 
         buttonDownWidget.setPos(x + 155, y + 52);
         buttonUpWidget.setPos(x + 155, y + 16);
+        buttonFluidWidget.setPos(x + 28, y - 27);
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, WIDGETS);
+        RenderSystem.enableDepthTest();
+        drawTexture(matrices, x, y - 27, 0, 66, 28, 30, 256, 256);
     }
 
     @Override
@@ -102,6 +142,7 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
         super.init();
         this.addDrawableChild(buttonDownWidget);
         this.addDrawableChild(buttonUpWidget);
+        this.addDrawableChild(buttonFluidWidget);
     }
 
     @Override
@@ -110,15 +151,23 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
         if(buttonUp) {
             buttonUp = false;
             MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 0);
+            getScreenHandler().calculateSlots();
         }
         if(buttonDown)
         {
             buttonDown = false;
             MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 1);
+            getScreenHandler().calculateSlots();
+        }
+        if(buttonFluid)
+        {
+            buttonFluid = false;
+            MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 2);
         }
 
         buttonUp = false;
         buttonDown = false;
+        buttonFluid = false;
 
         return super.mouseReleased(mouseX, mouseY, button);
     }

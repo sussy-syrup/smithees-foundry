@@ -2,10 +2,10 @@ package com.sussysyrup.theforge.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.theforge.Main;
-import com.sussysyrup.theforge.screen.PartBenchScreenHandler;
+import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
+import com.sussysyrup.theforge.screen.AlloySmelteryFluidScreenHandler;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,18 +13,20 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-public class PartBenchScreen extends HandledScreen<PartBenchScreenHandler> {
+public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidScreenHandler> {
 
-    private static final Identifier TEXTURE = new Identifier(Main.MODID, "textures/gui/part_bench_block.png");
+    private static final Identifier TEXTURE = new Identifier(Main.MODID, "textures/gui/alloy_smeltery_controllerfluid.png");
+
     private static final Identifier WIDGETS = new Identifier(Main.MODID, "textures/gui/widgets.png");
-    private static boolean buttonUp = false;
-    private static boolean buttonDown = true;
+    private static boolean buttonItem = false;
+    private final AlloySmelteryControllerBlockEntity be;
 
-    private TexturedButtonWidget buttonDownWidget = new TexturedButtonWidget(this.width / 2, this.height / 4, 18, 18, 18, 0, 18, WIDGETS, 256, 256, button -> buttonDown = true);
-    private TexturedButtonWidget buttonUpWidget = new TexturedButtonWidget(this.width / 4, this.height / 4, 18, 18, 0, 0, 18, WIDGETS, 256, 256, button -> buttonUp = true);
+    private TexturedButtonWidget buttonItemWidget = new TexturedButtonWidget(-500, -500, 28, 30, 0, 36, 30, WIDGETS, 256, 256, button -> buttonItem = true);
 
-    public PartBenchScreen(PartBenchScreenHandler handler, PlayerInventory inventory, Text title) {
+    public AlloySmelteryFluidScreen(AlloySmelteryFluidScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
+
+        this.be = handler.be;
     }
 
     @Override
@@ -46,36 +48,37 @@ public class PartBenchScreen extends HandledScreen<PartBenchScreenHandler> {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
 
-        buttonDownWidget.setPos(x + 153, y + 43);
-        buttonUpWidget.setPos(x + 153, y + 7);
+        buttonItemWidget.setPos(x, y - 27);
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, WIDGETS);
+        RenderSystem.enableDepthTest();
+        drawTexture(matrices, x + 28, y - 27, 27, 66, 28, 30, 256, 256);
+
+        renderFluid(x, y);
+    }
+
+    private void renderFluid(int x, int y) {
+
+        
+
     }
 
     @Override
     protected void init() {
-        titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2 + (backgroundWidth - textRenderer.getWidth(title)) / 4;
-        titleY = playerInventoryTitleY;
-
-        this.addDrawableChild(buttonDownWidget);
-        this.addDrawableChild(buttonUpWidget);
-
         super.init();
+        this.addDrawableChild(buttonItemWidget);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
 
-        if(buttonUp) {
-            buttonUp = false;
+        if(buttonItem) {
+            buttonItem = false;
             MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 0);
         }
-        if(buttonDown)
-        {
-            buttonDown = false;
-            MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 1);
-        }
 
-        buttonUp = false;
-        buttonDown = false;
+        buttonItem = false;
 
         return super.mouseReleased(mouseX, mouseY, button);
     }

@@ -1,20 +1,25 @@
 package com.sussysyrup.theforge.blocks.alloysmeltery.entity;
 
+import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.block.ForgeAlloySmelteryRegistry;
 import com.sussysyrup.theforge.api.fluid.FluidProperties;
 import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.api.fluid.ForgeSmelteryResourceRegistry;
 import com.sussysyrup.theforge.api.fluid.SmelteryResource;
+import com.sussysyrup.theforge.api.transfer.MultiStorageView;
 import com.sussysyrup.theforge.api.transfer.MultiVariantStorage;
 import com.sussysyrup.theforge.blocks.alloysmeltery.AlloySmelteryControllerBlock;
 import com.sussysyrup.theforge.registry.BlocksRegistry;
+import com.sussysyrup.theforge.registry.FluidRegistry;
 import com.sussysyrup.theforge.screen.AlloySmelteryInvScreenHandler;
 import com.sussysyrup.theforge.util.FluidUtil;
 import com.sussysyrup.theforge.util.InventoryUtil;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -33,9 +38,11 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,7 +66,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     public List<Integer> smeltTicks = new ArrayList<>();
     public int itemPageShift = 0;
 
-    public final MultiVariantStorage<FluidVariant> fluidStorage = new MultiVariantStorage<>(){
+    public MultiVariantStorage<FluidVariant> fluidStorage = new MultiVariantStorage<>(){
         @Override
         public void onFinalCommit() {
             markDirty();
@@ -124,7 +131,6 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 world.setBlockState(blockPos, blockState, Block.NOTIFY_ALL);
                 e.markDirty();
             }
-
             e.itemSmeltTick();
         }
         else
@@ -461,9 +467,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         boolean recalculateInventories = oldHeight != height || oldLength != length || oldWidth != width;
 
-        //Item Inventory
         if(recalculateInventories)
         {
+            //Item Inventory
             SimpleInventory newInv = new SimpleInventory(height * length * width);
             int newSize = newInv.size();
             int oldSize = itemInventory.size();
@@ -494,6 +500,41 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             }
 
             itemInventory = newInv;
+
+            //Fluid inventory
+            long maxCapacity = height * length * width * FluidConstants.BLOCK;
+            if(fluidStorage.maxCapacity <= maxCapacity)
+            {
+                fluidStorage.maxCapacity = maxCapacity;
+            }
+
+            if(fluidStorage.maxCapacity > maxCapacity)
+            {
+                if(fluidStorage.getCurrentCapacity() > maxCapacity)
+                {
+                    long diff = fluidStorage.getCurrentCapacity() - maxCapacity;
+                    MultiStorageView<FluidVariant> view;
+                    for (int i = fluidStorage.views.size() - 1; i >= 0; i--)
+                    {
+                        view = (MultiStorageView<FluidVariant>) fluidStorage.views.get(i);
+                        if(view.getAmount() > diff)
+                        {
+                            view.setAmount(view.getAmount() - diff);
+                            break;
+                        }
+                        if(view.getAmount() == diff)
+                        {
+                            fluidStorage.views.remove(view);
+                            break;
+                        }
+                        if(view.getAmount() < diff)
+                        {
+                            fluidStorage.views.remove(view);
+                        }
+                    }
+                }
+                fluidStorage.maxCapacity = maxCapacity;
+            }
         }
 
         oldHeight = height;
@@ -609,7 +650,17 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             {
                 smeltTicks.set(i, 0);
                 itemInventory.setStack(i, ItemStack.EMPTY);
+                meltItem(smelteryResource);
             }
+        }
+    }
+
+    private void meltItem(SmelteryResource smelteryResource)
+    {
+        try(Transaction transaction = Transaction.openOuter())
+        {
+            fluidStorage.insert(FluidVariant.of(Registry.FLUID.get(new Identifier(Main.MODID, smelteryResource.fluidID()))), smelteryResource.fluidValue(), transaction);
+            transaction.commit();
         }
     }
 }

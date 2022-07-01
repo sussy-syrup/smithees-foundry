@@ -6,7 +6,8 @@
   "mixins": [
     "RecipeManagerMixin",
     "LootManagerMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "LootUtilMixin"
   ],
   "client": [
     "client.ModelLoaderMixin",

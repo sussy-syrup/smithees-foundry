@@ -1,10 +1,7 @@
 package com.sussysyrup.theforge.registry;
 
 import com.sussysyrup.theforge.Main;
-import com.sussysyrup.theforge.screen.AlloySmelteryInvScreenHandler;
-import com.sussysyrup.theforge.screen.ForgeScreenHandler;
-import com.sussysyrup.theforge.screen.PartBenchScreenHandler;
-import com.sussysyrup.theforge.screen.RepairAnvilScreenHandler;
+import com.sussysyrup.theforge.screen.*;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -16,6 +13,7 @@ public class ModScreenHandlerRegistry {
     public static ScreenHandlerType<PartBenchScreenHandler> PARTBENCH_SCREEN_HANDLER;
     public static ScreenHandlerType<RepairAnvilScreenHandler> REPAIR_ANVIL_SCREEN_HANDLER;
     public static ScreenHandlerType<AlloySmelteryInvScreenHandler> ALLOY_SMELTERY_SCREEN_HANDLER;
+    public static ScreenHandlerType<AlloySmelteryFluidScreenHandler> ALLOY_SMELTERYFLUID_SCREEN_HANDLER;
 
     public static void init()
     {
@@ -24,5 +22,6 @@ public class ModScreenHandlerRegistry {
         REPAIR_ANVIL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(Main.MODID, "repair_anvil_screen_handler"), new ScreenHandlerType<RepairAnvilScreenHandler>(RepairAnvilScreenHandler::new));
 
         ALLOY_SMELTERY_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(Main.MODID, "alloy_smeltery_screen_handler"), new ExtendedScreenHandlerType<>(AlloySmelteryInvScreenHandler::new));
+        ALLOY_SMELTERYFLUID_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(Main.MODID, "alloy_smelteryfluid_screen_handler"), new ExtendedScreenHandlerType<>(AlloySmelteryFluidScreenHandler::new));
     }
 }

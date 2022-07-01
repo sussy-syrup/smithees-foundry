@@ -1,5 +1,6 @@
 package com.sussysyrup.theforge.api.transfer;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
@@ -17,8 +18,6 @@ import java.util.List;
  */
 @ApiStatus.Experimental
 public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends SnapshotParticipant<MultiResource<T>> implements MultiSlotStorage<T> {
-
-    public long currentCapacity = 0;
 
     public long maxCapacity = 0;
 
@@ -39,9 +38,7 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
             }
         }
 
-        long insertedAmount = Math.min(maxAmount, maxCapacity - currentCapacity);
-
-        currentCapacity += insertedAmount;
+        long insertedAmount = Math.min(maxAmount, maxCapacity - getCurrentCapacity());
 
         MultiStorageView view;
 
@@ -59,7 +56,7 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
         {
             view = (MultiStorageView) views.get(index);
 
-            view.setCapacity(view.getCapacity() + insertedAmount);
+            view.setAmount(view.amount + insertedAmount);
 
             return insertedAmount;
         }
@@ -93,12 +90,10 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
 
             view.extract(resource, extractedAmount, transaction);
 
-            if(view.getCapacity() == 0)
+            if(view.getAmount() == 0)
             {
                 views.remove(index);
             }
-
-            currentCapacity -= extractedAmount;
 
             return extractedAmount;
         }
@@ -111,15 +106,24 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
 
     @Override
     protected MultiResource<T> createSnapshot() {
-        return new MultiResource(views, currentCapacity);
+        return new MultiResource(views);
     }
 
     @Override
     protected void readSnapshot(MultiResource<T> snapshot) {
         views = snapshot.views();
-        currentCapacity = snapshot.currentCapacity();
     }
 
     @Override
     public abstract void onFinalCommit();
+
+    public long getCurrentCapacity() {
+        long currentCapacity = 0;
+
+        for(StorageView<T> view : views)
+        {
+            currentCapacity += view.getAmount();
+        }
+        return currentCapacity;
+    }
 }
