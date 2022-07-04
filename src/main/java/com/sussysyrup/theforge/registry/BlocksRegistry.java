@@ -9,11 +9,12 @@ import com.sussysyrup.theforge.blocks.alloysmeltery.AlloySmelteryControllerBlock
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
 import com.sussysyrup.theforge.blocks.entity.ForgeBlockEntity;
 import com.sussysyrup.theforge.blocks.entity.RepairAnvilBlockEntity;
+import com.sussysyrup.theforge.client.render.AlloySmelteryBlockEntityRenderer;
 import com.sussysyrup.theforge.client.render.ForgeBlockEntityRender;
 import com.sussysyrup.theforge.client.render.RepairAnvilBlockEntityRender;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import  net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -63,8 +64,9 @@ public class BlocksRegistry {
     @Environment(EnvType.CLIENT)
     public static void clientInit()
     {
-        BlockEntityRendererRegistry.INSTANCE.register(FORGE_BLOCK_ENTITY, ForgeBlockEntityRender::new);
-        BlockEntityRendererRegistry.INSTANCE.register(REPAIR_ANVIL_BLOCK_ENTITY, RepairAnvilBlockEntityRender::new);
+        BlockEntityRendererRegistry.register(FORGE_BLOCK_ENTITY, ForgeBlockEntityRender::new);
+        BlockEntityRendererRegistry.register(REPAIR_ANVIL_BLOCK_ENTITY, RepairAnvilBlockEntityRender::new);
+        BlockEntityRendererRegistry.register(ALLOY_SMELTERY_CONTROLLER_BLOCK_ENTITY, AlloySmelteryBlockEntityRenderer::new);
     }
 
 }

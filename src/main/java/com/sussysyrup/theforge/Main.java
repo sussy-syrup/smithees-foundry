@@ -2,6 +2,7 @@ package com.sussysyrup.theforge;
 
 import com.sussysyrup.theforge.api.block.ForgePartBenchRegistry;
 import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
+import com.sussysyrup.theforge.networking.c2s.C2SReceivers;
 import com.sussysyrup.theforge.registry.*;
 import com.sussysyrup.theforge.api.item.ForgePartRegistry;
 import com.sussysyrup.theforge.util.Cache;
@@ -62,6 +63,7 @@ public class Main implements ModInitializer {
 		EventRegistry.init();
 		ModScreenHandlerRegistry.init();
 
+		C2SReceivers.init();
 	}
 
 }

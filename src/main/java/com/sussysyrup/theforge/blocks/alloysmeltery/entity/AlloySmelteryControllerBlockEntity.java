@@ -57,9 +57,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     int count20 = 0;
     int count5 = 0;
 
-    int oldHeight = 0;
-    int oldWidth = 0;
-    int oldLength = 0;
+    public int oldHeight = 0;
+    public int oldWidth = 0;
+    public int oldLength = 0;
+
+    public int widthCorrection = 0;
 
     public Inventory itemInventory = new SimpleInventory(1);
     Inventory oldItemInventory;
@@ -89,6 +91,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         nbt.putInt("HEIGHT", oldHeight);
         nbt.putInt("WIDTH", oldWidth);
         nbt.putInt("LENGTH", oldLength);
+        nbt.putInt("WIDTHCOR", widthCorrection);
+
+        nbt.putBoolean("VALID", valid);
 
         FluidUtil.writeNbt(nbt, fluidStorage);
     }
@@ -106,6 +111,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         oldHeight = nbt.getInt("HEIGHT");
         oldWidth = nbt.getInt("WIDTH");
         oldLength = nbt.getInt("LENGTH");
+        widthCorrection = nbt.getInt("WIDTHCOR");
+
+        valid = nbt.getBoolean("VALID");
 
         FluidUtil.readNbt(nbt, fluidStorage);
     }
@@ -202,7 +210,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                     distanceL++;
                     remaining--;
                 }
-                
+
+                widthCorrection = distanceL;
+
                 //scan right of controller
                 continueScan = true;
                 scanPos = pos;
@@ -639,6 +649,13 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             }
 
             smelteryResource = ForgeSmelteryResourceRegistry.getSmelteryResource(item);
+
+            if(smelteryResource == null)
+            {
+                smeltTicks.set(i, 0);
+                continue;
+            }
+
             fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
             cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
 
@@ -653,6 +670,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 meltItem(smelteryResource);
             }
         }
+
+        oldItemInventory = itemInventory;
     }
 
     private void meltItem(SmelteryResource smelteryResource)

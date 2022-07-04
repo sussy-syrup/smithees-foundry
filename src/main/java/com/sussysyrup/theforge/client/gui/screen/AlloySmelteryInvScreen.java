@@ -78,6 +78,7 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
 
                 continue;
             }
+
             if(be.smeltTicks.get(i) == 0)
             {
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
