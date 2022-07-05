@@ -6,10 +6,12 @@ import com.sussysyrup.theforge.api.itemgroup.ItemGroups;
 import com.sussysyrup.theforge.api.client.model.ForgeToolTypeModelRegistry;
 import com.sussysyrup.theforge.api.recipe.ForgeToolRecipeRegistry;
 import com.sussysyrup.theforge.client.model.toolmodels.*;
+import com.sussysyrup.theforge.client.render.TankItemRenderer;
 import com.sussysyrup.theforge.items.*;
 import com.sussysyrup.theforge.recipe.ThreePartToolRecipe;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -79,5 +81,7 @@ public class ItemsRegistry {
         ForgeToolTypeModelRegistry.addToolTypeModel("hoe", new HoeToolTypeModel());
         ForgeToolTypeModelRegistry.addToolTypeModel("shovel", new ShovelToolTypeModel());
         ForgeToolTypeModelRegistry.addToolTypeModel("sword", new SwordToolTypeModel());
+
+        BuiltinItemRendererRegistry.INSTANCE.register(Registry.ITEM.get(new Identifier(Main.MODID, "tank_block")), new TankItemRenderer());
     }
 }

@@ -6,6 +6,7 @@ import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControll
 import com.sussysyrup.theforge.networking.c2s.C2SConstants;
 import com.sussysyrup.theforge.screen.AlloySmelteryFluidScreenHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
@@ -17,10 +18,12 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 
@@ -81,7 +84,6 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
 
         long capacity = be.fluidStorage.maxCapacity;
         int currentHeight;
-        Identifier fluidID;
         Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
         Sprite sprite;
 
@@ -101,13 +103,15 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
         float yScalingFac;
         float xScalingFac;
 
+        Fluid fluid;
+
         StorageView<FluidVariant> view;
 
         for (int i = 0; i < heights.size() - 1; i++) {
             view = be.fluidStorage.views.get(i);
 
-            fluidID = Registry.FLUID.getId(view.getResource().getFluid());
-            sprite = atlas.apply(new Identifier(fluidID.getNamespace(), "block/moltenstill_" + fluidID.getPath()));
+            fluid = view.getResource().getFluid();
+            sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(MinecraftClient.getInstance().world, new BlockPos(0, 0, 0), fluid.getDefaultState())[0];
 
             yShift = 16 - (heights.get(i + 1) - heights.get(i));
             xScalingFac = 2F / imageWidth;

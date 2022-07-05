@@ -46,7 +46,7 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
 
         if(index == -1)
         {
-            view = new MultiStorageView(resource, insertedAmount, 1000000000000000L);
+            view = new MultiStorageView(resource, insertedAmount, 1000000000000000L, this);
 
             views.add(view);
 
@@ -88,7 +88,7 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
             MultiStorageView view = (MultiStorageView) views.get(index);
             long extractedAmount = Math.min(maxAmount, view.amount);
 
-            view.extract(resource, extractedAmount, transaction);
+            view.removeAmount(extractedAmount);
 
             if(view.getAmount() == 0)
             {
@@ -106,7 +106,18 @@ public abstract class MultiVariantStorage<T extends TransferVariant<?>> extends 
 
     @Override
     protected MultiResource<T> createSnapshot() {
-        return new MultiResource(views);
+        List<MultiStorageView<T>> views = new ArrayList<>();
+
+        MultiStorageView<T> view;
+
+        for(StorageView<T> view1 : this.views)
+        {
+            view = ((MultiStorageView<T>) view1);
+
+            views.add(new MultiStorageView<T>(view.variant, view.amount, view.capacity, this));
+        }
+
+        return new MultiResource(new ArrayList<>(views));
     }
 
     @Override

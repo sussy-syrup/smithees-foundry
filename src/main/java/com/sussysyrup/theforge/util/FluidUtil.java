@@ -47,7 +47,7 @@ public class FluidUtil {
         for (int i = 0; i < nbtList.size(); ++i) {
             NbtCompound nbtCompound = nbtList.getCompound(i);
 
-            storageView = new MultiStorageView<>(FluidVariant.fromNbt(nbtCompound.getCompound("fluidvariant")), nbtCompound.getLong("fluidamount"), 1000000000000000L);
+            storageView = new MultiStorageView<>(FluidVariant.fromNbt(nbtCompound.getCompound("fluidvariant")), nbtCompound.getLong("fluidamount"), 1000000000000000L, storage);
 
             storage.views.add(storageView);
         }

@@ -3,6 +3,8 @@ package com.sussysyrup.theforge.client.render;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.theforge.blocks.alloysmeltery.AlloySmelteryControllerBlock;
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.minecraft.client.MinecraftClient;
@@ -13,6 +15,7 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Matrix4f;
@@ -28,7 +31,7 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
     @Override
     public void render(AlloySmelteryControllerBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
-        if(entity == null)
+        if(!(entity.getWorld().getBlockState(entity.getPos()).getBlock() instanceof AlloySmelteryControllerBlock))
         {
             return;
         }
@@ -47,12 +50,8 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
             float yShift = entity.oldHeight * (((float) entity.fluidStorage.getCurrentCapacity()) / ((float) entity.fluidStorage.maxCapacity));
 
             Fluid fluid = view.getResource().getFluid();
-            Identifier fluidID = Registry.FLUID.getId(fluid);
 
-
-            Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-
-            Sprite sprite = atlas.apply(new Identifier(fluidID.getNamespace(), "block/moltenstill_" + fluidID.getPath()));
+            Sprite sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(entity.getWorld(), entity.getPos(), fluid.getDefaultState())[0];
 
             Direction direction = entity.getWorld().getBlockState(entity.getPos()).get(AlloySmelteryControllerBlock.FACING);
 

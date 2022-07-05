@@ -1,39 +1,52 @@
 package com.sussysyrup.theforge.blocks.alloysmeltery;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.HorizontalFacingBlock;
+import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryDrainBlockEntity;
+import com.sussysyrup.theforge.registry.BlocksRegistry;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class AlloySmelteryDrainBlock extends BlockWithEntity {
 
-    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-
-    protected AlloySmelteryDrainBlock(Settings settings) {
+    public AlloySmelteryDrainBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
     }
+
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        }
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof AlloySmelteryDrainBlockEntity) {
+            player.openHandledScreen((AlloySmelteryDrainBlockEntity)blockEntity);
+        }
+
+        return ActionResult.CONSUME;
+    }
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
 
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new AlloySmelteryDrainBlockEntity(pos, state);
     }
 
+    @Nullable
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return (BlockState)this.getDefaultState().with(FACING, ctx.getPlayerFacing());
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return world.isClient() ? checkType(type, BlocksRegistry.ALLOY_SMELTERY_DRAIN_BLOCK_ENTITY, AlloySmelteryDrainBlockEntity::clientTicker) : checkType(type, BlocksRegistry.ALLOY_SMELTERY_DRAIN_BLOCK_ENTITY, AlloySmelteryDrainBlockEntity::serverTicker);
     }
 }

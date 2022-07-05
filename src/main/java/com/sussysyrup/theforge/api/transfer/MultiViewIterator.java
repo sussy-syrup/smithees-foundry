@@ -1,6 +1,8 @@
 package com.sussysyrup.theforge.api.transfer;
 
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
@@ -50,7 +52,34 @@ public final class MultiViewIterator<T> implements Iterator<StorageView<T>>, Tra
         }
         else
         {
-            throw new NoSuchElementException();
+            view = new StorageView<T>() {
+                @Override
+                public long extract(T resource, long maxAmount, TransactionContext transaction) {
+                    return 0;
+                }
+
+                @Override
+                public boolean isResourceBlank() {
+                    return true;
+                }
+
+                @Override
+                public T getResource() {
+                    return null;
+                }
+
+                @Override
+                public long getAmount() {
+                    return 0;
+                }
+
+                @Override
+                public long getCapacity() {
+                    return 0;
+                }
+            };
+            hasNext = false;
+            return view;
         }
 
         if(counter == maxIndex)

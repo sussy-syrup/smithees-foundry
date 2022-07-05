@@ -48,6 +48,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -67,6 +68,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     Inventory oldItemInventory;
     public List<Integer> smeltTicks = new ArrayList<>();
     public int itemPageShift = 0;
+
+    public List<BlockPos> slaves = new ArrayList<>();
 
     public MultiVariantStorage<FluidVariant> fluidStorage = new MultiVariantStorage<>(){
         @Override
@@ -93,6 +96,15 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         nbt.putInt("LENGTH", oldLength);
         nbt.putInt("WIDTHCOR", widthCorrection);
 
+        List<Long> encode = new ArrayList<>();
+
+        for(BlockPos pos : slaves)
+        {
+            encode.add(pos.asLong());
+        }
+
+        nbt.putLongArray("SLAVES", encode);
+
         nbt.putBoolean("VALID", valid);
 
         FluidUtil.writeNbt(nbt, fluidStorage);
@@ -112,6 +124,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         oldWidth = nbt.getInt("WIDTH");
         oldLength = nbt.getInt("LENGTH");
         widthCorrection = nbt.getInt("WIDTHCOR");
+
+        slaves = new ArrayList<>();
+        long[] encode = nbt.getLongArray("SLAVES");
+
+        Arrays.stream(encode).boxed().forEach(e -> slaves.add(BlockPos.fromLong(e)));
 
         valid = nbt.getBoolean("VALID");
 
@@ -165,6 +182,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     }
 
     protected void structCheck(World world, BlockPos pos) {
+
+        slaves = new ArrayList<>();
 
         BlockPos scanPos = pos;
 
@@ -450,6 +469,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
             return true;
         }
+        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
+            slaves.add(pos);
+            return true;
+        }
         return false;
     }
 
@@ -458,19 +482,28 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
             return true;
         }
-        return false;
-    }
-
-    private boolean checkBlockFloor(World world, BlockPos pos)
-    {
-        if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
+        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
             return true;
         }
         return false;
     }
 
+    private boolean checkBlockFloor(World world, BlockPos pos)
+    {
+        return checkBlock(world, pos);
+    }
+
     private void successfulScan(int heightIn, int length, int width)
     {
+        for(BlockPos slavePos : slaves)
+        {
+            if(world.getBlockEntity(slavePos) instanceof ISlave slave)
+            {
+                slave.addMaster(this.pos);
+            }
+        }
+
         valid = true;
 
         int height = heightIn - 1;
@@ -555,6 +588,16 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     private void failedScan()
     {
         valid = false;
+
+        for(BlockPos pos : slaves)
+        {
+            if(world.getBlockEntity(pos) instanceof ISlave slave)
+            {
+                slave.removeMaster();
+            }
+        }
+
+        slaves = new ArrayList<>();
     }
 
     public boolean isValid()

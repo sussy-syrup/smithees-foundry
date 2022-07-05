@@ -6,23 +6,28 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
 public class MultiStorageView<T extends TransferVariant<?>> implements StorageView<T> {
 
+    private final MultiVariantStorage storage;
     T variant;
     long amount;
     long capacity;
 
-    public MultiStorageView(T variant, long amount, long capacity)
+    public MultiStorageView(T variant, long amount, long capacity, MultiVariantStorage storage)
     {
         this.variant = variant;
         this.amount = amount;
         this.capacity = capacity;
+        this.storage = storage;
     }
 
     @Override
     public long extract(T resource, long maxAmount, TransactionContext transaction) {
 
-        amount = amount - maxAmount;
+        return storage.extract(resource, maxAmount, transaction);
+    }
 
-        return maxAmount;
+    public void removeAmount(long amount)
+    {
+        this.amount = this.amount - amount;
     }
 
     @Override

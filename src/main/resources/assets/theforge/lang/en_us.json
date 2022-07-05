@@ -3,6 +3,10 @@
   "block.theforge.part_bench_block": "Part Bench (%d)",
   "block.theforge.repair_anvil_block": "Repair Anvil",
   "block.theforge.reinforced_bricks": "Reinforced Bricks",
+  "block.theforge.alloy_smeltery_drain": "Alloy Smeltery Drain",
+  "block.theforge.alloy_smeltery_controller": "Alloy Smeltery Controller",
+  "block.theforge.alloy_smeltery_faucet": "Alloy Smeltery Faucet",
+  "block.theforge.tank_block": "Tank Block",
 
   "item.theforge.pickaxehead": "%d Pickaxe Head",
   "item.theforge.toolhandle": "%d Tool Handle",
