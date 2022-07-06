@@ -10,15 +10,13 @@ import com.sussysyrup.theforge.api.transfer.MultiStorageView;
 import com.sussysyrup.theforge.api.transfer.MultiVariantStorage;
 import com.sussysyrup.theforge.blocks.alloysmeltery.AlloySmelteryControllerBlock;
 import com.sussysyrup.theforge.registry.BlocksRegistry;
-import com.sussysyrup.theforge.registry.FluidRegistry;
 import com.sussysyrup.theforge.screen.AlloySmelteryInvScreenHandler;
 import com.sussysyrup.theforge.util.FluidUtil;
 import com.sussysyrup.theforge.util.InventoryUtil;
+import com.sussysyrup.theforge.util.records.ScanResult;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
-import net.fabricmc.fabric.api.transfer.v1.storage.TransferVariant;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,7 +46,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -181,17 +178,15 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         return createNbt();
     }
 
-    protected void structCheck(World world, BlockPos pos) {
-
+    protected void structCheck(World world, BlockPos pos)
+    {
         slaves = new ArrayList<>();
 
         BlockPos scanPos = pos;
 
         Direction direction = world.getBlockState(pos).get(AlloySmelteryControllerBlock.FACING);
-        Direction relativeRight = direction.rotateYClockwise();
-        Direction relativeLeft = direction.rotateYCounterclockwise();
 
-        Direction directionOpposite = direction.getOpposite();
+        ScanResult result;
 
         int distanceL = 0;
         int distanceR = 0;
@@ -203,298 +198,527 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         int sideLength3 = 0;
         int sideLength4 = 0;
 
-        boolean continueScan;
+        //Scanning front
+        //right
+        result = scanInitialSide(world, remaining - 1, scanPos.add(direction.rotateYClockwise().getVector()), direction.rotateYClockwise());
 
-        MAINLOOP : for (int height = 0; height < 16; height++)
+        if(result.endPos() == null || result.nextPos() == null)
         {
-            if(height == 0)
+            failedScan();
+            return;
+        }
+
+        remaining -= result.length();
+        distanceR = result.length();
+        BlockPos saveScanPos = result.nextPos();
+
+        //left
+        result = specialScanLeft(world, remaining, scanPos.add(direction.rotateYCounterclockwise().getVector()), direction.rotateYCounterclockwise());
+
+        if(result.endPos() == null || result.nextPos() == null)
+        {
+            failedScan();
+            return;
+        }
+
+        distanceL = result.length();
+
+        sideLength1 = distanceL + distanceR + 1;
+
+        //relative right side
+        result = scanInitialSide(world, 7, saveScanPos, direction);
+
+        if(result.endPos() == null || result.nextPos() == null)
+        {
+            failedScan();
+            return;
+        }
+
+        sideLength2 = result.length();
+        scanPos = result.nextPos();
+
+        //relative opposite side
+        direction = direction.rotateYCounterclockwise();
+
+        result = scanInitialSide(world, sideLength1, scanPos, direction);
+
+        if(result.endPos() == null || result.nextPos() == null || !(result.length() == sideLength1))
+        {
+            failedScan();
+            return;
+        }
+
+        scanPos = result.nextPos();
+        sideLength3 = result.length();
+
+        //relative left side
+        direction = direction.rotateYCounterclockwise();
+
+        result = scanInitialSide(world, sideLength2, scanPos, direction);
+
+        if(result.endPos() == null || result.nextPos() == null || !(result.length() == sideLength2))
+        {
+            failedScan();
+            return;
+        }
+
+        scanPos = result.nextPos();
+        sideLength4 = result.length();
+        widthCorrection = distanceL;
+
+        direction = direction.rotateYCounterclockwise().rotateYCounterclockwise();
+        BlockPos floorScan = scanPos.add(direction.getVector());
+        floorScan = floorScan.add(0, -1, 0);
+
+        boolean scanResult = floorScan(world, sideLength1, sideLength2, floorScan, direction);
+
+        if(!scanResult)
+        {
+            failedScan();
+            return;
+        }
+
+        BlockPos heightPos = scanPos.add(0, 1, 0);
+        boolean cont=true;
+        int height = 1;
+        while (cont)
+        {
+            if(height > 15)
             {
-                //scan left of controller
-                continueScan = true;
-                while(continueScan)
-                {
-                    scanPos = scanPos.add(relativeLeft.getVector());
-
-                    if(remaining == 1)
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-
-                    if(!checkBlockProper(world, scanPos))
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-                    distanceL++;
-                    remaining--;
-                }
-
-                widthCorrection = distanceL;
-
-                //scan right of controller
-                continueScan = true;
-                scanPos = pos;
-                while(continueScan)
-                {
-                    scanPos = scanPos.add(relativeRight.getVector());
-
-                    if(remaining == 0)
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-
-                    if(!checkBlockProper(world, scanPos))
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-                    distanceR++;
-                    remaining--;
-                }
-                sideLength1 = distanceL + distanceR + 1;
-
-                //scan relative right side
-                continueScan = true;
-                while (continueScan)
-                {
-                    scanPos = scanPos.add(direction.getVector());
-
-                    if(sideLength2 == 7)
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-
-                    if(!checkBlockProper(world, scanPos))
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-                    sideLength2++;
-                }
-
-                //scan opposite side
-                continueScan = true;
-                while (continueScan)
-                {
-                    scanPos = scanPos.add(relativeLeft.getVector());
-
-                    if(sideLength3 == 7)
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-
-                    if(!checkBlockProper(world, scanPos))
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-                    sideLength3++;
-                }
-
-                if(sideLength1 != sideLength3)
-                {
-                    failedScan();
-                    return;
-                }
-
-                //prepare pos for continued scan
-                scanPos = pos;
-                for(int i = 0; i < distanceL + 1; i++)
-                {
-                    scanPos = scanPos.add(relativeLeft.getVector());
-                }
-
-                //scan relative left side
-                continueScan = true;
-                while (continueScan)
-                {
-                    scanPos = scanPos.add(direction.getVector());
-
-                    if(sideLength4 == 7)
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-
-                    if(!checkBlockProper(world, scanPos))
-                    {
-                        continueScan = false;
-                        continue;
-                    }
-                    sideLength4++;
-                }
-
-                if(sideLength2 != sideLength4)
-                {
-                    failedScan();
-                    return;
-                }
-
-                //Floor scan
-                for(int length = 0; length < sideLength2; length++)
-                {
-                    scanPos = pos.add(0, -1, 0);
-                    for(int i = 0; i < distanceL + 1; i++)
-                    {
-                        scanPos = scanPos.add(relativeLeft.getVector());
-                    }
-                    for(int i = 0; i < length + 1; i++) {
-                        scanPos = scanPos.add(direction.getVector());
-                    }
-
-                    for(int width = 0; width < sideLength1; width++)
-                    {
-                        scanPos = scanPos.add(relativeRight.getVector());
-                        if(!checkBlockFloor(world, scanPos))
-                        {
-                            failedScan();
-                            return;
-                        }
-                    }
-                }
+                return;
+            }
+            if(scanRing(world, sideLength1, sideLength2, heightPos, direction))
+            {
+                height++;
+                heightPos = heightPos.add(0, 1, 0);
             }
             else
             {
-                for(int iter = 0; iter < 2; iter++) {
-                    //prepare
-                    scanPos = pos.add(0, height, 0);
-                    for (int i = 0; i < distanceL + 1; i++) {
-                        scanPos = scanPos.add(relativeLeft.getVector());
-                    }
-
-                    if(iter == 0)
-                    {
-                        for(int i = 0; i < sideLength1; i++)
-                        {
-                            scanPos = scanPos.add(relativeRight.getVector());
-
-                            if(!checkBlock(world, scanPos))
-                            {
-                                successfulScan(height + 1, sideLength1, sideLength2);
-                                return;
-                            }
-                        }
-                        scanPos = scanPos.add(relativeRight.getVector());
-                        for(int i = 0; i < sideLength2; i++)
-                        {
-                            scanPos = scanPos.add(direction.getVector());
-
-                            if(!checkBlock(world, scanPos))
-                            {
-                                successfulScan(height + 1, sideLength1, sideLength2);
-                                return;
-                            }
-                        }
-                        scanPos = scanPos.add(direction.getVector());
-                        for(int i = 0; i < sideLength3; i++)
-                        {
-                            scanPos = scanPos.add(relativeLeft.getVector());
-
-                            if(!checkBlock(world, scanPos))
-                            {
-                                successfulScan(height + 1, sideLength1, sideLength2);
-                                return;
-                            }
-                        }
-                        scanPos = scanPos.add(relativeLeft.getVector());
-                        for(int i = 0; i < sideLength4; i++)
-                        {
-                            scanPos = scanPos.add(directionOpposite.getVector());
-
-                            if(!checkBlock(world, scanPos))
-                            {
-                                successfulScan(height + 1, sideLength1, sideLength2);
-                                return;
-                            }
-                        }
-                    }
-                    if(iter == 1)
-                    {
-                        for(int i = 0; i < sideLength1; i++)
-                        {
-                            scanPos = scanPos.add(relativeRight.getVector());
-
-                            if(!checkBlockProper(world, scanPos))
-                            {
-                                failedScan();
-                                break MAINLOOP;
-                            }
-                        }
-                        scanPos = scanPos.add(relativeRight.getVector());
-                        for(int i = 0; i < sideLength2; i++)
-                        {
-                            scanPos = scanPos.add(direction.getVector());
-
-                            if(!checkBlockProper(world, scanPos))
-                            {
-                                failedScan();
-                                break MAINLOOP;
-                            }
-                        }
-                        scanPos = scanPos.add(direction.getVector());
-                        for(int i = 0; i < sideLength3; i++)
-                        {
-                            scanPos = scanPos.add(relativeLeft.getVector());
-
-                            if(!checkBlockProper(world, scanPos))
-                            {
-                                failedScan();
-                                break MAINLOOP;
-                            }
-                        }
-                        scanPos = scanPos.add(relativeLeft.getVector());
-                        for(int i = 0; i < sideLength4; i++)
-                        {
-                            scanPos = scanPos.add(directionOpposite.getVector());
-
-                            if(!checkBlockProper(world, scanPos))
-                            {
-                                failedScan();
-                                break MAINLOOP;
-                            }
-                        }
-                    }
-                }
+                break;
             }
         }
-        successfulScan(16, sideLength1, sideLength2);
+
+        BlockPos volumeScan = scanPos.add(direction.getVector());
+
+        if(!checkInterior(world, sideLength1, sideLength2, height, volumeScan, direction))
+        {
+            failedScan();
+            return;
+        }
+
+        successfulScan(height, sideLength1, sideLength2);
     }
 
-    private boolean checkBlockProper(World world, BlockPos pos)
+    public boolean checkInterior(World world, int width, int length, int height, BlockPos startPos, Direction direction)
     {
+        boolean approve = true;
+        BlockPos lengthScan;
+        BlockPos widthScan;
+        BlockPos heightScan = startPos;
+
+        mainloop : for(int h = 0; h < height; h++) {
+            lengthScan = heightScan;
+
+            innerloop:
+            for (int l = 0; l < length; l++) {
+                widthScan = lengthScan;
+
+                for (int w = 0; w < width; w++) {
+                    approve = world.getBlockState(widthScan).isAir();
+
+                    if (approve == false) {
+                        break mainloop;
+                    }
+
+                    widthScan = widthScan.add(direction.rotateYClockwise().getVector());
+                }
+
+                lengthScan = lengthScan.add(direction.getVector());
+            }
+            heightScan = heightScan.add(0, 1, 0);
+        }
+
+        return approve;
+    }
+
+    public ScanResult scanInitialSide(World world, int length, BlockPos startPos, Direction direction)
+    {
+        boolean cont = true;
+        BlockPos pos = startPos;
+
+        boolean blockCheck;
+        boolean firstScan = true;
+
+        int lengthOut = 0;
+
+        //Scan Blocks to the side
+        while (cont)
+        {
+            lengthOut++;
+
+            if(lengthOut > length)
+            {
+                lengthOut--;
+                break;
+            }
+
+            blockCheck = improvedBlockCheck(world, pos);
+
+            if(!blockCheck)
+            {
+                lengthOut--;
+                break;
+            }
+
+            pos = pos.add(direction.getVector());
+            firstScan = false;
+        }
+
+        if(firstScan == true)
+        {
+            return new ScanResult(0, null, null);
+        }
+
+        BlockPos endPos = startPos;
+        endPos = endPos.add(direction.rotateYCounterclockwise().getVector());
+        endPos = endPos.add(direction.getVector());
+
+        int newLengthOut = -1;
+
+        for(int i = 0; i < lengthOut; i++)
+        {
+            blockCheck = dummyBlockCheck(world, endPos);
+            if(blockCheck)
+            {
+                newLengthOut = i + 1;
+                break;
+            }
+            endPos = endPos.add(direction.getVector());
+        }
+
+        int removeLength = 0;
+        BlockPos removePos = null;
+
+        if(newLengthOut == -1)
+        {
+            endPos = null;
+        }
+        else
+        {
+            removeLength = lengthOut - newLengthOut;
+            removePos = endPos.add(direction.rotateYClockwise().getVector());
+            lengthOut = newLengthOut;
+        }
+
+        for(int i = 0; i < removeLength; i++)
+        {
+            removeSlave(world, removePos);
+            removePos = removePos.add(direction.getVector());
+        }
+
+        return new ScanResult(lengthOut, pos, endPos);
+    }
+    public ScanResult specialScanLeft(World world, int length, BlockPos startPos, Direction direction)
+    {
+        boolean cont = true;
+        BlockPos pos = startPos;
+
+        boolean blockCheck;
+        boolean firstScan = true;
+
+        int lengthOut = 0;
+
+        //Scan Blocks to the side
+        while (cont)
+        {
+            lengthOut++;
+
+            if(lengthOut > length)
+            {
+                lengthOut--;
+                break;
+            }
+
+            blockCheck = improvedBlockCheck(world, pos);
+
+            if(!blockCheck)
+            {
+                lengthOut--;
+                break;
+            }
+
+            pos = pos.add(direction.getVector());
+            firstScan = false;
+        }
+
+        if(firstScan == true)
+        {
+            return new ScanResult(0, null, null);
+        }
+
+        BlockPos endPos = startPos;
+        endPos = endPos.add(direction.rotateYClockwise().getVector());
+        endPos = endPos.add(direction.getVector());
+
+        int newLengthOut = -1;
+
+        for(int i = 0; i < lengthOut; i++)
+        {
+            blockCheck = dummyBlockCheck(world, endPos);
+            if(blockCheck)
+            {
+                newLengthOut = i + 1;
+                break;
+            }
+            endPos = endPos.add(direction.getVector());
+        }
+
+        int removeLength = 0;
+        BlockPos removePos = null;
+
+        if(newLengthOut == -1)
+        {
+            endPos = null;
+        }
+        else
+        {
+            removeLength = lengthOut - newLengthOut;
+            removePos = endPos.add(direction.rotateYCounterclockwise().getVector());
+            lengthOut = newLengthOut;
+        }
+
+        for(int i = 0; i < removeLength; i++)
+        {
+            removeSlave(world, removePos);
+            removePos = removePos.add(direction.getVector());
+        }
+
+        return new ScanResult(lengthOut, pos, endPos);
+    }
+
+    public ScanResult scanSide(World world, int length, BlockPos startPos, Direction direction)
+    {
+        boolean cont = true;
+        BlockPos pos = startPos;
+
+        boolean blockCheck;
+        boolean firstScan = true;
+
+        int lengthOut = 0;
+
+        //Scan Blocks to the side
+        while (cont)
+        {
+            lengthOut++;
+
+            if(lengthOut > length)
+            {
+                lengthOut--;
+                break;
+            }
+
+            blockCheck = dummyBlockCheck(world, pos);
+
+            if(!blockCheck)
+            {
+                lengthOut--;
+                break;
+            }
+
+            pos = pos.add(direction.getVector());
+            firstScan = false;
+        }
+
+        if(firstScan == true)
+        {
+            return new ScanResult(0, null, null);
+        }
+
+        BlockPos endPos = startPos;
+        endPos = endPos.add(direction.rotateYCounterclockwise().getVector());
+        endPos = endPos.add(direction.getVector());
+
+        int newLengthOut = -1;
+
+        for(int i = 0; i < lengthOut; i++)
+        {
+            blockCheck = dummyBlockCheck(world, endPos);
+            if(blockCheck)
+            {
+                newLengthOut = i + 1;
+                break;
+            }
+            endPos = endPos.add(direction.getVector());
+        }
+
+        int removeLength = 0;
+        if(newLengthOut == -1)
+        {
+            endPos = null;
+        }
+        else
+        {
+            lengthOut = newLengthOut;
+        }
+
+        return new ScanResult(lengthOut, pos, endPos);
+    }
+
+    public void scanSideInclude(World world, int length, BlockPos startPos, Direction direction)
+    {
+        boolean cont = true;
+        BlockPos pos = startPos;
+
+        boolean blockCheck;
+
+        int lengthOut = 0;
+
+        //Scan Blocks to the side
+        while (cont)
+        {
+            lengthOut++;
+
+            if(lengthOut > length)
+            {
+                lengthOut--;
+                break;
+            }
+
+            blockCheck = improvedBlockCheck(world, pos);
+
+            if(!blockCheck)
+            {
+                lengthOut--;
+                break;
+            }
+
+            pos = pos.add(direction.getVector());
+        }
+    }
+
+    public boolean scanRing(World world, int sideWidth, int sideHeight, BlockPos startPos, Direction direction)
+    {
+        BlockPos pos = startPos;
+
+        ScanResult scanResult = scanSide(world, sideWidth, pos, direction.rotateYClockwise());
+
+        if(scanResult.length() != sideWidth || scanResult.endPos() == null || scanResult.nextPos() == null)
+        {
+            return false;
+        }
+
+        BlockPos pos1 = scanResult.nextPos();
+        direction = direction.rotateYCounterclockwise();
+
+        scanResult = scanSide(world, sideHeight, pos1, direction.rotateYClockwise());
+
+        if(scanResult.length() != sideHeight || scanResult.endPos() == null || scanResult.nextPos() == null)
+        {
+            return false;
+        }
+
+        BlockPos pos2 = scanResult.nextPos();
+        direction = direction.rotateYCounterclockwise();
+
+        scanResult = scanSide(world, sideWidth, pos2, direction.rotateYClockwise());
+
+        if(scanResult.length() != sideWidth || scanResult.endPos() == null || scanResult.nextPos() == null)
+        {
+            return false;
+        }
+
+        BlockPos pos3 = scanResult.nextPos();
+        direction = direction.rotateYCounterclockwise();
+
+        scanResult = scanSide(world, sideHeight, pos3, direction.rotateYClockwise());
+
+        if(scanResult.length() != sideHeight || scanResult.endPos() == null || scanResult.nextPos() == null)
+        {
+            return false;
+        }
+        scanSideInclude(world, sideWidth, pos, direction);
+
+        direction = direction.rotateYCounterclockwise();
+        scanSideInclude(world, sideHeight, pos1, direction);
+
+        direction = direction.rotateYCounterclockwise();
+        scanSideInclude(world, sideWidth, pos2, direction);
+
+        direction = direction.rotateYCounterclockwise();
+        scanSideInclude(world, sideHeight, pos3, direction);
+
+        return true;
+    }
+
+    public boolean floorScan(World world, int width, int height, BlockPos startPos, Direction direction)
+    {
+        boolean approve = true;
+        BlockPos pos = startPos;
+        BlockPos widthScan;
+
+        mainloop : for(int h = 0; h < height; h++)
+        {
+            widthScan = pos;
+
+            for(int w = 0; w < width; w++)
+            {
+                approve = dummyBlockCheck(world, widthScan);
+
+                if(approve == false)
+                {
+                    break mainloop;
+                }
+
+                widthScan = widthScan.add(direction.rotateYClockwise().getVector());
+            }
+
+            pos = pos.add(direction.getVector());
+        }
+
+        return approve;
+    }
+
+    protected void removeSlave(World world, BlockPos pos)
+    {
+        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
+            slaves.remove(pos);
+        }
+    }
+
+    protected boolean dummyBlockCheck(World world, BlockPos pos)
+    {
+        boolean valid = false;
+
         if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
-            return true;
+            valid = true;
+        }
+        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
+            valid = true;
+        }
+
+        return valid;
+    }
+
+    protected boolean improvedBlockCheck(World world, BlockPos pos)
+    {
+        boolean valid = false;
+
+
+        if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
+            valid = true;
         }
         if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
         {
             slaves.add(pos);
-            return true;
+            valid = true;
         }
-        return false;
+
+        return valid;
     }
 
-    private boolean checkBlock(World world, BlockPos pos)
-    {
-        if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
-            return true;
-        }
-        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean checkBlockFloor(World world, BlockPos pos)
-    {
-        return checkBlock(world, pos);
-    }
-
-    private void successfulScan(int heightIn, int length, int width)
+    private void successfulScan(int height, int length, int width)
     {
         for(BlockPos slavePos : slaves)
         {
@@ -505,8 +729,6 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         }
 
         valid = true;
-
-        int height = heightIn - 1;
 
         boolean recalculateInventories = oldHeight != height || oldLength != length || oldWidth != width;
 
@@ -702,11 +924,13 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
             cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
 
-            smeltTicks.set(i, smeltTicks.get(i) + 1);
+            if(smeltTicks.get(i) < cookTime) {
+                smeltTicks.set(i, smeltTicks.get(i) + 1);
+            }
 
             smeltTick = smeltTicks.get(i);
 
-            if(smeltTick >= cookTime)
+            if(smeltTick >= cookTime && fluidStorage.getCurrentCapacity() < fluidStorage.maxCapacity)
             {
                 smeltTicks.set(i, 0);
                 itemInventory.setStack(i, ItemStack.EMPTY);

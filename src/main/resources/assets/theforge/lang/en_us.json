@@ -6,7 +6,8 @@
   "block.theforge.alloy_smeltery_drain": "Alloy Smeltery Drain",
   "block.theforge.alloy_smeltery_controller": "Alloy Smeltery Controller",
   "block.theforge.alloy_smeltery_faucet": "Alloy Smeltery Faucet",
-  "block.theforge.tank_block": "Tank Block",
+  "block.theforge.tank_block": "Tank",
+  "block.theforge.casting_table_block": "Casting Table",
 
   "item.theforge.pickaxehead": "%d Pickaxe Head",
   "item.theforge.toolhandle": "%d Tool Handle",
@@ -38,6 +39,8 @@
   "fluid.theforge.molten_iron": "Molten Iron",
   "fluid.theforge.molten_copper": "Molten Copper",
   "fluid.theforge.molten_netherite": "Molten Netherite",
+  "fluid.theforge.amount": "%d ingots",
+  "fluid.theforge.remainder": "%d droplets",
 
   "tool.theforge.durability": "durability: %d",
   "tool.theforge.miningspeed": "mining speed: %d",

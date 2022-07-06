@@ -42,8 +42,6 @@ public class TankBlock extends BlockWithEntity {
     public TankBlock(Settings settings) {
         super(settings);
         this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(FACING, Direction.NORTH));
-
-
     }
 
     @Override

@@ -70,26 +70,19 @@ public class TankBlockEntityRenderer implements BlockEntityRenderer<TankBlockEnt
 
             float height = 1 * (((float) entity.fluidStorage.getAmount()) / ((float) entity.fluidStorage.getCapacity()));
 
-            float yOffset = 1F - (height / 1F);
-
             Sprite sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(entity.getWorld(), entity.getPos(), fluid.getDefaultState())[0];
-
-            int imageHeight = (int) ((1 / (sprite.getMaxV() - sprite.getMinV())) * 16);
-
-            float yScalingFac =(yOffset * 16)/ ((float) imageHeight);
 
             matrices.translate(1, 0, 1F);
             matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 
-            //TOP
-            matrices.translate(0, height, 0);
+            matrices.translate(0, height - 0.01F, 0);
 
             int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), entity.getWorld(), entity.getPos(), 0);
 
             ForgeSpriteRendering.renderColouredTileUp(matrices, sprite, 0.001F, 0.998F, 0.001F, 0.998F, colour, 1);
 
-            matrices.translate(0, -height, 0.01F);
-            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0.001F, 0.998F, 0.001F, height, colour, 1);
+            matrices.translate(0, -height, 0.05F);
+            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, 1);
 
             matrices.pop();
             matrices.pop();

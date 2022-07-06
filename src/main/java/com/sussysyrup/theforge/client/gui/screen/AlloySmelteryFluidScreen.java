@@ -8,6 +8,7 @@ import com.sussysyrup.theforge.screen.AlloySmelteryFluidScreenHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.minecraft.client.MinecraftClient;
@@ -240,8 +241,11 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
     public void renderMouseToolTip(MatrixStack matrices, double mouseX, double mouseY) {
         super.mouseMoved(mouseX, mouseY);
 
-        TranslatableText translatableText;
         Identifier fluidID;
+        List<Text> texts;
+
+        int amount;
+        long remainder;
 
         if((mouseX >= x + 7 && mouseX <= x+133) && (mouseY <= y+69 && mouseY >= y+15))
         {
@@ -257,8 +261,19 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                 if(mouseY <= refY - heights.get(i) && mouseY >= refY -heights.get(i+1))
                 {
                     fluidID = (Registry.FLUID.getId(be.fluidStorage.views.get(i).getResource().getFluid()));
-                    translatableText = new TranslatableText("fluid." +fluidID.getNamespace() + "." + fluidID.getPath());
-                    renderTooltip(matrices, translatableText, (int) mouseX, (int) mouseY);
+                    texts = new ArrayList<>();
+                    texts.add(new TranslatableText("fluid." +fluidID.getNamespace() + "." + fluidID.getPath()));
+
+                    StorageView<FluidVariant> view = be.fluidStorage.views.get(i);
+
+                    amount = (int) (Math.floor(((float) view.getAmount())) / ((float) FluidConstants.INGOT));
+
+                    remainder = view.getAmount() - (amount * FluidConstants.INGOT);
+
+                    texts.add(new TranslatableText("fluid.theforge.amount", amount));
+                    texts.add(new TranslatableText("fluid.theforge.remainder", remainder));
+
+                    renderTooltip(matrices, texts, (int) mouseX, (int) mouseY);
                     liquidID = i;
                     break;
                 }

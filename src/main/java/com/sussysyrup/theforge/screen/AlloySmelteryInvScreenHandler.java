@@ -1,8 +1,12 @@
 package com.sussysyrup.theforge.screen;
 
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
+import com.sussysyrup.theforge.networking.s2c.S2CConstants;
 import com.sussysyrup.theforge.registry.ModScreenHandlerRegistry;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -21,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class AlloySmelteryInvScreenHandler extends ScreenHandler implements ExtendedScreenHandlerFactory {
 
-    private final Inventory inventory;
+    private Inventory inventory;
     private final PlayerInventory playerInventory;
 
     public int pageShift = 0;
@@ -51,11 +55,43 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
         calculateSlots();
     }
 
+    @Override
+    public void sendContentUpdates() {
+        super.sendContentUpdates();
+
+        if (!be.itemInventory.equals(inventory) && !be.getWorld().isClient) {
+            inventory = be.itemInventory;
+            calculateSlots();
+            ServerPlayNetworking.send((ServerPlayerEntity) playerInventory.player, S2CConstants.AlloySmelteryInvSync, PacketByteBufs.create());
+        }
+    }
+
+    public void updateClient()
+    {
+        inventory = be.itemInventory;
+        calculateSlots();
+    }
+
     public void calculateSlots()
     {
         slots = DefaultedList.of();
 
         be.itemPageShift = pageShift;
+
+
+        int m;
+        int l;
+
+        //The player inventory
+        for (m = 0; m < 3; ++m) {
+            for (l = 0; l < 9; ++l) {
+                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
+            }
+        }
+        //The player Hotbar
+        for (m = 0; m < 9; ++m) {
+            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
+        }
 
         int index = 0 + (pageShift * 21);
 
@@ -71,20 +107,6 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
                 }
                 index++;
             }
-        }
-
-        int m;
-        int l;
-
-        //The player inventory
-        for (m = 0; m < 3; ++m) {
-            for (l = 0; l < 9; ++l) {
-                this.addSlot(new Slot(playerInventory, l + m * 9 + 9, 8 + l * 18, 84 + m * 18));
-            }
-        }
-        //The player Hotbar
-        for (m = 0; m < 9; ++m) {
-            this.addSlot(new Slot(playerInventory, m, 8 + m * 18, 142));
         }
     }
 
@@ -107,7 +129,7 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
             while (!stack.isEmpty() && (fromLast ? i >= startIndex : i < endIndex)) {
                 slot = this.slots.get(i);
                 itemStack = slot.getStack();
-                if (!itemStack.isEmpty() && ItemStack.canCombine(stack, itemStack) && !(slot instanceof SingleSlot)) {
+                if (false) {
                     int j = itemStack.getCount() + stack.getCount();
                     if (j <= stack.getMaxCount()) {
                         stack.setCount(0);
@@ -155,28 +177,21 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int invSlot) {
-        ItemStack newStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(invSlot);
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = (Slot)this.slots.get(invSlot);
         if (slot != null && slot.hasStack()) {
-            ItemStack originalStack = slot.getStack();
-            newStack = originalStack.copy();
-            if (invSlot < this.inventory.size()) {
-                if (!this.insertItem(originalStack, this.inventory.size(), this.slots.size(), true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.insertItem(originalStack, 0, this.inventory.size(), false)) {
+            ItemStack itemStack2 = slot.getStack();
+            itemStack = itemStack2.copy();
+            if (invSlot < 36 ? !this.insertItem(itemStack2, 36, this.slots.size(), false) : !this.insertItem(itemStack2, 0, 36, false)) {
                 return ItemStack.EMPTY;
             }
-
-            if (originalStack.isEmpty()) {
-                slot.onQuickTransfer(newStack, originalStack);
+            if (itemStack2.isEmpty()) {
                 slot.setStack(ItemStack.EMPTY);
             } else {
                 slot.markDirty();
             }
         }
-
-        return newStack;
+        return itemStack;
     }
 
     @Override
@@ -256,7 +271,6 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
         public int getMaxItemCount(ItemStack stack) {
             return 1;
         }
-
     }
 
     public class BlockedSlot extends Slot

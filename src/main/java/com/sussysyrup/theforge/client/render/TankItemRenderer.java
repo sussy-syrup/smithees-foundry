@@ -1,7 +1,10 @@
 package com.sussysyrup.theforge.client.render;
 
-import com.sussysyrup.theforge.Main;
+import com.sussysyrup.theforge.api.render.ForgeSpriteRendering;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
@@ -9,11 +12,12 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
@@ -21,7 +25,6 @@ import net.minecraft.util.math.Vec3f;
 import java.util.List;
 import java.util.Random;
 
-//TODO BROKEN
 public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
 
     @Override
@@ -31,7 +34,6 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
         boolean leftHanded = false;
 
         BakedModel model = MinecraftClient.getInstance().getBlockRenderManager().getModel(state);
-        //model = MinecraftClient.getInstance().getItemRenderer().getModel(new ItemStack(Items.DIAMOND), MinecraftClient.getInstance().world, MinecraftClient.getInstance().player, 0);
 
         if(mode.equals(ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND) || mode.equals(ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND)) {
             leftHanded = true;
@@ -40,39 +42,74 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
         RenderLayer renderLayer = RenderLayers.getItemLayer(stack, false);
 
         VertexConsumer consumer = ItemRenderer.getItemGlintConsumer(vertexConsumers, renderLayer, true, stack.hasGlint());;
+        matrices.push();
+
+        Vec3f translate = model.getTransformation().getTransformation(mode).translation;
+        Vec3f rotation = model.getTransformation().getTransformation(mode).rotation;
+        Vec3f scale = model.getTransformation().getTransformation(mode).scale;
+
+        matrices.translate(translate.getX(), translate.getY(), translate.getZ());
+
+        matrices.translate(0.5, 0.5D, 0.5D);
+
+        matrices.multiply(new Quaternion(rotation.getX(), rotation.getY(), rotation.getZ(), true));
+
+        matrices.scale(scale.getX(), scale.getY(), scale.getZ());
+
+        matrices.translate(-0.5D, -0.5D, -0.5D);
+
+        renderBakedItemModel(model, light, overlay, matrices, consumer);
+
+        renderContents(stack, matrices, vertexConsumers);
+
+        matrices.pop();
+    }
+
+    private static void renderContents(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers)
+    {
+        NbtCompound compound = stack.getNbt();
+
+        if(compound == null)
+        {
+            return;
+        }
+
+        compound = compound.getCompound("BlockEntityTag");
+
+        if(compound == null)
+        {
+            return;
+        }
+
+        FluidVariant variant = FluidVariant.fromNbt(compound.getCompound("fluidVariant"));
+
+        if(variant.equals(FluidVariant.blank()))
+        {
+            return;
+        }
+
+        Fluid fluid = variant.getFluid();
+        long amount = compound.getLong("amount");
+
+        float height = 1 * (((float) amount) / ((float) (4 * FluidConstants.BUCKET)));
+
+        Sprite sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), fluid.getDefaultState())[0];
 
         matrices.push();
 
-        model.getTransformation().getTransformation(mode).apply(leftHanded, matrices);
+        matrices.translate(1, 0, 1F);
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
 
-        matrices.translate(0.5D, 0.5D, 0.5D);
-        /**
-        if(mode.equals(ModelTransformation.Mode.GROUND)) {
-            matrices.translate(1, 0, 1);
-        }
-        if(mode.equals(ModelTransformation.Mode.GUI))
-        {
-            matrices.translate(-1.5, 0, -1.65);
-        }
-        if(mode.equals(ModelTransformation.Mode.FIRST_PERSON_RIGHT_HAND))
-        {
-            matrices.translate(-2.75, 0, -0.7);
-        }
-        if(mode.equals(ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND))
-        {
-            matrices.translate(-0.7, 0, -2.75);
-        }
-        if(mode.equals(ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND))
-        {
-            matrices.translate(0.65, 0.65, -0.65);
-        }
-        if(mode.equals(ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND))
-        {
-            matrices.translate(0, 0.65, -1.65);
-            matrices.translate(-0.85, 0, -0.85);
-        }
-        **/
-        renderBakedItemModel(model, light, overlay, matrices, consumer);
+        matrices.translate(0, height - 0.01F, 0);
+
+        int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), 0);
+
+        ForgeSpriteRendering.renderColouredTileUp(matrices, sprite, 0.001F, 0.998F, 0.001F, 0.998F, colour, 1);
+
+        matrices.translate(0, -height, 0.01F);
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+        matrices.translate(-1, 0, -0.95);
+        ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, 1);
 
         matrices.pop();
     }
