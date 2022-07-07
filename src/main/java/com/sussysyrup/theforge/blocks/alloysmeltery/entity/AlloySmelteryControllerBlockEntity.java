@@ -23,6 +23,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
@@ -44,9 +45,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 public class AlloySmelteryControllerBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory {
@@ -67,6 +66,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     public int itemPageShift = 0;
 
     public List<BlockPos> slaves = new ArrayList<>();
+    public List<BlockPos> tanks = new ArrayList<>();
+
+    private List<Fluid> currentFuels = new ArrayList<>();
+
+    public FluidVariant activeFuel = FluidVariant.blank();
 
     public MultiVariantStorage<FluidVariant> fluidStorage = new MultiVariantStorage<>(){
         @Override
@@ -102,6 +106,17 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         nbt.putLongArray("SLAVES", encode);
 
+        encode = new ArrayList<>();
+
+        for(BlockPos pos : tanks)
+        {
+            encode.add(pos.asLong());
+        }
+
+        nbt.putLongArray("TANKS", encode);
+
+        nbt.put("ACTIVE", activeFuel.toNbt());
+
         nbt.putBoolean("VALID", valid);
 
         FluidUtil.writeNbt(nbt, fluidStorage);
@@ -127,9 +142,35 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         Arrays.stream(encode).boxed().forEach(e -> slaves.add(BlockPos.fromLong(e)));
 
+        tanks = new ArrayList<>();
+        encode = nbt.getLongArray("TANKS");
+
+        Arrays.stream(encode).boxed().forEach(e -> tanks.add(BlockPos.fromLong(e)));
+
+        currentFuels = calculateFuels();
+
+        activeFuel = FluidVariant.fromNbt(nbt.getCompound("ACTIVE"));
+
         valid = nbt.getBoolean("VALID");
 
         FluidUtil.readNbt(nbt, fluidStorage);
+    }
+
+    private List<Fluid> calculateFuels() {
+        List<Fluid> fluids = new ArrayList<>();
+
+        TankBlockEntity be;
+
+        for(BlockPos pos : tanks)
+        {
+            be = ((TankBlockEntity) world.getBlockEntity(pos));
+            if(!fluids.contains(be.fluidStorage.getResource().getFluid()))
+            {
+                fluids.add(be.fluidStorage.getResource().getFluid());
+            }
+        }
+
+        return fluids;
     }
 
     public static <E extends AlloySmelteryControllerBlockEntity> void clientTicker(World world, BlockPos blockPos, BlockState blockState, E e) {
@@ -180,6 +221,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
     protected void structCheck(World world, BlockPos pos)
     {
+        currentFuels = new ArrayList<>();
+        tanks = new ArrayList<>();
         slaves = new ArrayList<>();
 
         BlockPos scanPos = pos;
@@ -362,7 +405,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 break;
             }
 
-            blockCheck = improvedBlockCheck(world, pos);
+            blockCheck = slaveBlockCheck(world, pos);
 
             if(!blockCheck)
             {
@@ -439,7 +482,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 break;
             }
 
-            blockCheck = improvedBlockCheck(world, pos);
+            blockCheck = slaveBlockCheck(world, pos);
 
             if(!blockCheck)
             {
@@ -584,7 +627,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 break;
             }
 
-            blockCheck = improvedBlockCheck(world, pos);
+            blockCheck = slaveBlockCheck(world, pos);
 
             if(!blockCheck)
             {
@@ -684,6 +727,12 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         {
             slaves.remove(pos);
         }
+        if(ForgeAlloySmelteryRegistry.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
+            if(tanks.contains(pos)) {
+                tanks.remove(pos);
+            }
+        }
     }
 
     protected boolean dummyBlockCheck(World world, BlockPos pos)
@@ -698,20 +747,46 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             valid = true;
         }
 
+        if(ForgeAlloySmelteryRegistry.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
+        {
+            valid = true;
+        }
+
         return valid;
     }
 
-    protected boolean improvedBlockCheck(World world, BlockPos pos)
+    protected boolean slaveBlockCheck(World world, BlockPos pos)
     {
         boolean valid = false;
+        Block block = world.getBlockState(pos).getBlock();
 
-
-        if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
+        if(ForgeAlloySmelteryRegistry.getStructureBlocks().contains(block)) {
             valid = true;
         }
-        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        if(ForgeAlloySmelteryRegistry.getFunctionalBlocks().contains(block))
         {
             slaves.add(pos);
+            valid = true;
+        }
+        if(ForgeAlloySmelteryRegistry.getTankBlocks().contains(block))
+        {
+            TankBlockEntity blockEntity = (TankBlockEntity) world.getBlockEntity(pos);
+
+            Map<Fluid, Float> fuelMap = ForgeAlloySmelteryRegistry.getFuelFluids();
+
+            if(fuelMap.keySet().contains(blockEntity.fluidStorage.getResource().getFluid())) {
+                if(currentFuels.contains(blockEntity.fluidStorage.getResource().getFluid())) {
+                    tanks.add(pos);
+                }
+                else
+                {
+                    if(currentFuels.size() < 3)
+                    {
+                        tanks.add(pos);
+                        currentFuels.add(blockEntity.fluidStorage.getResource().getFluid());
+                    }
+                }
+            }
             valid = true;
         }
 
@@ -805,6 +880,28 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         oldHeight = height;
         oldLength = length;
         oldWidth = width;
+
+        if(tanks.isEmpty())
+        {
+            activeFuel = FluidVariant.blank();
+        }
+        else
+        {
+            boolean containsOldFuel = false;
+
+            for(BlockPos pos : tanks)
+            {
+                if(activeFuel.equals(((TankBlockEntity) world.getBlockEntity(pos)).fluidStorage.variant))
+                {
+                    containsOldFuel = true;
+                    break;
+                }
+            }
+            if(!containsOldFuel)
+            {
+                activeFuel = ((TankBlockEntity) world.getBlockEntity(tanks.get(0))).fluidStorage.variant;
+            }
+        }
     }
 
     private void failedScan()
@@ -849,6 +946,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         buf.writeBlockPos(getPos());
     }
 
+    //TODO implement fuel tick
     void itemSmeltTick()
     {
         //PrepareSmeltList

@@ -22,6 +22,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -72,6 +73,8 @@ public class BlocksRegistry {
 
         ForgeAlloySmelteryRegistry.addStructureBlock(REINFORCED_BRICKS);
         ForgeAlloySmelteryRegistry.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
+        ForgeAlloySmelteryRegistry.addTankBlock(TANK_BLOCK);
+        ForgeAlloySmelteryRegistry.addFuelFluid(Fluids.LAVA, 1);
 
         FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> entity.master.fluidStorage, ALLOY_SMELTERY_DRAIN_BLOCK_ENTITY);
         FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> entity.fluidStorage, TANK_BLOCK_ENTITY);
