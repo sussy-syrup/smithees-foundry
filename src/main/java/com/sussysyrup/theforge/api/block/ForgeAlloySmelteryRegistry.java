@@ -59,14 +59,14 @@ public class ForgeAlloySmelteryRegistry {
         tankBlocks.remove(block);
     }
 
-    private final static Map<Fluid, Float> fuelFluids = new HashMap<>();
+    private final static Map<Fluid, Integer> fuelFluids = new HashMap<>();
 
-    public static Map<Fluid, Float> getFuelFluids()
+    public static Map<Fluid, Integer> getFuelFluids()
     {
         return fuelFluids;
     }
 
-    public static void addFuelFluid(Fluid fluid, float fuelValue)
+    public static void addFuelFluid(Fluid fluid, int fuelValue)
     {
         fuelFluids.put(fluid, fuelValue);
     }
@@ -74,5 +74,10 @@ public class ForgeAlloySmelteryRegistry {
     public static void removeFuelFluid(Fluid fluid)
     {
         fuelFluids.remove(fluid);
+    }
+
+    public static int getFuelValue(Fluid fluid)
+    {
+        return fuelFluids.get(fluid);
     }
 }

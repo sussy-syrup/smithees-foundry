@@ -4,10 +4,12 @@ import com.sussysyrup.theforge.api.transfer.MultiStorageView;
 import com.sussysyrup.theforge.api.transfer.MultiVariantStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Only applies to multivariant storage
@@ -53,4 +55,38 @@ public class FluidUtil {
         }
         storage.maxCapacity = compound.getLong("maxamount");
     }
+
+    public static NbtCompound writeVariantOnly(NbtCompound compound, List<Fluid> fluids)
+    {
+        NbtList nbtList = new NbtList();
+
+        NbtCompound nbt;
+
+        for(Fluid fluidVariant : fluids)
+        {
+            nbt = new NbtCompound();
+            nbt.put("fluidvariant", FluidVariant.of(fluidVariant).toNbt());
+
+            nbtList.add(nbt);
+        }
+
+        compound.put("oFluidVariants", nbtList);
+
+        return compound;
+    }
+    public static List<Fluid> readVariantOnly(NbtCompound compound)
+    {
+        NbtList nbtList = compound.getList("oFluidVariants", 10);
+
+        List<Fluid> fluids = new ArrayList<>();
+
+        for (int i = 0; i < nbtList.size(); ++i) {
+            NbtCompound nbtCompound = nbtList.getCompound(i);
+
+            fluids.add(FluidVariant.fromNbt(nbtCompound.getCompound("fluidvariant")).getFluid());
+        }
+
+        return fluids;
+    }
+
 }

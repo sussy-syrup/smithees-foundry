@@ -68,7 +68,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     public List<BlockPos> slaves = new ArrayList<>();
     public List<BlockPos> tanks = new ArrayList<>();
 
-    private List<Fluid> currentFuels = new ArrayList<>();
+    public List<Fluid> currentFuels = new ArrayList<>();
 
     public FluidVariant activeFuel = FluidVariant.blank();
 
@@ -117,6 +117,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         nbt.put("ACTIVE", activeFuel.toNbt());
 
+        FluidUtil.writeVariantOnly(nbt, currentFuels);
+
         nbt.putBoolean("VALID", valid);
 
         FluidUtil.writeNbt(nbt, fluidStorage);
@@ -147,9 +149,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         Arrays.stream(encode).boxed().forEach(e -> tanks.add(BlockPos.fromLong(e)));
 
-        currentFuels = calculateFuels();
-
         activeFuel = FluidVariant.fromNbt(nbt.getCompound("ACTIVE"));
+
+        currentFuels = FluidUtil.readVariantOnly(nbt);
 
         valid = nbt.getBoolean("VALID");
 
@@ -157,6 +159,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     }
 
     private List<Fluid> calculateFuels() {
+
         List<Fluid> fluids = new ArrayList<>();
 
         TankBlockEntity be;
@@ -164,10 +167,19 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         for(BlockPos pos : tanks)
         {
             be = ((TankBlockEntity) world.getBlockEntity(pos));
+
             if(!fluids.contains(be.fluidStorage.getResource().getFluid()))
             {
                 fluids.add(be.fluidStorage.getResource().getFluid());
             }
+        }
+
+        if(!fluids.isEmpty()) {
+            activeFuel = FluidVariant.of(fluids.get(0));
+        }
+        else
+        {
+            activeFuel = FluidVariant.blank();
         }
 
         return fluids;
@@ -772,7 +784,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         {
             TankBlockEntity blockEntity = (TankBlockEntity) world.getBlockEntity(pos);
 
-            Map<Fluid, Float> fuelMap = ForgeAlloySmelteryRegistry.getFuelFluids();
+            Map<Fluid, Integer> fuelMap = ForgeAlloySmelteryRegistry.getFuelFluids();
 
             if(fuelMap.keySet().contains(blockEntity.fluidStorage.getResource().getFluid())) {
                 if(currentFuels.contains(blockEntity.fluidStorage.getResource().getFluid())) {
@@ -946,7 +958,6 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         buf.writeBlockPos(getPos());
     }
 
-    //TODO implement fuel tick
     void itemSmeltTick()
     {
         //PrepareSmeltList
@@ -981,6 +992,15 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             oldItemInventory = itemInventory;
         }
 
+        FluidVariant fuel = activeFuel;
+
+        if(fuel.isBlank())
+        {
+            return;
+        }
+
+        int tickStep = ForgeAlloySmelteryRegistry.getFuelValue(fuel.getFluid());
+
         ItemStack stack;
         Item item;
         SmelteryResource smelteryResource;
@@ -988,6 +1008,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         int cookTime;
 
         int smeltTick;
+
+        boolean tickSmelt = false;
 
         //Actually tick the smelting
         for(int i = 0; i < itemInventory.size(); i++)
@@ -1023,8 +1045,10 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
 
             if(smeltTicks.get(i) < cookTime) {
-                smeltTicks.set(i, smeltTicks.get(i) + 1);
+                smeltTicks.set(i, smeltTicks.get(i) + tickStep);
             }
+
+            tickSmelt = true;
 
             smeltTick = smeltTicks.get(i);
 
@@ -1033,6 +1057,28 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 smeltTicks.set(i, 0);
                 itemInventory.setStack(i, ItemStack.EMPTY);
                 meltItem(smelteryResource);
+            }
+        }
+
+        if(tickSmelt)
+        {
+            TankBlockEntity tank;
+
+            for(BlockPos pos : tanks)
+            {
+                tank = ((TankBlockEntity) world.getBlockEntity(pos));
+                if(tank.fluidStorage.getResource().equals(fuel))
+                {
+                    try (Transaction transaction = Transaction.openOuter())
+                    {
+                        tank.fluidStorage.extract(fuel, 20, transaction);
+                        transaction.commit();
+                    }
+
+                    calculateFuels();
+
+                    break;
+                }
             }
         }
 
