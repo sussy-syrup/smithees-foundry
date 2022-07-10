@@ -66,7 +66,6 @@ public class ForgeSpriteRendering {
 
         RenderSystem.setShader(GameRenderer::getPositionTexLightmapColorShader);
         RenderSystem.enableDepthTest();
-        RenderSystem.enableDepthTest();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 

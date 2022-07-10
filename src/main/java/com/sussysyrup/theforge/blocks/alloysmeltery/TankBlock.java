@@ -21,6 +21,8 @@ import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
@@ -75,6 +77,8 @@ public class TankBlock extends BlockWithEntity {
                             {
                                 tankStorage.insert(view.getResource(), FluidConstants.BUCKET, transaction);
 
+                                playBucketFill(bucketItem, world, pos);
+
                                 view.extract(view.getResource(), FluidConstants.BUCKET, transaction);
 
                                 break;
@@ -94,6 +98,8 @@ public class TankBlock extends BlockWithEntity {
                                 {
                                     bucketStorage.insert(tankVariant, FluidConstants.BUCKET, transaction);
                                     tankStorage.extract(tankVariant, FluidConstants.BUCKET, transaction);
+
+                                    playBucketFill(bucketItem, world, pos);
                                 }
                             }
                             else
@@ -103,6 +109,7 @@ public class TankBlock extends BlockWithEntity {
                                 {
                                     view.extract(tankVariant, FluidConstants.BUCKET, transaction);
                                     tankStorage.insert(tankVariant, FluidConstants.BUCKET, transaction);
+                                    playBucketFill(bucketItem, world, pos);
                                 }
                             }
                         }
@@ -114,6 +121,18 @@ public class TankBlock extends BlockWithEntity {
         }
 
         return ActionResult.SUCCESS;
+    }
+
+    private void playBucketFill(Item bucketItem, World world, BlockPos blockPos)
+    {
+        if(bucketItem.equals(Items.WATER_BUCKET))
+        {
+            world.playSound(null, blockPos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1f, 1f);
+        }
+        else
+        {
+            world.playSound(null, blockPos, SoundEvents.ITEM_BUCKET_FILL_LAVA, SoundCategory.BLOCKS, 1f, 1f);
+        }
     }
 
     @Override

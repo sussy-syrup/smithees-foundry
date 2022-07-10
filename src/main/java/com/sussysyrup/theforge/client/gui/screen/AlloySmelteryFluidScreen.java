@@ -2,7 +2,9 @@ package com.sussysyrup.theforge.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.theforge.Main;
+import com.sussysyrup.theforge.api.render.ForgeSpriteRendering;
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
+import com.sussysyrup.theforge.blocks.alloysmeltery.entity.TankBlockEntity;
 import com.sussysyrup.theforge.networking.c2s.C2SConstants;
 import com.sussysyrup.theforge.screen.AlloySmelteryFluidScreenHandler;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -21,6 +23,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
@@ -28,6 +31,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.registry.Registry;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -43,6 +47,7 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
     private TexturedButtonWidget buttonItemWidget = new TexturedButtonWidget(-500, -500, 28, 30, 0, 36, 30, WIDGETS, 256, 256, button -> buttonItem = true);
 
     int liquidID = -1;
+    int fuelPress = -1;
 
     public AlloySmelteryFluidScreen(AlloySmelteryFluidScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -77,6 +82,8 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
         drawTexture(matrices, x + 28, y - 27, 27, 66, 28, 30, 256, 256);
 
         renderFluid(matrices, x, y);
+
+        renderFuel(matrices, x, y);
 
         this.renderMouseToolTip(matrices, mouseX, mouseY);
     }
@@ -187,7 +194,47 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
         }
     }
 
-    //Max height 54, min height 2. Total Fluids in smeltery = 27. You must do something special to go past 27 fluids
+    private void renderFuel(MatrixStack matrices, int x, int y)
+    {
+        Sprite sprite;
+
+        Fluid fluid;
+
+        for(int i = 0; i < 3; i++) {
+
+            if(i == be.currentFuels.size())
+            {
+                return;
+            }
+
+            fluid = be.currentFuels.get(i);
+
+            if(fluid == null)
+            {
+                continue;
+            }
+
+            sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), fluid.getDefaultState())[0];
+
+            matrices.push();
+            matrices.translate(x, y, 0);
+            matrices.translate(146, 15 + (i * 19), 0);
+            matrices.scale(16, 16, 0);
+            ForgeSpriteRendering.renderSpriteTile(matrices, sprite, 0, 1, 0, 1);
+
+            matrices.pop();
+
+            if(be.activeFuel.isOf(fluid))
+            {
+                matrices.push();
+                RenderSystem.setShaderTexture(0, WIDGETS);
+                drawTexture(matrices, x + 146, y + 15 + (i * 19), 0, 96, 16, 16, 256, 256);
+                matrices.pop();
+            }
+        }
+    }
+
+    //Max height 54, min height 2. Total Fluids in smeltery = 27 before things get unfunny. You must do something special to go past 27 fluids
     private List<Integer> calcHeights() {
         List<Integer> heights = new ArrayList<>();
         List<StorageView<FluidVariant>> views = be.fluidStorage.views;
@@ -235,6 +282,13 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
             liquidID = -1;
         }
 
+        if(!(fuelPress == -1))
+        {
+            MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, fuelPress + 1);
+
+            fuelPress = -1;
+        }
+
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
@@ -246,6 +300,9 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
 
         int amount;
         long remainder;
+
+        liquidID = -1;
+        fuelPress = -1;
 
         if((mouseX >= x + 7 && mouseX <= x+133) && (mouseY <= y+69 && mouseY >= y+15))
         {
@@ -262,7 +319,7 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                 {
                     fluidID = (Registry.FLUID.getId(be.fluidStorage.views.get(i).getResource().getFluid()));
                     texts = new ArrayList<>();
-                    texts.add(new TranslatableText("fluid." +fluidID.getNamespace() + "." + fluidID.getPath()));
+                    texts.add(new TranslatableText("block." +fluidID.getNamespace() + "." + fluidID.getPath()));
 
                     StorageView<FluidVariant> view = be.fluidStorage.views.get(i);
 
@@ -279,6 +336,91 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                 }
                 liquidID = -1;
             }
+        }
+
+        List<Fluid> fuels = be.currentFuels;
+        Fluid fluid;
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        float buckets = 0;
+        TankBlockEntity tank;
+
+        if((mouseX >= x + 146 && mouseX <= x+162) && (mouseY <= y+31 && mouseY >= y+15) && fuels.size() > 0)
+        {
+            texts = new ArrayList<>();
+            fluid = fuels.get(0);
+            fluidID = (Registry.FLUID.getId(fluid));
+
+            for(BlockPos pos : be.tanks)
+            {
+                tank = ((TankBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos));
+
+                if(tank.fluidStorage.getResource().getFluid().equals(fluid))
+                {
+                    buckets += tank.fluidStorage.amount;
+                }
+            }
+
+            buckets = buckets / ((float) FluidConstants.BUCKET);
+
+            texts.add(new TranslatableText("block." +fluidID.getNamespace() + "." + fluidID.getPath()));
+            texts.add(new TranslatableText("fluid.theforge.buckets", String.valueOf(df.format(buckets))));
+
+            renderTooltip(matrices, texts, (int)mouseX, (int)mouseY);
+
+            fuelPress = 0;
+        }
+
+        if((mouseX >= x + 146 && mouseX <= x+162) && (mouseY <= y+50 && mouseY >= y+34) && fuels.size() > 1)
+        {
+            texts = new ArrayList<>();
+            fluid = fuels.get(1);
+            fluidID = (Registry.FLUID.getId(fluid));
+
+            for(BlockPos pos : be.tanks)
+            {
+                tank = ((TankBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos));
+
+                if(tank.fluidStorage.getResource().getFluid().equals(fluid))
+                {
+                    buckets += tank.fluidStorage.amount;
+                }
+            }
+
+            buckets = buckets / ((float) FluidConstants.BUCKET);
+
+            texts.add(new TranslatableText("block." +fluidID.getNamespace() + "." + fluidID.getPath()));
+            texts.add(new TranslatableText("fluid.theforge.buckets", String.valueOf(df.format(buckets))));
+
+            renderTooltip(matrices, texts, (int)mouseX, (int)mouseY);
+
+            fuelPress = 1;
+        }
+                                                        //haha funny number
+        if((mouseX >= x + 146 && mouseX <= x+162) && (mouseY <= y+69 && mouseY >= y+53) && fuels.size() > 2)
+        {
+            texts = new ArrayList<>();
+            fluid = fuels.get(2);
+            fluidID = (Registry.FLUID.getId(fluid));
+
+            for(BlockPos pos : be.tanks)
+            {
+                tank = ((TankBlockEntity) MinecraftClient.getInstance().world.getBlockEntity(pos));
+
+                if(tank.fluidStorage.getResource().getFluid().equals(fluid))
+                {
+                    buckets += tank.fluidStorage.amount;
+                }
+            }
+
+            buckets = buckets / ((float) FluidConstants.BUCKET);
+
+            texts.add(new TranslatableText("block." +fluidID.getNamespace() + "." + fluidID.getPath()));
+            texts.add(new TranslatableText("fluid.theforge.buckets", String.valueOf(df.format(buckets))));
+
+            renderTooltip(matrices, texts, (int)mouseX, (int)mouseY);
+
+            fuelPress = 2;
         }
     }
 }

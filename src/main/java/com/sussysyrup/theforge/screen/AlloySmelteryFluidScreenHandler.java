@@ -3,6 +3,7 @@ package com.sussysyrup.theforge.screen;
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
 import com.sussysyrup.theforge.registry.ModScreenHandlerRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -53,6 +54,19 @@ public class AlloySmelteryFluidScreenHandler extends ScreenHandler implements Ex
 
         if (id == 0) {
             player.openHandledScreen(this);
+        }
+
+        if(id == 1)
+        {
+             be.activeFuel = FluidVariant.of(be.currentFuels.get(0));
+        }
+        if(id == 2)
+        {
+            be.activeFuel = FluidVariant.of(be.currentFuels.get(1));
+        }
+        if(id == 3)
+        {
+            be.activeFuel = FluidVariant.of(be.currentFuels.get(2));
         }
 
         return super.onButtonClick(player, id);

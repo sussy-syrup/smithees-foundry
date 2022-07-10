@@ -36,11 +36,12 @@
   "material.theforge.diamond.adj": "Diamond",
   "material.theforge.netherite.adj": "Netherite",
 
-  "fluid.theforge.molten_iron": "Molten Iron",
-  "fluid.theforge.molten_copper": "Molten Copper",
-  "fluid.theforge.molten_netherite": "Molten Netherite",
+  "block.theforge.molten_iron": "Molten Iron",
+  "block.theforge.molten_copper": "Molten Copper",
+  "block.theforge.molten_netherite": "Molten Netherite",
   "fluid.theforge.amount": "%d ingots",
   "fluid.theforge.remainder": "%d droplets",
+  "fluid.theforge.buckets": "%d buckets",
 
   "tool.theforge.durability": "durability: %d",
   "tool.theforge.miningspeed": "mining speed: %d",
