@@ -89,7 +89,7 @@ public class AlloySmelteryFaucetBlockEntity extends BlockEntity {
             }
         }
 
-        if(resourceAmount >= FluidConstants.NUGGET)
+        if(resourceAmount >= 250)
         {
             try (Transaction transaction = Transaction.openOuter())
             {
@@ -102,7 +102,7 @@ public class AlloySmelteryFaucetBlockEntity extends BlockEntity {
                     return;
                 }
 
-                extractedAmount = target.insert(variant, FluidConstants.NUGGET, transaction);
+                extractedAmount = target.insert(variant, 250L, transaction);
 
                 if(extractedAmount == 0)
                 {

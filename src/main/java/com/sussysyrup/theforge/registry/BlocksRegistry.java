@@ -76,7 +76,12 @@ public class BlocksRegistry {
         ForgeAlloySmelteryRegistry.addTankBlock(TANK_BLOCK);
         ForgeAlloySmelteryRegistry.addFuelFluid(Fluids.LAVA, 1);
 
-        FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> entity.master.fluidStorage, ALLOY_SMELTERY_DRAIN_BLOCK_ENTITY);
+        FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> {
+            if(entity.master != null) {
+                return entity.master.fluidStorage;
+            }
+            return null;
+        }, ALLOY_SMELTERY_DRAIN_BLOCK_ENTITY);
         FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> entity.fluidStorage, TANK_BLOCK_ENTITY);
         FluidStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> {
             if(direction.equals(Direction.UP))

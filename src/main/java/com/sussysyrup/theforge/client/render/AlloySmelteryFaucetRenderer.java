@@ -2,6 +2,7 @@ package com.sussysyrup.theforge.client.render;
 
 import com.sussysyrup.theforge.api.render.ForgeSpriteRendering;
 import com.sussysyrup.theforge.blocks.alloysmeltery.AlloySmelteryFaucetBlock;
+import com.sussysyrup.theforge.blocks.alloysmeltery.CastingTableBlock;
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryFaucetBlockEntity;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -59,20 +60,38 @@ public class AlloySmelteryFaucetRenderer implements BlockEntityRenderer<AlloySme
             matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
             matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180));
             matrices.translate(0, 0, -0.25F);
-            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0, 0.625F, colour, 1);
 
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
-            matrices.translate(-0.25F, 0, -0.125F);
-            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0.125F, 0.625F, colour, 1);
+            if(entity.getWorld().getBlockState(entity.getPos().add(0, -1, 0)).getBlock() instanceof CastingTableBlock)
+            {
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0, 0.75F, colour, 1);
 
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
-            matrices.translate(-0.125F, 0, 0);
-            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.625F, colour, 1);
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.25F, 0, -0.125F);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0.125F, 0.625F, colour, 1);
 
-            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
-            matrices.translate(-0.125F, 0, -0.25F);
-            ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.625F, colour, 1);
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.translate(-0.125F, 0, 0);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.75F, colour, 1);
 
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.125F, 0, -0.25F);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.75F, colour, 1);
+            }
+            else {
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0, 0.625F, colour, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.25F, 0, -0.125F);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.25F, 0.125F, 0.5F, colour, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.translate(-0.125F, 0, 0);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.625F, colour, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.125F, 0, -0.25F);
+                ForgeSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.125F, 0, 0.625F, colour, 1);
+            }
             matrices.pop();
             matrices.pop();
         }

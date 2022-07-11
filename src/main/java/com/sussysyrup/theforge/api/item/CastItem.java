@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 
 public class CastItem extends Item {
 
-    String castType;
+    public String castType;
 
     public CastItem(Settings settings, String castType) {
         super(settings);
