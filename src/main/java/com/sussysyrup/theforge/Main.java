@@ -41,6 +41,12 @@ public class Main implements ModInitializer {
 
 		//Fluids
 		FluidRegistry.init();
+
+		//Casting
+		CastingRegistry.init();
+
+		//Smelting
+		SmelteryResourceRegistry.init();
 	}
 
 	private static void processing()

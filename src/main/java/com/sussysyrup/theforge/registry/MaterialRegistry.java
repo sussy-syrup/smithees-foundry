@@ -27,35 +27,35 @@ import java.util.List;
 public class MaterialRegistry {
 
     private static final MaterialResource WOOD = new MaterialResource("wood", 1);
-    private static final TagKey<Item> WOOD_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "wood_resource_material"));
+    private static final TagKey<Item> WOOD_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/wood_resource_material"));
 
     private static final MaterialResource STONE = new MaterialResource("stone", 1);
-    private static final TagKey<Item> STONE_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "stone_resource_material"));
+    private static final TagKey<Item> STONE_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/stone_resource_material"));
 
     private static final MaterialResource FLINT = new MaterialResource("flint", 1);
-    private static final TagKey<Item> FLINT_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "flint_resource_material"));
+    private static final TagKey<Item> FLINT_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/flint_resource_material"));
 
     private static final MaterialResource IRONNUG = new MaterialResource("iron", 1F/9F);
-    private static final TagKey<Item> IRONNUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "ironnug_resource_material"));
+    private static final TagKey<Item> IRONNUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/ironnug_resource_material"));
     private static final MaterialResource IRONING = new MaterialResource("iron", 1);
-    private static final TagKey<Item> IRONING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "ironing_resource_material"));
+    private static final TagKey<Item> IRONING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/ironing_resource_material"));
     private static final MaterialResource IRONBLOCK = new MaterialResource("iron", 9);
-    private static final TagKey<Item> IRONBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "ironblock_resource_material"));
+    private static final TagKey<Item> IRONBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/ironblock_resource_material"));
 
     //copper nuggets don't exist, yet
     private static final MaterialResource COPPERING = new MaterialResource("copper", 1);
-    private static final TagKey<Item> COPPERING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "coppering_resource_material"));
+    private static final TagKey<Item> COPPERING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/coppering_resource_material"));
     private static final MaterialResource COPPERBLOCK = new MaterialResource("copper", 9);
-    private static final TagKey<Item> COPPERBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "copperblock_resource_material"));
+    private static final TagKey<Item> COPPERBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/copperblock_resource_material"));
 
     private static final MaterialResource DIAMOND = new MaterialResource("diamond", 1);
-    private static final TagKey<Item> DIAMOND_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "diamond_resource_material"));
+    private static final TagKey<Item> DIAMOND_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/diamond_resource_material"));
 
     //nether nugs don't exist either, yet
     private static final MaterialResource NETHERITEING = new MaterialResource("netherite", 1);
-    private static final TagKey<Item> NETHERITEING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "netheriteing_resource_material"));
+    private static final TagKey<Item> NETHERITEING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteing_resource_material"));
     private static final MaterialResource NETHERITEBLOCK = new MaterialResource("netherite", 9);
-    private static final TagKey<Item> NETHERITEBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "netheriteblock_resource_material"));
+    private static final TagKey<Item> NETHERITEBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteblock_resource_material"));
 
     private static TraitContainer REGROWTH_TRAIT = new RegrowthTrait("regrowth",Formatting.DARK_GREEN);
     private static TraitContainer MAGNETIC1_TRAIT = new MagneticTrait("magnetic1", Formatting.GRAY, 4);

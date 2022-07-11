@@ -1,13 +1,16 @@
 package com.sussysyrup.theforge.registry;
 
 import com.sussysyrup.theforge.Main;
+import com.sussysyrup.theforge.api.fluid.FluidProperties;
 import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.api.fluid.ForgeSmelteryResourceRegistry;
 import com.sussysyrup.theforge.api.fluid.SmelteryResource;
+import com.sussysyrup.theforge.api.item.ForgePartRegistry;
 import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
 import com.sussysyrup.theforge.api.material.ForgeMaterialRegistry;
 import com.sussysyrup.theforge.api.material.Material;
 import com.sussysyrup.theforge.api.material.MaterialResource;
+import com.sussysyrup.theforge.items.PartItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -27,32 +30,65 @@ public class EventRegistry {
         ServerLifecycleEvents.SERVER_STARTED.register((server) ->
         {
             List<Item> items = Registry.ITEM.stream().toList();
-            MaterialResource recipe;
-            String fluidID;
 
             for(Item item : items)
             {
-                for(TagKey<Item> tag : ForgeMaterialRegistry.getPreMaterialResourceMap().keySet())
-                {
-                    recipe = ForgeMaterialRegistry.getPreMaterialResource(tag);
-
-                    if(item.getRegistryEntry().isIn(tag))
-                    {
-                        ForgeMaterialRegistry.registerMaterialResource(Registry.ITEM.getId(item).toString(), recipe);
-
-                        Material material = ForgeMaterialRegistry.getMaterial(recipe.materialId());
-
-                        if(material.isMetal())
-                        {
-                            fluidID = material.getFluidID();
-
-                            ForgeSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(fluidID, (long) (recipe.materialValue() * FluidConstants.INGOT)));
-                        }
-                    }
-                }
+                setupMaterials(item);
+                setupSmelteryMelting(item);
             }
         });
     }
+
+    private static void setupMaterials(Item item)
+    {
+        MaterialResource recipe;
+        String fluidID;
+        for(TagKey<Item> tag : ForgeMaterialRegistry.getPreMaterialResourceMap().keySet())
+        {
+            recipe = ForgeMaterialRegistry.getPreMaterialResource(tag);
+
+            if(item.getRegistryEntry().isIn(tag))
+            {
+                ForgeMaterialRegistry.registerMaterialResource(Registry.ITEM.getId(item).toString(), recipe);
+
+                Material material = ForgeMaterialRegistry.getMaterial(recipe.materialId());
+
+                if(material.isMetal())
+                {
+                    fluidID = material.getFluidID();
+
+                    ForgeSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(fluidID, (long) (recipe.materialValue() * FluidConstants.INGOT)));
+                }
+                break;
+            }
+        }
+    }
+
+    private static void setupSmelteryMelting(Item item)
+    {
+        for(TagKey<Item> tag : ForgeSmelteryResourceRegistry.getPreSmelteryResourceMap().keySet())
+        {
+            if(item.getRegistryEntry().isIn(tag))
+            {
+                ForgeSmelteryResourceRegistry.registerSmelteryResource(item, ForgeSmelteryResourceRegistry.getPreSmelteryResourceMap().get(tag));
+                break;
+            }
+        }
+        FluidProperties fluidProperties;
+        if(item instanceof PartItem partItem)
+        {
+            for(String key : ForgeMoltenFluidRegistry.getFluidRegistry().keySet())
+            {
+                fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(key);
+                if(partItem.getMaterialId().equals(fluidProperties.getMaterialID()))
+                {
+                    ForgeSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ForgePartRegistry.getPartCost(partItem.getPartName())) * FluidConstants.INGOT));
+                    break;
+                }
+            }
+        }
+    }
+
 
     @Environment(EnvType.CLIENT)
     public static void clientInit()

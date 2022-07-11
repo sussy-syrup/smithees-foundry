@@ -1,6 +1,8 @@
 package com.sussysyrup.theforge.registry;
 
 import com.sussysyrup.theforge.Main;
+import com.sussysyrup.theforge.api.item.CastItem;
+import com.sussysyrup.theforge.api.casting.ForgeCastingRegistry;
 import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
 import com.sussysyrup.theforge.api.itemgroup.ItemGroups;
 import com.sussysyrup.theforge.api.client.model.ForgeToolTypeModelRegistry;
@@ -31,6 +33,8 @@ public class ItemsRegistry {
     public static Item FORGE_SWORD = new SwordToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "sword", SWORD_MINEABLE);
 
     public static Item CRUDE_CHISEL = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1).maxDamage(128));
+    public static CastItem BLANK_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "blank");
+    public static CastItem INGOT_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "ingot");
 
     public static void init()
     {
@@ -66,6 +70,12 @@ public class ItemsRegistry {
         ForgeToolRegistry.addPreToolRenderedPart("sword_handle");
         ForgeToolRecipeRegistry.register("sword", ForgeToolRecipeRegistry.createKey("toolhandle", "swordguard", "swordblade", "empty", "empty"), new ThreePartToolRecipe(FORGE_SWORD));
         ForgeToolRegistry.addSweepWeapon("sword");
+
+        register("blank_cast", BLANK_CAST);
+        ForgeCastingRegistry.addCastItem("blank", BLANK_CAST);
+
+        register("ingot_cast", INGOT_CAST);
+        ForgeCastingRegistry.addCastItem("ingot", INGOT_CAST);
     }
 
     private static void register(String name, Item item)

@@ -1,9 +1,9 @@
 package com.sussysyrup.theforge.blocks.alloysmeltery.entity;
 
 import com.sussysyrup.theforge.registry.BlocksRegistry;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,8 +17,26 @@ import net.minecraft.world.World;
 public class CastingTableBlockEntity extends BlockEntity {
 
     public long capacity = 0;
+    public boolean isCasting = false;
 
     public final SingleVariantStorage<FluidVariant> fluidStorage = new SingleVariantStorage<>() {
+
+        @Override
+        public long insert(FluidVariant insertedVariant, long maxAmount, TransactionContext transaction) {
+            if(!isCasting)
+            {
+                startCasting(insertedVariant);
+            }
+
+            long superVal = super.insert(insertedVariant, maxAmount, transaction);
+
+            return superVal;
+        }
+
+        @Override
+        public long extract(FluidVariant extractedVariant, long maxAmount, TransactionContext transaction) {
+            return 0;
+        }
 
         @Override
         protected FluidVariant getBlankVariant() {
@@ -46,6 +64,7 @@ public class CastingTableBlockEntity extends BlockEntity {
         nbt.put("fluidVariant", fluidStorage.variant.toNbt());
         nbt.putLong("amount", fluidStorage.amount);
         nbt.putLong("capacity", fluidStorage.getCapacity());
+        nbt.putBoolean("isCasting", isCasting);
     }
 
     @Override
@@ -55,6 +74,7 @@ public class CastingTableBlockEntity extends BlockEntity {
         fluidStorage.variant = FluidVariant.fromNbt(nbt.getCompound("fluidVariant"));
         fluidStorage.amount = nbt.getLong("amount");
         capacity = nbt.getLong("capacity");
+        isCasting = nbt.getBoolean("isCasting");
     }
 
     @javax.annotation.Nullable
@@ -72,6 +92,30 @@ public class CastingTableBlockEntity extends BlockEntity {
     }
 
     public static <E extends CastingTableBlockEntity> void serverTicker(World world, BlockPos pos, BlockState blockState, E e) {
+
+        if(e.isCasting && e.fluidStorage.amount == e.fluidStorage.getCapacity())
+        {
+            e.tickCasting();
+        }
+
         world.updateListeners(pos, blockState, blockState, Block.NOTIFY_LISTENERS);
+    }
+
+    protected void startCasting(FluidVariant variant)
+    {
+        isCasting = true;
+    }
+
+    protected void finishCasting()
+    {
+        fluidStorage.amount = 0;
+        capacity = 0;
+        fluidStorage.variant = FluidVariant.blank();
+        isCasting = false;
+    }
+
+    protected void tickCasting()
+    {
+
     }
 }

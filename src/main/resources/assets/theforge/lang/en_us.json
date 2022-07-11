@@ -27,6 +27,8 @@
   "item.theforge.forge_sword": "Sword",
   "item.theforge.crude_chisel": "Crude Chisel",
   "item.theforge.fluidbucket": "%d Bucket",
+  "item.theforge.blank_cast": "Blank Cast",
+  "item.theforge.ingot_cast": "Ingot Cast",
 
   "material.theforge.wood.adj": "Wooden",
   "material.theforge.stone.adj": "Stone",
