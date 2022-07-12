@@ -1,4 +1,4 @@
-package com.sussysyrup.theforge.items;
+package com.sussysyrup.theforge.api.item;
 
 import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.trait.TraitContainer;

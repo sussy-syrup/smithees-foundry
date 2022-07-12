@@ -1,5 +1,7 @@
 package com.sussysyrup.theforge.api.fluid;
 
+import net.minecraft.fluid.Fluid;
+
 import java.awt.*;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ public class FluidProperties {
     private final String name;
     private final String materialID;
     private final int cookTime;
+    private Fluid fluid;
 
     private Map<Color, Color> colourMap = Map.of(new Color(0, 0, 0), new Color(0, 0, 0),
             new Color(43, 43, 43), new Color(43, 43, 43),
@@ -47,5 +50,14 @@ public class FluidProperties {
     public int getCookTime()
     {
         return cookTime;
+    }
+
+    public Fluid getFluid() {
+        return fluid;
+    }
+
+    public void setFluid(Fluid fluid)
+    {
+        this.fluid = fluid;
     }
 }

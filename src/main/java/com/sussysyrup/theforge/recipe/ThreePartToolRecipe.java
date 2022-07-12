@@ -2,7 +2,7 @@ package com.sussysyrup.theforge.recipe;
 
 import com.sussysyrup.theforge.api.material.ForgeMaterialRegistry;
 import com.sussysyrup.theforge.api.recipe.ForgeToolRecipe;
-import com.sussysyrup.theforge.items.PartItem;
+import com.sussysyrup.theforge.api.item.PartItem;
 import com.sussysyrup.theforge.api.item.ToolItem;
 import com.sussysyrup.theforge.api.material.Material;
 import com.sussysyrup.theforge.util.ToolUtil;

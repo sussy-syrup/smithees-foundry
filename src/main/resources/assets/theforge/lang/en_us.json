@@ -9,6 +9,8 @@
   "block.theforge.tank_block": "Tank",
   "block.theforge.casting_table_block": "Casting Table",
 
+  "item.theforge.blank": "%d Blank",
+  "item.theforge.ingot": "%d Ingot",
   "item.theforge.pickaxehead": "%d Pickaxe Head",
   "item.theforge.toolhandle": "%d Tool Handle",
   "item.theforge.toolbinding": "%d Tool Binder",
@@ -27,8 +29,9 @@
   "item.theforge.forge_sword": "Sword",
   "item.theforge.crude_chisel": "Crude Chisel",
   "item.theforge.fluidbucket": "%d Bucket",
-  "item.theforge.blank_cast": "Blank Cast",
-  "item.theforge.ingot_cast": "Ingot Cast",
+  "item.theforge.cast": "%d Cast",
+  "item.theforge.compound_clay": "Compound Clay",
+  "item.theforge.reinforced_brick": "Reinforced Brick",
 
   "material.theforge.wood.adj": "Wooden",
   "material.theforge.stone.adj": "Stone",
@@ -37,10 +40,12 @@
   "material.theforge.copper.adj": "Copper",
   "material.theforge.diamond.adj": "Diamond",
   "material.theforge.netherite.adj": "Netherite",
+  "material.theforge.gold.adj": "Golden",
 
   "block.theforge.molten_iron": "Molten Iron",
   "block.theforge.molten_copper": "Molten Copper",
   "block.theforge.molten_netherite": "Molten Netherite",
+  "block.theforge.molten_gold": "Molten Gold",
   "fluid.theforge.amount": "%d ingots",
   "fluid.theforge.remainder": "%d droplets",
   "fluid.theforge.buckets": "%d buckets",

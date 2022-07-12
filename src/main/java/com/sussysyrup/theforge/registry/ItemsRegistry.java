@@ -33,12 +33,19 @@ public class ItemsRegistry {
     public static Item FORGE_SWORD = new SwordToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "sword", SWORD_MINEABLE);
 
     public static Item CRUDE_CHISEL = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1).maxDamage(128));
+
+    public static Item COMPOUND_CLAY = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
+    public static Item REINFORCED_BRICK = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
+
     public static CastItem BLANK_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "blank");
     public static CastItem INGOT_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "ingot");
 
     public static void init()
     {
         register("crude_chisel", CRUDE_CHISEL);
+
+        register("compound_clay", COMPOUND_CLAY);
+        register("reinforced_brick", REINFORCED_BRICK);
 
         ForgeToolRegistry.registerTool("pickaxe", FORGE_PICKAXE);
         ForgeToolRegistry.addPreToolRenderedPart("pickaxe_head");

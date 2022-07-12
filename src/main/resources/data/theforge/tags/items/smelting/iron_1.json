@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#c:raw_iron_ores",
+    "#c:iron_ingots"
+  ]
+}

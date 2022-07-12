@@ -32,6 +32,11 @@ public class ForgeCastingRegistry {
         itemTypeMap.remove(item);
     }
 
+    public static String getTypeFromItem(Item item)
+    {
+        return itemTypeMap.get(item);
+    }
+
     public static CastItem getCastItem(String type)
     {
         return typeCastItemMap.get(type);

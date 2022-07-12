@@ -1,6 +1,8 @@
 package com.sussysyrup.theforge.registry;
 
 import com.sussysyrup.theforge.Main;
+import com.sussysyrup.theforge.api.casting.CastingResource;
+import com.sussysyrup.theforge.api.casting.ForgeCastingRegistry;
 import com.sussysyrup.theforge.api.fluid.FluidProperties;
 import com.sussysyrup.theforge.api.fluid.ForgeMoltenFluidRegistry;
 import com.sussysyrup.theforge.api.fluid.ForgeSmelteryResourceRegistry;
@@ -10,17 +12,19 @@ import com.sussysyrup.theforge.api.item.ForgeToolRegistry;
 import com.sussysyrup.theforge.api.material.ForgeMaterialRegistry;
 import com.sussysyrup.theforge.api.material.Material;
 import com.sussysyrup.theforge.api.material.MaterialResource;
-import com.sussysyrup.theforge.items.PartItem;
+import com.sussysyrup.theforge.api.item.PartItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class EventRegistry {
@@ -39,6 +43,7 @@ public class EventRegistry {
             {
                 setupMaterials(item);
                 setupSmelteryMelting(item);
+                setupCasting(item);
             }
         });
     }
@@ -79,6 +84,8 @@ public class EventRegistry {
             }
         }
         FluidProperties fluidProperties;
+
+        CastingResource castingResource;
         if(item instanceof PartItem partItem)
         {
             for(String key : ForgeMoltenFluidRegistry.getFluidRegistry().keySet())
@@ -86,10 +93,40 @@ public class EventRegistry {
                 fluidProperties = ForgeMoltenFluidRegistry.getFluidProperties(key);
                 if(partItem.getMaterialId().equals(fluidProperties.getMaterialID()))
                 {
-                    ForgeSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ForgePartRegistry.getPartCost(partItem.getPartName())) * FluidConstants.INGOT));
+                    ForgeSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ForgePartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT));
+
+                    castingResource = ForgeCastingRegistry.getCastingResource(partItem.getPartName());
+                    if(castingResource == null)
+                    {
+                        FluidProperties finalFluidProperties = fluidProperties;
+
+                        castingResource = new CastingResource(((long) ForgePartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT, new HashMap<Fluid,Item>(){{
+                            put(finalFluidProperties.getFluid() ,partItem);
+                        }});
+                        ForgeCastingRegistry.addCastingResource(partItem.getPartName(), castingResource);
+                    }
+                    else
+                    {
+                        HashMap<Fluid,Item> map = castingResource.fluidItemMap();
+                        map.put(fluidProperties.getFluid(), partItem);
+
+                        /**
+                        Long fluidValue = castingResource.fluidValue();
+                        ForgeCastingRegistry.removeCastingResource(partItem.getPartName());
+                        ForgeCastingRegistry.addCastingResource(partItem.getPartName(), new CastingResource(fluidValue, map));
+                         **/
+                    }
                     break;
                 }
             }
+        }
+    }
+
+    private static void setupCasting(Item item)
+    {
+        if(item instanceof PartItem partItem)
+        {
+            ForgeCastingRegistry.addItemToType(partItem.getPartName(), partItem);
         }
     }
 

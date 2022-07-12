@@ -4,7 +4,6 @@ import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.itemgroup.ItemGroups;
 import com.sussysyrup.theforge.api.material.ForgeMaterialRegistry;
 import com.sussysyrup.theforge.client.model.provider.PartItemVariantProvider;
-import com.sussysyrup.theforge.items.PartItem;
 import com.sussysyrup.theforge.api.material.Material;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -115,10 +114,8 @@ public class ForgePartRegistry {
         partCostMap.remove(part);
     }
 
-    public static float getPartCost(String part)
+    public static Float getPartCost(String part)
     {
-        float cost = partCostMap.get(part);
-
-        return cost;
+        return partCostMap.get(part);
     }
 }

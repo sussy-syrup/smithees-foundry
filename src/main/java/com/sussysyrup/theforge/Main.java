@@ -55,6 +55,9 @@ public class Main implements ModInitializer {
 		//Depends on Materials Existing
 		ForgeMoltenFluidRegistry.init();
 
+		//Depends on Fluids existing
+		FluidRegistry.postInit();
+
 		//Depends on ForgePartRegistry to define part benches first
 		ForgePartBenchRegistry.init();
 	}

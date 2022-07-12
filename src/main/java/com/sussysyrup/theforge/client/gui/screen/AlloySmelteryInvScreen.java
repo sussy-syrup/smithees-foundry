@@ -152,13 +152,14 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
         if(buttonUp) {
             buttonUp = false;
             MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 0);
-            getScreenHandler().calculateSlots();
+            getScreenHandler().clientCalculateShift(0);
         }
         if(buttonDown)
         {
             buttonDown = false;
             MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 1);
             getScreenHandler().calculateSlots();
+            getScreenHandler().clientCalculateShift(1);
         }
         if(buttonFluid)
         {

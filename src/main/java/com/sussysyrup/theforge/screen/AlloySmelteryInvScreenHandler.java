@@ -235,6 +235,28 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
         return super.onButtonClick(player, id);
     }
 
+    public void clientCalculateShift(int id) {
+
+        if(id == 0)
+        {
+            if(!(pageShift == 0))
+            {
+                pageShift -= 1;
+            }
+            calculateSlots();
+        }
+        if(id == 1)
+        {
+            int shiftMinimalIndex = 20 + (21 * pageShift);
+
+            if(shiftMinimalIndex < inventory.size() - 2)
+            {
+                pageShift +=1;
+            }
+            calculateSlots();
+        }
+    }
+
     public AlloySmelteryControllerBlockEntity getBlockEntity() {
         return be;
     }

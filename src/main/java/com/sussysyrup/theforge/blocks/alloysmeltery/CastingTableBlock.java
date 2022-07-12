@@ -8,13 +8,17 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -79,6 +83,7 @@ public class CastingTableBlock extends BlockWithEntity {
            {
                if(handStack.getItem() instanceof  CastItem && inv.get(1).isEmpty()) {
                    inv.set(0, handStack.split(1));
+                   world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
                    return ActionResult.CONSUME;
                }
            }
@@ -86,6 +91,9 @@ public class CastingTableBlock extends BlockWithEntity {
            {
                if(inv.get(1).isEmpty())
                {
+                   if(!inv.get(0).isEmpty()) {
+                       world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
+                   }
                    player.giveItemStack(inv.get(0).split(1));
                    return ActionResult.CONSUME;
                }
@@ -94,6 +102,9 @@ public class CastingTableBlock extends BlockWithEntity {
            {
                if(inv.get(0).isEmpty())
                {
+                   if(!handStack.isEmpty()) {
+                       world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
+                   }
                    inv.set(1, handStack.split(1));
                    return ActionResult.CONSUME;
                }
@@ -101,6 +112,7 @@ public class CastingTableBlock extends BlockWithEntity {
            else
            {
                player.giveItemStack(inv.get(1).split(1));
+               world.playSound(null, pos, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.BLOCKS, 1f, 1f);
                return ActionResult.CONSUME;
            }
         }
@@ -112,6 +124,23 @@ public class CastingTableBlock extends BlockWithEntity {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new CastingTableBlockEntity(pos, state);
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.isOf(newState.getBlock())) {
+            return;
+        }
+        if(world.getBlockEntity(pos) instanceof CastingTableBlockEntity be)
+        {
+            Inventory inventory = new SimpleInventory(2);
+            inventory.setStack(0, be.inventory.get(0));
+            inventory.setStack(1, be.inventory.get(1));
+
+            ItemScatterer.spawn(world, pos, inventory);
+        }
+
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Nullable

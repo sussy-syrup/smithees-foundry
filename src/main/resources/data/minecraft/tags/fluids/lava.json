@@ -7,6 +7,8 @@
     "theforge:molten_copper",
     "theforge:flowing_molten_copper",
     "theforge:molten_netherite",
-    "theforge:flowing_molten_netherite"
+    "theforge:flowing_molten_netherite",
+    "theforge:molten_gold",
+    "theforge:flowing_molten_gold"
   ]
 }

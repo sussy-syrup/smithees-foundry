@@ -1,6 +1,6 @@
 package com.sussysyrup.theforge.api.recipe;
 
-import com.sussysyrup.theforge.items.PartItem;
+import com.sussysyrup.theforge.api.item.PartItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

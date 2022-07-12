@@ -34,11 +34,11 @@ public class BlocksRegistry {
     public static Block FORGE_BLOCK = new ForgeBlock(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
     public static Block REPAIR_ANVIL_BLOCK = new RepairAnvilBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0f, 1200.0f).sounds(BlockSoundGroup.ANVIL));
 
-    public static Block ALLOY_SMELTERY_CONTROLLER = new AlloySmelteryControllerBlock(FabricBlockSettings.of(Material.STONE).strength(4.0F));
-    public static Block ALLOY_SMELTERY_DRAIN = new AlloySmelteryDrainBlock(FabricBlockSettings.of(Material.STONE).strength(4.0F));
-    public static Block ALLOY_SMELTERY_FAUCET = new AlloySmelteryFaucetBlock(FabricBlockSettings.of(Material.STONE).strength(4.0F));
-    public static Block TANK_BLOCK = new TankBlock(FabricBlockSettings.of(Material.STONE).strength(4.0F));
-    public static Block CASTING_TABLE_BLOCK = new CastingTableBlock(FabricBlockSettings.of(Material.STONE).strength(4.0F));
+    public static Block ALLOY_SMELTERY_CONTROLLER = new AlloySmelteryControllerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block ALLOY_SMELTERY_DRAIN = new AlloySmelteryDrainBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block ALLOY_SMELTERY_FAUCET = new AlloySmelteryFaucetBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block TANK_BLOCK = new TankBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block CASTING_TABLE_BLOCK = new CastingTableBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
 
     public static BlockEntityType<ForgeBlockEntity> FORGE_BLOCK_ENTITY;
     public static BlockEntityType<RepairAnvilBlockEntity> REPAIR_ANVIL_BLOCK_ENTITY;

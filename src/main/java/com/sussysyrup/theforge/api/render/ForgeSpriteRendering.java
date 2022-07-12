@@ -5,7 +5,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.theforge.Main;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.block.FluidRenderer;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
@@ -115,9 +118,7 @@ public class ForgeSpriteRendering {
         float uScalingMax = (((x + xSize) * 16) / ((float) imageWidth));
         float vScalingMax = (((y + ySize) * 16) / ((float) imageHeight));
 
-        RenderSystem.setShader(GameRenderer::getPositionTexLightmapColorShader);
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.setShader(GameRenderer::getRenderTypeEntityTranslucentCullShader);
         RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
 
         Matrix4f matrix4f = matrices.peek().getPositionMatrix();
@@ -126,7 +127,5 @@ public class ForgeSpriteRendering {
         consumer.vertex(matrix4f, x + xSize, y + ySize, 0).color(r, g, b, a).texture(sprite.getMinU() + uScalingMax, sprite.getMinV() + vScalingMax).overlay(overlay).light(light).normal(0, 0, 1).next();
         consumer.vertex(matrix4f, x + xSize, y, 0).color(r, g, b, a).texture(sprite.getMinU() + uScalingMax, sprite.getMinV() + vScalingMin).overlay(overlay).light(light).normal(0, 0, 1).next();
         consumer.vertex(matrix4f, x, y, 0).color(r, g, b, a).texture(sprite.getMinU() + uScalingMin, sprite.getMinV() + vScalingMin).overlay(overlay).light(light).normal(0, 0, 1).next();
-        RenderSystem.disableBlend();
-
     }
 }

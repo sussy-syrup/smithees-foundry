@@ -18,6 +18,6 @@ public class FluidBucketItem extends BucketItem {
     @Override
     public Text getName(ItemStack stack) {
 
-        return new TranslatableText("item.theforge.fluidbucket", new TranslatableText("fluid.theforge." + fluidName));
+        return new TranslatableText("item.theforge.fluidbucket", new TranslatableText("block.theforge." + fluidName));
     }
 }

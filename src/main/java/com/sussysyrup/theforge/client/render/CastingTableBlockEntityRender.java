@@ -17,6 +17,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -61,20 +62,26 @@ public class CastingTableBlockEntityRender implements BlockEntityRenderer<Castin
 
                 if(entity.solidifyTick > 1)
                 {
-                    alpha = 1 - (((float) entity.solidifyTick) / ((((float) entity.fluidStorage.amount) / ((float) FluidConstants.INGOT)) * 30F));
+                    alpha = 1 - (((float) entity.solidifyTick) / ((((float) entity.fluidStorage.amount) / ((float) FluidConstants.INGOT)) * 60F));
                 }
 
                 matrices.push();
 
                 float offset = (0.0625F * (((float) entity.fluidStorage.getAmount()) / ((float) entity.fluidStorage.getCapacity())));
 
-                matrices.translate(0, 0.87495 + offset + 1, 0);
+                matrices.translate(0, 0.87495 + offset, 0);
 
                 Fluid fluid = entity.fluidStorage.variant.getFluid();
+
+                if(fluid == null)
+                {
+                    fluid = Fluids.LAVA;
+                }
+
                 Sprite sprite = FluidRenderHandlerRegistry.INSTANCE.get(fluid).getFluidSprites(entity.getWorld(), entity.getPos(), fluid.getDefaultState())[0];
                 int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), entity.getWorld(), entity.getPos(), 0);
 
-                ForgeSpriteRendering.renderConsumerSpriteUp(matrices, sprite, vertexConsumers.getBuffer(RenderLayer.getTranslucent()), 0, 1F, 0, 1F, colour, overlay, light, alpha);
+                ForgeSpriteRendering.renderConsumerSpriteUp(matrices, sprite, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE)), 0, 1F, 0, 1F, colour, overlay, light, alpha);
 
                 matrices.pop();
 

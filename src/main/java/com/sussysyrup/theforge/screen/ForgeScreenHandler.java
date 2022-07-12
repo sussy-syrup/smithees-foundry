@@ -2,7 +2,7 @@ package com.sussysyrup.theforge.screen;
 
 import com.sussysyrup.theforge.api.item.ForgePartRegistry;
 import com.sussysyrup.theforge.api.recipe.ForgeToolRecipeRegistry;
-import com.sussysyrup.theforge.items.PartItem;
+import com.sussysyrup.theforge.api.item.PartItem;
 import com.sussysyrup.theforge.registry.ModScreenHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

@@ -1,5 +1,6 @@
 package com.sussysyrup.theforge.blocks.alloysmeltery.entity;
 
+import com.sussysyrup.theforge.Main;
 import com.sussysyrup.theforge.api.casting.CastingResource;
 import com.sussysyrup.theforge.api.casting.ForgeCastingRegistry;
 import com.sussysyrup.theforge.api.item.CastItem;
@@ -18,8 +19,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class CastingTableBlockEntity extends BlockEntity {
@@ -162,11 +167,49 @@ public class CastingTableBlockEntity extends BlockEntity {
                     }
                 }
             }
+            Fluid fluid = Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold"));
+            if(!inventory.get(1).isEmpty() && inventory.get(0).isEmpty())
+            {
+                if(variant.isOf(fluid)) {
+                    type = ForgeCastingRegistry.getTypeFromItem(inventory.get(1).getItem());
+                    if(type == null)
+                    {
+                        isCasting = false;
+                        return;
+                    }
+                    castingStack = ForgeCastingRegistry.getCastItem(type).getDefaultStack();
+                    capacity = FluidConstants.INGOT * 2;
+                }
+                if(castingStack.isEmpty())
+                {
+                    isCasting = false;
+                    return;
+                }
+            }
+            if(inventory.get(1).isEmpty() && inventory.get(0).isEmpty())
+            {
+                if(variant.isOf(fluid)) {
+                    type = "blank";
+                    if(type == null)
+                    {
+                        isCasting = false;
+                        return;
+                    }
+                    castingStack = ForgeCastingRegistry.getCastItem(type).getDefaultStack();
+                    capacity = FluidConstants.INGOT * 2;
+                }
+                if(castingStack.isEmpty())
+                {
+                    isCasting = false;
+                    return;
+                }
+            }
         }
     }
 
     protected void finishCasting()
     {
+        world.playSound(null, this.getPos(), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1f, 1f);
         fluidStorage.amount = 0;
         capacity = 0;
         fluidStorage.variant = FluidVariant.blank();
@@ -177,11 +220,20 @@ public class CastingTableBlockEntity extends BlockEntity {
 
     protected void tickCasting()
     {
-        if(solidifyTick >= (((float) fluidStorage.amount) / ((float) FluidConstants.INGOT)) * 30)
+        if(solidifyTick >= (((float) fluidStorage.amount) / ((float) FluidConstants.INGOT)) * 60F)
         {
             if(inventory.get(1).isEmpty() && !inventory.get(0).isEmpty())
             {
                 inventory.set(1, castingStack);
+            }
+            if(!inventory.get(1).isEmpty() && inventory.get(0).isEmpty())
+            {
+                inventory.set(0, castingStack);
+                inventory.set(1, ItemStack.EMPTY);
+            }
+            if(inventory.get(1).isEmpty() && inventory.get(0).isEmpty())
+            {
+                inventory.set(0, castingStack);
             }
             finishCasting();
         }

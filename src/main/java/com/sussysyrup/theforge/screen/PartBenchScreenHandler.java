@@ -138,7 +138,7 @@ public class PartBenchScreenHandler extends ScreenHandler {
 
         String part;
 
-        if(materialResource != null)
+        if(materialResource != null && !ForgeMaterialRegistry.getMaterial(materialResource.materialId()).isMetal())
         {
             for(int i = 2; i < 20; i++)
             {

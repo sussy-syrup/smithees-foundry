@@ -14,7 +14,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Now that you have made the essentials it is time to place wood, or another material of your choice, into the top slot and the chisel into the chisel slot. The parts you can afford with the materials inserted will appear. You may now craft the forge to make use of your parts. You can find the correct parts (along with a description of said tool) for your tool in the tools category."
+      "text": "Now that you have made the essentials it is time to place wood, or another material of your choice (given that it is not a metal), into the top slot and the chisel into the chisel slot. The parts you can afford with the materials inserted will appear. You may now craft the forge to make use of your parts. You can find the correct parts (along with a description of said tool) for your tool in the tools category."
     },
     {
       "type": "patchouli:crafting",

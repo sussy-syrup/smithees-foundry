@@ -1,13 +1,14 @@
 package com.sussysyrup.theforge.blocks.alloysmeltery;
 
 import com.sussysyrup.theforge.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
-import com.sussysyrup.theforge.blocks.entity.ForgeBlockEntity;
 import com.sussysyrup.theforge.registry.BlocksRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -15,6 +16,7 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -60,6 +62,21 @@ public class AlloySmelteryControllerBlock extends BlockWithEntity {
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
+    }
+
+    @Override
+    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
+        if (state.isOf(newState.getBlock())) {
+            return;
+        }
+        if(world.getBlockEntity(pos) instanceof AlloySmelteryControllerBlockEntity be)
+        {
+            Inventory inventory = be.itemInventory;
+
+            ItemScatterer.spawn(world, pos, inventory);
+        }
+
+        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Override
