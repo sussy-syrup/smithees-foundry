@@ -26,6 +26,18 @@
     ],
     "preLaunch": [
       "com.sussysyrup.theforge.PreLaunch"
+    ],
+    "ForgeSetup": [
+      "com.sussysyrup.theforge.SetupCommon"
+    ],
+    "ForgeSetupPost": [
+      "com.sussysyrup.theforge.PostCommon"
+    ],
+    "ForgeSetupPostMaterials": [
+      "com.sussysyrup.theforge.PostMaterialCommon"
+    ],
+    "ForgeSetupPostFluids": [
+      "com.sussysyrup.theforge.PostFluidCommon"
     ]
   },
   "mixins": [

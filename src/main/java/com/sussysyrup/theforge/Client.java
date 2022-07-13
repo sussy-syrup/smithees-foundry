@@ -12,21 +12,25 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class Client implements ClientModInitializer {
+    //Order of loading doesn't matter here so go mad
     @Override
     public void onInitializeClient() {
         ModScreenRegistry.init();
 
-        //SETUP
         MaterialRegistry.clientInit();
+
         ForgePartRegistry.clientInit();
+
         ForgeToolRegistry.itemRenderingInit();
+
         ForgePartBenchRegistry.clientInit();
 
         ForgeMoltenFluidRegistry.clientInit();
+
         FluidRegistry.clientInit();
 
-        //PROCESSING
         ItemsRegistry.clientInit();
+
         BlocksRegistry.clientInit();
 
         EventRegistry.clientInit();
