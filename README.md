@@ -10,7 +10,7 @@ maven {url "https://raw.github.com/sussy-syrup/maven/main"}
 ```
 Dependency:
 ```
-modImplementation "com.sussysyrup:theforge:1.2.0"
+modImplementation "com.sussysyrup:theforge:1.2.1"
 
-include "com.sussysyrup:theforge:1.2.0"
+include "com.sussysyrup:theforge:1.2.1"
 ```
