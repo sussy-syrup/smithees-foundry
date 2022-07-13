@@ -1,4 +1,4 @@
-## The Forge
+## Smithee's Foundry
 
 ## Setup
 
