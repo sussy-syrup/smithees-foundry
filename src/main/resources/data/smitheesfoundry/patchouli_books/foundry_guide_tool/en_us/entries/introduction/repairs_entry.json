@@ -1,0 +1,15 @@
+{
+  "name": "Repairs",
+  "icon": "smitheesfoundry:repair_anvil_block",
+  "category": "smitheesfoundry:intro_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Your tool has worn out and must now be repaired. Using a repair anvil similarly to a normal anvil with the tool head material as the repair material you can repair your tool. Some traits may activate during the repair process."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "smitheesfoundry:repair_anvil"
+    }
+  ]
+}

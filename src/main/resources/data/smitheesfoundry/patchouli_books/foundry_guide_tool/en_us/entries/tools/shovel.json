@@ -1,0 +1,18 @@
+{
+  "name": "Shovel",
+  "icon": "smitheesfoundry:forge_shovel",
+  "category": "smitheesfoundry:tool_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "smitheesfoundry:forge_shovel",
+      "title": "Shovel",
+      "text": "Requirements: Shovel Head, Tool Binding, Tool Handle."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Description",
+      "text": "The shovel mines shovel-mineable blocks and makes paths when you right click grass."
+    }
+  ]
+}

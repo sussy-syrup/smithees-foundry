@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "theforge",
+  "id": "smitheesfoundry",
   "version": "${version}",
 
-  "name": "The Forge",
+  "name": "Smithee's Foundry",
   "description": "A modular tool mod drawing inspiration from tinkers construct",
   "authors": [
     "Sussy_Syrup"
@@ -14,36 +14,36 @@
   },
 
   "license": "MIT",
-  "icon": "assets/theforge/icon.png",
+  "icon": "assets/smitheesfoundry/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.sussysyrup.theforge.Main"
+      "com.sussysyrup.smitheesfoundry.Main"
     ],
     "client": [
-      "com.sussysyrup.theforge.Client"
+      "com.sussysyrup.smitheesfoundry.Client"
     ],
     "preLaunch": [
-      "com.sussysyrup.theforge.PreLaunch"
+      "com.sussysyrup.smitheesfoundry.PreLaunch"
     ],
-    "ForgeSetup": [
-      "com.sussysyrup.theforge.SetupCommon"
+    "FoundrySetup": [
+      "com.sussysyrup.smitheesfoundry.SetupCommon"
     ],
-    "ForgeSetupPost": [
-      "com.sussysyrup.theforge.PostCommon"
+    "FoundrySetupPost": [
+      "com.sussysyrup.smitheesfoundry.PostCommon"
     ],
-    "ForgeSetupPostMaterials": [
-      "com.sussysyrup.theforge.PostMaterialCommon"
+    "FoundrySetupPostMaterials": [
+      "com.sussysyrup.smitheesfoundry.PostMaterialCommon"
     ],
-    "ForgeSetupPostFluids": [
-      "com.sussysyrup.theforge.PostFluidCommon"
+    "FoundrySetupPostFluids": [
+      "com.sussysyrup.smitheesfoundry.PostFluidCommon"
     ]
   },
   "mixins": [
-    "theforge.mixins.json"
+    "smitheesfoundry.mixins.json"
   ],
-  "accessWidener": "theforge.accesswidener",
+  "accessWidener": "smitheesfoundry.accesswidener",
 
   "depends": {
     "fabricloader": ">=0.14.6",

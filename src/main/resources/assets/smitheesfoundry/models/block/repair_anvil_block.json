@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_anvil",
+  "textures": {
+    "top": "smitheesfoundry:block/repair_anvil_top",
+    "body": "smitheesfoundry:block/repair_anvil"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Pickaxe",
+  "icon": "smitheesfoundry:forge_pickaxe",
+  "category": "smitheesfoundry:tool_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "smitheesfoundry:forge_pickaxe",
+      "title": "Pickaxe",
+      "text": "Requirements: Pickaxe Head, Tool Binding, Tool Handle."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Description",
+      "text": "The pickaxe mines pickaxe-mineable blocks and does nothing else that's special."
+    }
+  ]
+}

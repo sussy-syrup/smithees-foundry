@@ -1,12 +1,12 @@
 {
   "replace": false,
   "values": [
-    "theforge:forge_block",
-    "theforge:repair_anvil_block",
-    "theforge:alloy_smeltery_controller",
-    "theforge:alloy_smeltery_drain",
-    "theforge:alloy_smeltery_faucet",
-    "theforge:tank_block",
-    "theforge:casting_table_block"
+    "smitheesfoundry:forge_block",
+    "smitheesfoundry:repair_anvil_block",
+    "smitheesfoundry:alloy_smeltery_controller",
+    "smitheesfoundry:alloy_smeltery_drain",
+    "smitheesfoundry:alloy_smeltery_faucet",
+    "smitheesfoundry:tank_block",
+    "smitheesfoundry:casting_table_block"
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "G G",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "item": "smitheesfoundry:reinforced_brick"
+    }
+  },
+  "result": {
+    "item": "smitheesfoundry:alloy_smeltery_faucet",
+    "count": 1
+  }
+}

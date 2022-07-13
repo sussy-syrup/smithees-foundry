@@ -1,0 +1,18 @@
+{
+  "name": "Sword",
+  "icon": "smitheesfoundry:forge_sword",
+  "category": "smitheesfoundry:tool_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "smitheesfoundry:forge_sword",
+      "title": "Sword",
+      "text": "Requirements: Sword Blade, Sword Guard, Tool Handle."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Description",
+      "text": "The sword mines sword-mineable blocks and can be used to deal a lot of damage."
+    }
+  ]
+}

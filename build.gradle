@@ -42,7 +42,7 @@ dependencies {
 
 loom {
 	// For where I cant hack it with an accessor
-	accessWidenerPath = file("src/main/resources/theforge.accesswidener")
+	accessWidenerPath = file("src/main/resources/smitheesfoundry.accesswidener")
 }
 
 processResources {

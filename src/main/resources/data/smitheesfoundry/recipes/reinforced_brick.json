@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "smitheesfoundry:compound_clay"
+  },
+  "result": "smitheesfoundry:reinforced_brick",
+  "experience": 0.2,
+  "cookingtime": 200
+}

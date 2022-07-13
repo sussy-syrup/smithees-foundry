@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "smitheesfoundry:block/casting_table_block",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "smitheesfoundry:block/casting_table_block"
+    },
+    "facing=south": {
+      "model": "smitheesfoundry:block/casting_table_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "smitheesfoundry:block/casting_table_block",
+      "y": 270
+    }
+  }
+}

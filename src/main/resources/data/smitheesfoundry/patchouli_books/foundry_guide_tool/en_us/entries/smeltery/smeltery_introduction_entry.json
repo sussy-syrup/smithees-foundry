@@ -1,0 +1,35 @@
+{
+  "name": "Assembling the Smeltery",
+  "icon": "smitheesfoundry:reinforced_bricks",
+  "category": "smitheesfoundry:smeltery_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "You have made yourself some basic tool parts but you want to make yourself a metal tool so now you must make a smeltery."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "smitheesfoundry:compound_clay",
+      "text": "Smelting compound clay yields reinforced brick which can be used to make the smeltery."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "smitheesfoundry:reinforced_bricks",
+      "recipe2": "smitheesfoundry:alloy_smeltery_controller"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "smitheesfoundry:alloy_smeltery_faucet",
+      "recipe2": "smitheesfoundry:alloy_smeltery_drain"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "smitheesfoundry:casting_table_block",
+      "recipe2": "smitheesfoundry:tank_block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The smeltery is then assembled as a hollow cuboid with an open top and optionally corners. The smeltery controller must be in the bottom row in a wall. The smeltery drain and tank may be anywhere in the walls. The faucet is mounted on the smeltery drain."
+    }
+  ]
+}

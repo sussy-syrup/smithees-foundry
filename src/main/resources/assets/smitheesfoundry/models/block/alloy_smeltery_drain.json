@@ -1,0 +1,12 @@
+{
+	"parent": "minecraft:block/cube",
+	"textures": {
+		"particle": "smitheesfoundry:block/alloy_smeltery_drain",
+		"north": "smitheesfoundry:block/alloy_smeltery_drain",
+		"south": "smitheesfoundry:block/alloy_smeltery_drain",
+		"east": "smitheesfoundry:block/alloy_smeltery_drain",
+		"west": "smitheesfoundry:block/alloy_smeltery_drain",
+		"up": "smitheesfoundry:block/reinforced_bricks",
+		"down": "smitheesfoundry:block/reinforced_bricks"
+	}
+}

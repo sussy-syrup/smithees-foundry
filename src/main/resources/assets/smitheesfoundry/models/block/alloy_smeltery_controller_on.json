@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "smitheesfoundry:block/smooth_reinforced_stone",
+    "front": "smitheesfoundry:block/alloy_smeltery_controller_on",
+    "side": "smitheesfoundry:block/reinforced_bricks"
+  }
+}
