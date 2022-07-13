@@ -22,7 +22,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import org.jetbrains.annotations.Nullable;
 
-public class AlloySmelteryInvScreenHandler extends ScreenHandler implements ExtendedScreenHandlerFactory {
+public class AlloySmelteryInvScreenHandler extends ScreenHandler {
 
     private Inventory inventory;
     private final PlayerInventory playerInventory;
@@ -31,10 +31,23 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
 
     private AlloySmelteryControllerBlockEntity be;
 
+    public double mouseX;
+    public double mouseY;
+
+    public boolean shouldMouse;
+
     public AlloySmelteryInvScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, new SimpleInventory(buf.readInt()), (AlloySmelteryControllerBlockEntity) playerInventory.player.world.getBlockEntity(buf.readBlockPos()));
 
         be = (AlloySmelteryControllerBlockEntity) playerInventory.player.world.getBlockEntity(buf.readBlockPos());
+
+        shouldMouse = buf.readBoolean();
+
+        if(shouldMouse)
+        {
+            mouseX = buf.readDouble();
+            mouseY = buf.readDouble();
+        }
     }
 
     public AlloySmelteryInvScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, AlloySmelteryControllerBlockEntity be)
@@ -226,10 +239,6 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
            }
             calculateSlots();
         }
-        if(id == 2)
-        {
-            player.openHandledScreen(this);
-        }
 
         return super.onButtonClick(player, id);
     }
@@ -259,24 +268,6 @@ public class AlloySmelteryInvScreenHandler extends ScreenHandler implements Exte
     public AlloySmelteryControllerBlockEntity getBlockEntity() {
         return be;
     }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeBlockPos(be.getPos());
-        buf.writeBlockPos(be.getPos());
-    }
-
-    @Override
-    public Text getDisplayName() {
-        return new TranslatableText("smitheesfoundry.container.alloysmeltery");
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloySmelteryFluidScreenHandler(syncId, inv, be);
-    }
-
 
     public class SingleSlot extends Slot
     {

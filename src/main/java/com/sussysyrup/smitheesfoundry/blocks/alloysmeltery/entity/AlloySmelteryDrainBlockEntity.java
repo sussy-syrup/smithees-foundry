@@ -48,6 +48,7 @@ public class AlloySmelteryDrainBlockEntity extends BlockEntity implements Extend
     public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
         buf.writeBlockPos(masterPos);
         buf.writeBlockPos(masterPos);
+        buf.writeBoolean(false);
     }
 
     @Override

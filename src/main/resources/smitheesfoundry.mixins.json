@@ -11,7 +11,8 @@
   ],
   "client": [
     "client.ModelLoaderMixin",
-    "client.NamespaceResourceManagerMixin"
+    "client.NamespaceResourceManagerMixin",
+    "client.MouseAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -7,16 +7,22 @@ import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiSmelteryResourceRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.SmelteryResource;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
+import com.sussysyrup.smitheesfoundry.mixin.client.MouseAccessor;
+import com.sussysyrup.smitheesfoundry.networking.c2s.C2SConstants;
 import com.sussysyrup.smitheesfoundry.screen.AlloySmelteryInvScreenHandler;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -141,6 +147,16 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
     @Override
     protected void init() {
         super.init();
+
+        if(getScreenHandler().shouldMouse) {
+            MouseAccessor mouse = ((MouseAccessor) MinecraftClient.getInstance().mouse);
+
+            mouse.setX(getScreenHandler().mouseX);
+            mouse.setY(getScreenHandler().mouseY);
+
+            InputUtil.setCursorParameters(this.client.getWindow().getHandle(), 212993, getScreenHandler().mouseX, getScreenHandler().mouseY);
+        }
+
         this.addDrawableChild(buttonDownWidget);
         this.addDrawableChild(buttonUpWidget);
         this.addDrawableChild(buttonFluidWidget);
@@ -164,7 +180,16 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
         if(buttonFluid)
         {
             buttonFluid = false;
-            MinecraftClient.getInstance().interactionManager.clickButton(getScreenHandler().syncId, 2);
+
+            PacketByteBuf buf = PacketByteBufs.create();
+
+            buf.writeInt(0);
+
+            buf.writeBlockPos(be.getPos());
+            buf.writeDouble(MinecraftClient.getInstance().mouse.getX());
+            buf.writeDouble(MinecraftClient.getInstance().mouse.getY());
+
+            ClientPlayNetworking.send(C2SConstants.AlloySmelteryOpenScreen, buf);
         }
 
         buttonUp = false;

@@ -956,6 +956,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         buf.writeInt(itemInventory.size());
         buf.writeBlockPos(getPos());
         buf.writeBlockPos(getPos());
+        buf.writeBoolean(false);
     }
 
     void itemSmeltTick()

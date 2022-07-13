@@ -14,14 +14,27 @@ import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import org.jetbrains.annotations.Nullable;
 
-public class AlloySmelteryFluidScreenHandler extends ScreenHandler implements ExtendedScreenHandlerFactory {
+public class AlloySmelteryFluidScreenHandler extends ScreenHandler {
 
     public AlloySmelteryControllerBlockEntity be;
+
+    public double mouseX;
+    public double mouseY;
+
+    public boolean shouldMouse;
 
     public AlloySmelteryFluidScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
         this(syncId, playerInventory, (AlloySmelteryControllerBlockEntity) playerInventory.player.world.getBlockEntity(buf.readBlockPos()));
 
         be = (AlloySmelteryControllerBlockEntity) playerInventory.player.world.getBlockEntity(buf.readBlockPos());
+
+        shouldMouse = buf.readBoolean();
+
+        if(shouldMouse)
+        {
+            mouseX = buf.readDouble();
+            mouseY = buf.readDouble();
+        }
     }
 
     public AlloySmelteryFluidScreenHandler(int syncId, PlayerInventory playerInventory, AlloySmelteryControllerBlockEntity be) {
@@ -52,9 +65,6 @@ public class AlloySmelteryFluidScreenHandler extends ScreenHandler implements Ex
     @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
 
-        if (id == 0) {
-            player.openHandledScreen(this);
-        }
 
         if(id == 1)
         {
@@ -70,23 +80,5 @@ public class AlloySmelteryFluidScreenHandler extends ScreenHandler implements Ex
         }
 
         return super.onButtonClick(player, id);
-    }
-
-    @Override
-    public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-        buf.writeInt(be.itemInventory.size());
-        buf.writeBlockPos(be.getPos());
-        buf.writeBlockPos(be.getPos());
-    }
-
-    @Override
-    public Text getDisplayName() {
-        return new TranslatableText("smitheesfoundry.container.alloysmeltery");
-    }
-
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory inv, PlayerEntity player) {
-        return new AlloySmelteryInvScreenHandler(syncId, inv, be.itemInventory, be);
     }
 }
