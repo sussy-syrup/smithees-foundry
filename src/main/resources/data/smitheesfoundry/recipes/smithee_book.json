@@ -1,5 +1,5 @@
 {
-  "type": "patchouli:shapeless_book_recipe",
+  "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
       "item": "minecraft:flint"
@@ -11,5 +11,8 @@
       "item": "minecraft:book"
     }
   ],
-  "book": "smitheesfoundry:foundry_guide_tool"
+  "result": {
+    "item": "smitheesfoundry:smithee_guide",
+    "count": 1
+  }
 }

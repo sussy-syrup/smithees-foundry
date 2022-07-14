@@ -29,13 +29,8 @@ dependencies {
 
 	include "com.sussysyrup:sussyconfig:1.0.0"
 
-	/**
-	 * Support TBD
-	 */
-	/*
 	modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:8.2.471"
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.2.471"
-	*/
 
 	modImplementation "vazkii.patchouli:Patchouli:1.18.2-70-FABRIC"
 }

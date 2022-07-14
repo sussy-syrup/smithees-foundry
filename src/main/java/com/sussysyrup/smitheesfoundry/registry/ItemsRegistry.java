@@ -33,6 +33,7 @@ public class ItemsRegistry {
     public static Item FORGE_SWORD = new SwordToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "sword", SWORD_MINEABLE);
 
     public static Item CRUDE_CHISEL = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1).maxDamage(128));
+    public static Item GUIDE_BOOK_ITEM = new GuideBookItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1));
 
     public static Item COMPOUND_CLAY = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
     public static Item REINFORCED_BRICK = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
@@ -42,6 +43,8 @@ public class ItemsRegistry {
 
     public static void init()
     {
+        register("smithee_guide", GUIDE_BOOK_ITEM);
+
         register("crude_chisel", CRUDE_CHISEL);
 
         register("compound_clay", COMPOUND_CLAY);

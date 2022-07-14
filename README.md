@@ -10,7 +10,7 @@ maven {url "https://raw.github.com/sussy-syrup/maven/main"}
 ```
 Dependency:
 ```
-modImplementation "com.sussysyrup:smitheesfoundry:1.2.1.1"
+modImplementation "com.sussysyrup:smitheesfoundry:1.2.1.2"
 
-include "com.sussysyrup:smitheesfoundry:1.2.1.1"
+include "com.sussysyrup:smitheesfoundry:1.2.1.2"
 ```

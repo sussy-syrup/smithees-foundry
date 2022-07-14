@@ -1,10 +1,12 @@
 {
-  "name": "Tool Worker's Guide",
+  "name": "item.smitheesfoundry.tool_book",
   "landing_text": "An extensive guide to material working with tools",
   "version": 1,
+  "custom_book_item": "smitheesfoundry:smithee_guide",
   "creative_tab": "smitheesfoundry.items",
+  "dont_generate_book": true,
   "show_progress": false,
   "book_texture": "patchouli:textures/gui/book_red.png",
-  "model": "smitheesfoundry:tool_book",
+  "model": "smitheesfoundry:smithee_guide",
   "filler_texture": "smitheesfoundry:patchouli/tool_page_filler.png"
 }
