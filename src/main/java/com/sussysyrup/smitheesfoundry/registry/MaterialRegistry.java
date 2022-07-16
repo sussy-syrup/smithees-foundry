@@ -96,6 +96,9 @@ public class MaterialRegistry {
         ApiMaterialRegistry.registerMaterial("netherite", new Material("netherite", true, "molten_netherite", MiningLevels.NETHERITE, 2031, 0.9F, 9F, 4.0F,
                 createTraitsList(), createTraitsList(ANCIENT_TRAIT), createTraitsList(), createTraitsList(ANCIENT_TRAIT)));
 
+        ApiMaterialRegistry.registerMaterial("rosegold", new Material("rosegold", true, "molten_rosegold", MiningLevels.STONE, 56, 1F, 12F, 1.0F,
+                createTraitsList(), createTraitsList(), createTraitsList(), createTraitsList()));
+
         ApiMaterialRegistry.registerPreMaterialResource(WOOD_TAG, WOOD);
         ApiMaterialRegistry.registerPreMaterialResource(STONE_TAG, STONE);
         ApiMaterialRegistry.registerPreMaterialResource(FLINT_TAG, FLINT);
@@ -190,6 +193,15 @@ public class MaterialRegistry {
                 new Color(59, 57, 59),
                 new Color(90, 87, 90),
                 new Color(115, 113, 115));
+
+        ApiMaterialRegistry.registerColours("rosegold",
+                new Color(86, 44 ,37),
+                new Color(122, 64, 50),
+                new Color(152, 86, 68),
+                new Color(160, 100, 80),
+                new Color(183, 124, 108),
+                new Color(194, 135, 119),
+                new Color(228, 180, 168));
     }
 
     private static List<TraitContainer> createTraitsList(TraitContainer... containers)

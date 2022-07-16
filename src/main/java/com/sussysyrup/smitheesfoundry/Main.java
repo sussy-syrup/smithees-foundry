@@ -26,8 +26,6 @@ public class Main implements ModInitializer {
 
 	private static void setup()
 	{
-		System.out.println(MinecraftClient.getInstance().getVersionType());
-
 		cache = new Cache();
 
 		//Config should be loaded before anything else here

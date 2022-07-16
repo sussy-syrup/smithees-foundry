@@ -42,11 +42,13 @@
   "material.smitheesfoundry.diamond.adj": "Diamond",
   "material.smitheesfoundry.netherite.adj": "Netherite",
   "material.smitheesfoundry.gold.adj": "Golden",
+  "material.smitheesfoundry.rosegold.adj": "Rose Gold",
 
   "block.smitheesfoundry.molten_iron": "Molten Iron",
   "block.smitheesfoundry.molten_copper": "Molten Copper",
   "block.smitheesfoundry.molten_netherite": "Molten Netherite",
   "block.smitheesfoundry.molten_gold": "Molten Gold",
+  "block.smitheesfoundry.molten_rosegold": "Molten Rose Gold",
   "fluid.smitheesfoundry.amount": "%d ingots",
   "fluid.smitheesfoundry.remainder": "%d droplets",
   "fluid.smitheesfoundry.buckets": "%d buckets",

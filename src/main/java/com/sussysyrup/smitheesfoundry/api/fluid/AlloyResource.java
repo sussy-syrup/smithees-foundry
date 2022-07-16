@@ -1,8 +1,6 @@
 package com.sussysyrup.smitheesfoundry.api.fluid;
 
-public class AlloyResource {
+import net.minecraft.fluid.Fluid;
 
-    public AlloyResource()
-    {}
-
+public record AlloyResource(Fluid keyFluid, long keyFluidAmount, AlloyResource alloyResourceOut, Fluid fluidOut, long fluidOutAmount) {
 }

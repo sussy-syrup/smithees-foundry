@@ -18,6 +18,7 @@ public class FluidRegistry {
         ApiMoltenFluidRegistry.registerFluid("molten_copper", new FluidProperties("molten_copper", "copper", 150));
         ApiMoltenFluidRegistry.registerFluid("molten_netherite", new FluidProperties("molten_netherite","netherite", 900));
         ApiMoltenFluidRegistry.registerFluid("molten_gold", new FluidProperties("molten_gold",null, 450));
+        ApiMoltenFluidRegistry.registerFluid("molten_rosegold", new FluidProperties("molten_rosegold",null, 300));
     }
 
     public static void postInit()
@@ -26,6 +27,7 @@ public class FluidRegistry {
         ApiMoltenFluidRegistry.getFluidProperties("molten_copper").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")));
         ApiMoltenFluidRegistry.getFluidProperties("molten_netherite").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")));
         ApiMoltenFluidRegistry.getFluidProperties("molten_gold").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")));
+        ApiMoltenFluidRegistry.getFluidProperties("molten_rosegold").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")));
     }
 
     @Environment(EnvType.CLIENT)
@@ -66,6 +68,15 @@ public class FluidRegistry {
                 new Color(245, 204, 39),
                 new Color(255, 236, 79),
                 new Color(255, 253, 144));
+
+        ApiMoltenFluidRegistry.registerColours("molten_rosegold",
+                new Color(159, 76, 16),
+                new Color(182, 93, 25),
+                new Color(191, 101, 32),
+                new Color(223, 132, 21),
+                new Color(225, 144, 24),
+                new Color(236, 166, 55),
+                new Color(242, 183, 103));
     }
 
 }

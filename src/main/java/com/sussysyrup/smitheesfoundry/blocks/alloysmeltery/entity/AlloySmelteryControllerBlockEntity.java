@@ -2,10 +2,7 @@ package com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity;
 
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.block.ApiAlloySmelteryRegistry;
-import com.sussysyrup.smitheesfoundry.api.fluid.FluidProperties;
-import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
-import com.sussysyrup.smitheesfoundry.api.fluid.ApiSmelteryResourceRegistry;
-import com.sussysyrup.smitheesfoundry.api.fluid.SmelteryResource;
+import com.sussysyrup.smitheesfoundry.api.fluid.*;
 import com.sussysyrup.smitheesfoundry.api.transfer.MultiStorageView;
 import com.sussysyrup.smitheesfoundry.api.transfer.MultiVariantStorage;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.AlloySmelteryControllerBlock;
