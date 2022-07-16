@@ -31,7 +31,7 @@ public class ApiAlloyRegistry {
         AlloyResource inner = new AlloyResource(fluids[endIndex], amount[endIndex], null, output, outputAmount);
         AlloyResource outer = null;
 
-        for (int i = endIndex-1; i-- > 0; ) {
+        for (int i = endIndex-1; i >= 0; i--) {
             outer = new AlloyResource(fluids[i], amount[i], inner, null, 0);
 
             inner = outer;

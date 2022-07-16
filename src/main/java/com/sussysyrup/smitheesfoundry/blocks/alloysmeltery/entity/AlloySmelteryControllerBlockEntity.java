@@ -1093,7 +1093,114 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         }
     }
 
-    protected void alloyTick()
-    {
+    protected void alloyTick() {
+
+        List<Fluid> reduceFluids = new ArrayList<>();
+        List<Long> reduceAmounts = new ArrayList<>();
+        List<Fluid> addFluids = new ArrayList<>();
+        List<Long> addAmounts = new ArrayList<>();
+
+        for(int i = 0; i < fluidStorage.views.size(); i++)
+        {
+            if(i+1 == fluidStorage.views.size())
+            {
+                continue;
+            }
+
+            List<AlloyResource> list = ApiAlloyRegistry.getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
+
+            if(list == null)
+            {
+                continue;
+            }
+
+            List<Fluid> fluids = new ArrayList();
+            List<Long> amounts = new ArrayList<>();
+            Fluid fluidOut = null;
+            long fluidOutAmount = 0;
+
+            for(AlloyResource resource : list)
+            {
+                fluids.add(resource.keyFluid());
+                amounts.add(resource.keyFluidAmount());
+
+                boolean valid = true;
+
+                AlloyResource aResource = resource.alloyResourceOut();
+
+                int iterations = 0;
+
+                while(valid)
+                {
+
+                    if(aResource.alloyResourceOut() == null)
+                    {
+                        valid = false;
+                        fluidOut = aResource.fluidOut();
+                        fluidOutAmount = aResource.fluidOutAmount();
+                    }
+
+                    iterations++;
+
+                    if(i + iterations < fluidStorage.views.size()) {
+
+                        fluids.add(aResource.keyFluid());
+                        amounts.add(aResource.keyFluidAmount());
+
+                        aResource = aResource.alloyResourceOut();
+                    }
+                    else
+                    {
+                        aResource = null;
+                    }
+                }
+
+                boolean use = true;
+
+                for(int z = i; z <= i+iterations; z++)
+                {
+                    if(!fluidStorage.views.get(z).getResource().isOf(fluids.get(z-i)))
+                    {
+                        use = false;
+                        break;
+                    }
+                    if(fluidStorage.views.get(z).getAmount() < amounts.get(z-i))
+                    {
+                        use = false;
+                        break;
+                    }
+                }
+
+                if(!use)
+                {
+                    continue;
+                }
+
+                for(int z = 0; z < fluids.size(); z++)
+                {
+                    if(reduceFluids.contains(fluids.get(z)))
+                    {
+                        reduceAmounts.set(reduceAmounts.indexOf(fluids.get(z)), reduceAmounts.get(reduceAmounts.indexOf(fluids.get(z))) + amounts.get(z));
+                    }
+                    else
+                    {
+                        reduceFluids.add(fluids.get(z));
+                        reduceAmounts.add(amounts.get(z));
+                    }
+                }
+
+                if(addFluids.contains(fluidOut))
+                {
+                    addAmounts.set(addAmounts.indexOf(fluidOut), addAmounts.get(addAmounts.indexOf(fluidOut)) + fluidOutAmount);
+                }
+                else
+                {
+                    addFluids.add(fluidOut);
+                    addAmounts.add(fluidOutAmount);
+                }
+            }
+        }
+
+        //TODO Invert above. Test Inverted. Apply
     }
 }
