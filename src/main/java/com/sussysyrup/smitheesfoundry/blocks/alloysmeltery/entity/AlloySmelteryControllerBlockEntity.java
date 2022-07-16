@@ -207,6 +207,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 e.markDirty();
             }
             e.itemSmeltTick();
+            e.alloyTick();
         }
         else
         {
@@ -1093,5 +1094,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             fluidStorage.insert(FluidVariant.of(Registry.FLUID.get(new Identifier(Main.MODID, smelteryResource.fluidID()))), smelteryResource.fluidValue(), transaction);
             transaction.commit();
         }
+    }
+
+    protected void alloyTick()
+    {
     }
 }

@@ -27,16 +27,16 @@
     "preLaunch": [
       "com.sussysyrup.smitheesfoundry.PreLaunch"
     ],
-    "FoundrySetup": [
+    "smitheesfoundry:setup": [
       "com.sussysyrup.smitheesfoundry.SetupCommon"
     ],
-    "FoundrySetupPost": [
+    "smitheesfoundry:setupPost": [
       "com.sussysyrup.smitheesfoundry.PostCommon"
     ],
-    "FoundrySetupPostMaterials": [
+    "smitheesfoundry:setupPostMaterials": [
       "com.sussysyrup.smitheesfoundry.PostMaterialCommon"
     ],
-    "FoundrySetupPostFluids": [
+    "smitheesfoundry:foundrySetupPostFluids": [
       "com.sussysyrup.smitheesfoundry.PostFluidCommon"
     ]
   },

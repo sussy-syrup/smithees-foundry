@@ -6,7 +6,8 @@ import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonPost;
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonSetup;
 import com.sussysyrup.smitheesfoundry.util.Cache;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.impl.entrypoint.EntrypointUtils;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,26 +26,28 @@ public class Main implements ModInitializer {
 
 	private static void setup()
 	{
+		System.out.println(MinecraftClient.getInstance().getVersionType());
+
 		cache = new Cache();
 
 		//Config should be loaded before anything else here
 		Config.config();
 
-		EntrypointUtils.invoke("FoundrySetup", CommonSetup.class, CommonSetup::init);
+		FabricLoader.getInstance().getEntrypoints("smitheesfoundry:setup", CommonSetup.class).forEach(c -> c.init());
 	}
 
 	private static void processing()
 	{
 		//Creates Fluids and other things that only depend on materials
-		EntrypointUtils.invoke("FoundrySetupPostMaterials", CommonMaterialPost.class, CommonMaterialPost::init);
+		FabricLoader.getInstance().getEntrypoints("smitheesfoundry:setupPostMaterials", CommonMaterialPost.class).forEach(c -> c.init());
 
 		//Depends on Fluids and the bits you defined before on existing
-		EntrypointUtils.invoke("FoundrySetupPostFluids", CommonFluidPost.class, CommonFluidPost::init);
+		FabricLoader.getInstance().getEntrypoints("smitheesfoundry:setupPostFluids", CommonFluidPost.class).forEach(c -> c.init());
 	}
 
 	private static void post()
 	{
-		EntrypointUtils.invoke("FoundrySetupPost", CommonPost.class, CommonPost::init);
+		FabricLoader.getInstance().getEntrypoints("smitheesfoundry:setupPost", CommonPost.class).forEach(c -> c.init());
 	}
 
 }
