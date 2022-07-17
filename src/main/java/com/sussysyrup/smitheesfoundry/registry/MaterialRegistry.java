@@ -57,6 +57,13 @@ public class MaterialRegistry {
     private static final MaterialResource NETHERITEBLOCK = new MaterialResource("netherite", 9);
     private static final TagKey<Item> NETHERITEBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteblock_resource_material"));
 
+    private static final MaterialResource ROSEGOLDNUG = new MaterialResource("rosegold", 1F/9F);
+    private static final TagKey<Item> ROSEGOLDNUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/rosegoldnug_resource_material"));
+    private static final MaterialResource ROSEGOLDING = new MaterialResource("rosegold", 1);
+    private static final TagKey<Item> ROSEGOLDING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/rosegolding_resource_material"));
+    private static final MaterialResource ROSEGOLDBLOCK = new MaterialResource("rosegold", 9);
+    private static final TagKey<Item> ROSEGOLDBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/rosegoldblock_resource_material"));
+
     private static TraitContainer REGROWTH_TRAIT = new RegrowthTrait("regrowth",Formatting.DARK_GREEN);
     private static TraitContainer MAGNETIC1_TRAIT = new MagneticTrait("magnetic1", Formatting.GRAY, 4);
     private static TraitContainer MAGNETIC2_TRAIT = new MagneticTrait("magnetic2", Formatting.GRAY, 4.5F);
@@ -110,6 +117,9 @@ public class MaterialRegistry {
         ApiMaterialRegistry.registerPreMaterialResource(DIAMOND_TAG, DIAMOND);
         ApiMaterialRegistry.registerPreMaterialResource(NETHERITEING_TAG, NETHERITEING);
         ApiMaterialRegistry.registerPreMaterialResource(NETHERITEBLOCK_TAG, NETHERITEBLOCK);
+        ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDNUG_TAG, ROSEGOLDNUG);
+        ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDING_TAG, ROSEGOLDING);
+        ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDBLOCK_TAG, ROSEGOLDBLOCK);
     }
 
     private static void registerTraits()
