@@ -38,8 +38,13 @@ public class ItemsRegistry {
     public static Item COMPOUND_CLAY = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
     public static Item REINFORCED_BRICK = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
 
+    public static Item ROSEGOLD_INGOT = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
+    public static Item ROSEGOLD_NUGGET = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
+
+
     public static CastItem BLANK_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "blank");
     public static CastItem INGOT_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "ingot");
+    public static CastItem NUGGET_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "nugget");
 
     public static void init()
     {
@@ -49,6 +54,9 @@ public class ItemsRegistry {
 
         register("compound_clay", COMPOUND_CLAY);
         register("reinforced_brick", REINFORCED_BRICK);
+
+        register("rosegold_ingot", ROSEGOLD_INGOT);
+        register("rosegold_nugget", ROSEGOLD_NUGGET);
 
         ApiToolRegistry.registerTool("pickaxe", FORGE_PICKAXE);
         ApiToolRegistry.addPreToolRenderedPart("pickaxe_head");
@@ -86,6 +94,9 @@ public class ItemsRegistry {
 
         register("ingot_cast", INGOT_CAST);
         ApiCastingRegistry.addCastItem("ingot", INGOT_CAST);
+
+        register("nugget_cast", NUGGET_CAST);
+        ApiCastingRegistry.addCastItem("nugget", NUGGET_CAST);
     }
 
     private static void register(String name, Item item)

@@ -1,6 +1,6 @@
 {
   "name": "item.smitheesfoundry.tool_book",
-  "landing_text": "An extensive guide to material working with tools",
+  "landing_text": "An extensive guide to material working",
   "version": 1,
   "custom_book_item": "smitheesfoundry:smithee_guide",
   "creative_tab": "smitheesfoundry.items",

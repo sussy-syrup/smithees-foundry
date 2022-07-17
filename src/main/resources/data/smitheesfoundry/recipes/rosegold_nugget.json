@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "smitheesfoundry:rosegold_ingot"
+    }
+  ],
+  "result": {
+    "item": "smitheesfoundry:rosegold_nugget",
+    "count": 9
+  }
+}

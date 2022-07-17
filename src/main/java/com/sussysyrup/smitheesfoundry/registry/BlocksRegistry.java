@@ -50,6 +50,7 @@ public class BlocksRegistry {
     public static BlockEntityType<CastingTableBlockEntity> CASTING_TABLE_ENTITY;
 
     public static Block REINFORCED_BRICKS = new Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
+    public static Block ROSEGOLD_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F));
 
     public static void init()
     {
@@ -70,6 +71,7 @@ public class BlocksRegistry {
         CASTING_TABLE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "casting_table"), FabricBlockEntityTypeBuilder.create(CastingTableBlockEntity::new, CASTING_TABLE_BLOCK).build());
 
         register(REINFORCED_BRICKS, "reinforced_bricks");
+        register(ROSEGOLD_BLOCK, "rosegold_block");
 
         ApiAlloySmelteryRegistry.addStructureBlock(REINFORCED_BRICKS);
         ApiAlloySmelteryRegistry.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);

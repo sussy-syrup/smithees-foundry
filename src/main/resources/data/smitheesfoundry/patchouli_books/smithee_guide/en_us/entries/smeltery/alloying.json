@@ -1,0 +1,11 @@
+{
+  "name": "Alloying",
+  "icon": "smitheesfoundry:fluidbucket_molten_rosegold",
+  "category": "smitheesfoundry:smeltery_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Some metals may be mixed within the smeltery to produce an alloy. The order of fluids within the smeltery is important and it can be adjusted by clicking on the fluids. Refer to the alloying section to view the possible alloys."
+    }
+  ]
+}

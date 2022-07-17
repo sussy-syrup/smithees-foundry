@@ -1,0 +1,18 @@
+{
+  "name": "Rose Gold",
+  "icon": "smitheesfoundry:rosegold_pickaxehead",
+  "category": "smitheesfoundry:material_category",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "smitheesfoundry:rosegold_pickaxehead",
+      "title": "Rose Gold",
+      "text": "Mining Level: Stone (1) $(br2)Mining Speed: 12 $(br2)Base Durability: 56 $(br2)Durability Multiplier: 1 $(br2)Attack Damage: +1"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Traits",
+      "text": "$(7)Magnetic I: $()$(br)Holding the tool pulls nearby items. $(br2)$(4)Corroding: $()$(br)The tool loses a small amount of durability with each repair."
+    }
+  ]
+}

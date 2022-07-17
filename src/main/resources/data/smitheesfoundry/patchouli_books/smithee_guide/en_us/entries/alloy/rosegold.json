@@ -1,0 +1,11 @@
+{
+  "name": "Rose Gold",
+  "icon": "smitheesfoundry:rosegold_ingot",
+  "category": "smitheesfoundry:alloy_category",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Output:$(br) Rose Gold (20 droplets) $(br2)Input:$(br)Gold (15 droplets)$(br)Copper (5 droplets)"
+    }
+  ]
+}

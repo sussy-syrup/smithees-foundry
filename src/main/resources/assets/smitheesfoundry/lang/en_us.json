@@ -8,9 +8,11 @@
   "block.smitheesfoundry.alloy_smeltery_faucet": "Alloy Smeltery Faucet",
   "block.smitheesfoundry.tank_block": "Tank",
   "block.smitheesfoundry.casting_table_block": "Casting Table",
+  "block.smitheesfoundry.rosegold_block": "Rose Gold Block",
 
   "item.smitheesfoundry.blank": "%d Blank",
   "item.smitheesfoundry.ingot": "%d Ingot",
+  "item.smitheesfoundry.nugget": "%d Nugget",
   "item.smitheesfoundry.pickaxehead": "%d Pickaxe Head",
   "item.smitheesfoundry.toolhandle": "%d Tool Handle",
   "item.smitheesfoundry.toolbinding": "%d Tool Binder",
@@ -20,6 +22,9 @@
   "item.smitheesfoundry.swordguard": "%d Sword Guard",
   "item.smitheesfoundry.swordblade": "%d Sword Blade",
   "item.smitheesfoundry.smithee_guide": "Smithee's Guide",
+  "item.smitheesfoundry.rosegold_ingot": "Rose Gold Ingot",
+  "item.smitheesfoundry.rosegold_nugget": "Rose Gold Nugget",
+
 
   "item.smitheesfoundry.forge_block": "Forge Block",
 

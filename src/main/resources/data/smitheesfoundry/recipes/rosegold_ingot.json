@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "smitheesfoundry:rosegold_nugget"
+    }
+  },
+  "result": {
+    "item": "smitheesfoundry:rosegold_ingot",
+    "count": 1
+  }
+}

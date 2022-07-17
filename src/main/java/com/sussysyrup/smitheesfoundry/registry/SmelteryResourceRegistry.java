@@ -25,6 +25,8 @@ public class SmelteryResourceRegistry {
     private static final TagKey<Item> GOLD_1_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/gold_1"));
     private static final SmelteryResource GOLD_9 = new SmelteryResource("molten_gold", 9 * FluidConstants.INGOT);
     private static final TagKey<Item> GOLD_9_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/gold_9"));
+    private static final SmelteryResource GOLD_NUG = new SmelteryResource("molten_gold", FluidConstants.NUGGET);
+    private static final TagKey<Item> GOLD_NUG_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/gold_nug"));
 
     private static final SmelteryResource IRON_2 = new SmelteryResource("molten_iron", 2 * FluidConstants.INGOT);
     private static final TagKey<Item> IRON_2_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/iron_2"));
@@ -38,6 +40,12 @@ public class SmelteryResourceRegistry {
     private static final SmelteryResource NETHERITE_9 = new SmelteryResource("molten_netherite", 9 * FluidConstants.INGOT);
     private static final TagKey<Item> NETHERITE_9_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/netherite_9"));
 
+    private static final SmelteryResource ROSEGOLD_1 = new SmelteryResource("molten_rosegold", 1 * FluidConstants.INGOT);
+    private static final TagKey<Item> ROSEGOLD_1_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_1"));
+    private static final SmelteryResource ROSEGOLD_9 = new SmelteryResource("molten_rosegold", 9 * FluidConstants.INGOT);
+    private static final TagKey<Item> ROSEGOLD_9_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_9"));
+    private static final SmelteryResource ROSEGOLD_NUG = new SmelteryResource("molten_rosegold", FluidConstants.NUGGET);
+    private static final TagKey<Item> ROSEGOLD_NUG_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_nug"));
     public static void init()
     {
         ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_1_SMELTING, COPPER_1);
@@ -47,6 +55,7 @@ public class SmelteryResourceRegistry {
         ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_1_SMELTING, GOLD_1);
         ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_2_SMELTING, GOLD_2);
         ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_9_SMELTING, GOLD_9);
+        ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_NUG_SMELTING, GOLD_NUG);
 
         ApiSmelteryResourceRegistry.addPreSmelteryResource(IRON_1_SMELTING, IRON_1);
         ApiSmelteryResourceRegistry.addPreSmelteryResource(IRON_2_SMELTING, IRON_2);
@@ -54,5 +63,9 @@ public class SmelteryResourceRegistry {
 
         ApiSmelteryResourceRegistry.addPreSmelteryResource(NETHERITE_1_SMELTING, NETHERITE_1);
         ApiSmelteryResourceRegistry.addPreSmelteryResource(NETHERITE_9_SMELTING, NETHERITE_9);
+
+        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_1_SMELTING, ROSEGOLD_1);
+        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_9_SMELTING, ROSEGOLD_9);
+        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_NUG_SMELTING, ROSEGOLD_NUG);
     }
 }

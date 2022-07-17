@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class CastingRegistry {
 
     public static HashMap<Fluid, Item> ingotFluidMap = new HashMap<>();
+    public static HashMap<Fluid, Item> nuggetFluidMap = new HashMap<>();
 
     public static void preInit()
     {
@@ -22,15 +23,26 @@ public class CastingRegistry {
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), Items.COPPER_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), Items.NETHERITE_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_INGOT);
+        ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_INGOT);
+
+        nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_NUGGET);
+        nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_NUGGET);
+        nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_NUGGET);
     }
 
     public static void init()
     {
         ApiCastingRegistry.addCastingResource("ingot", new CastingResource(FluidConstants.INGOT, ingotFluidMap));
+        ApiCastingRegistry.addCastingResource("nugget", new CastingResource(FluidConstants.NUGGET, nuggetFluidMap));
 
         for(Item item : ingotFluidMap.values())
         {
             ApiCastingRegistry.addItemToType("ingot", item);
+        }
+
+        for(Item item : nuggetFluidMap.values())
+        {
+            ApiCastingRegistry.addItemToType("nugget", item);
         }
     }
 
