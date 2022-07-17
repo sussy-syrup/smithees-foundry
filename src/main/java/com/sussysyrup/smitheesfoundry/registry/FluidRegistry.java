@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class FluidRegistry {
 
-    public static void init()
+    public static void main()
     {
         ApiMoltenFluidRegistry.registerFluid("molten_iron", new FluidProperties("molten_iron", "iron", 300));
         ApiMoltenFluidRegistry.registerFluid("molten_copper", new FluidProperties("molten_copper", "copper", 150));

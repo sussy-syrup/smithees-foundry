@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 @Environment(EnvType.CLIENT)
 public class ModScreenRegistry {
 
-    public static void init()
+    public static void clientInit()
     {
         ScreenRegistry.register(ModScreenHandlerRegistry.FORGE_SCREEN_HANDLER, ForgeScreen::new);
         ScreenRegistry.register(ModScreenHandlerRegistry.PARTBENCH_SCREEN_HANDLER, PartBenchScreen::new);

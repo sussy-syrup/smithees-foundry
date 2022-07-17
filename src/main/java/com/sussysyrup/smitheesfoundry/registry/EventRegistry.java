@@ -29,7 +29,7 @@ import java.util.List;
 
 public class EventRegistry {
 
-    public static void init()
+    public static void main()
     {
         ServerLifecycleEvents.SERVER_STARTED.register((server) ->
         {

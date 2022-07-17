@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public class AlloyRegistry {
 
-    public static void init()
+    public static void main()
     {
         ApiAlloyRegistry.addAlloy(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), 20,
                 new Fluid[]{Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")),

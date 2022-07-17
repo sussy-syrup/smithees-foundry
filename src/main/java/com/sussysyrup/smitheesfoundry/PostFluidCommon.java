@@ -8,6 +8,6 @@ public class PostFluidCommon implements CommonFluidPost {
     @Override
     public void init() {
         FluidRegistry.postInit();
-        AlloyRegistry.init();
+        AlloyRegistry.main();
     }
 }

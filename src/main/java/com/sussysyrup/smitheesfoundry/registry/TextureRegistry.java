@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class TextureRegistry {
 
-    public static void init()
+    public static void clientInit()
     {
         registerPart("pickaxehead");
         registerPart("toolhandle");

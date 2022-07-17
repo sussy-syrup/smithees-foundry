@@ -8,18 +8,18 @@ public class SetupCommon implements CommonSetup {
     @Override
     public void init() {
         //First to exist other than config
-        MaterialRegistry.init();
+        MaterialRegistry.main();
 
         //Creates Default Parts
-        PartRegistry.init();
+        PartRegistry.main();
 
         //Makes all the necessary calls for ForgePartBenchRegistry. multiple calls like this can exist as long as its before ForgePartBenchRegistry
-        PartBenchRegistry.init();
+        PartBenchRegistry.main();
 
         //Fluids
-        FluidRegistry.init();
+        FluidRegistry.main();
 
         //Smelting
-        SmelteryResourceRegistry.init();
+        SmelteryResourceRegistry.main();
     }
 }

@@ -52,7 +52,7 @@ public class BlocksRegistry {
     public static Block REINFORCED_BRICKS = new Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
     public static Block ROSEGOLD_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F));
 
-    public static void init()
+    public static void main()
     {
         register(FORGE_BLOCK, "forge_block");
         register(REPAIR_ANVIL_BLOCK, "repair_anvil_block");

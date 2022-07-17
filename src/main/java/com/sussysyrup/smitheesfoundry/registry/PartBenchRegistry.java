@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 
 public class PartBenchRegistry {
 
-    public static void init()
+    public static void main()
     {
         ApiPartBenchRegistry.registerPartBenchWood(new Identifier(Main.MODID, "oak_part_bench_block"), new Identifier("oak"));
         ApiPartBenchRegistry.registerPartBenchWood(new Identifier(Main.MODID, "spruce_part_bench_block"), new Identifier("spruce"));

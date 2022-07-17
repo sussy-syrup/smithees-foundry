@@ -77,7 +77,7 @@ public class MaterialRegistry {
     private static TraitContainer GROWTH_TRAIT = new GrowthTrait("growth", Formatting.DARK_GREEN);
     private static TraitContainer CORRODING_TRAIT = new CorrodingTrait("corroding",Formatting.DARK_RED);
 
-    public static void init()
+    public static void main()
     {
         registerTraits();
 

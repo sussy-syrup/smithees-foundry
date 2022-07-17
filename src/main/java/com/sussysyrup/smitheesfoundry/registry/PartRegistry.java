@@ -12,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 
 public class PartRegistry {
 
-    public static void init() {
+    public static void main() {
         registerPart("pickaxehead", 2, "head");
         registerPart("toolhandle", 1, "handle");
         registerPart("toolbinding", 1, "binding");

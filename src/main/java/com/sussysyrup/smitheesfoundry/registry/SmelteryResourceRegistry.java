@@ -46,7 +46,7 @@ public class SmelteryResourceRegistry {
     private static final TagKey<Item> ROSEGOLD_9_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_9"));
     private static final SmelteryResource ROSEGOLD_NUG = new SmelteryResource("molten_rosegold", FluidConstants.NUGGET);
     private static final TagKey<Item> ROSEGOLD_NUG_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_nug"));
-    public static void init()
+    public static void main()
     {
         ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_1_SMELTING, COPPER_1);
         ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_2_SMELTING, COPPER_2);

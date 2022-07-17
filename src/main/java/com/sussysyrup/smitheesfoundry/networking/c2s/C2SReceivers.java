@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class C2SReceivers {
 
-    public static void init()
+    public static void main()
     {
         ServerPlayNetworking.registerGlobalReceiver(C2SConstants.AlloySmelteryFluidClick, (server, player, handler, buf, sender) ->
         {

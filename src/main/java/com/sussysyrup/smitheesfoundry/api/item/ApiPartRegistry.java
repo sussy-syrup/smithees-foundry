@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ApiPartRegistry {
 
-    public static void init()
+    public static void main()
     {
         generateParts();
     }

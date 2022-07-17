@@ -46,7 +46,7 @@ public class ItemsRegistry {
     public static CastItem INGOT_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "ingot");
     public static CastItem NUGGET_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "nugget");
 
-    public static void init()
+    public static void main()
     {
         register("smithee_guide", GUIDE_BOOK_ITEM);
 

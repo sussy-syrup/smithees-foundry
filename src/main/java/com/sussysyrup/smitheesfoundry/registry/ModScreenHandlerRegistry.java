@@ -15,7 +15,7 @@ public class ModScreenHandlerRegistry {
     public static ScreenHandlerType<AlloySmelteryInvScreenHandler> ALLOY_SMELTERY_SCREEN_HANDLER;
     public static ScreenHandlerType<AlloySmelteryFluidScreenHandler> ALLOY_SMELTERYFLUID_SCREEN_HANDLER;
 
-    public static void init()
+    public static void main()
     {
         FORGE_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(Main.MODID, "forge_screen_handler"), new ScreenHandlerType<ForgeScreenHandler>(ForgeScreenHandler::new));
         PARTBENCH_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(Main.MODID, "partbench_screen_handler"), new ScreenHandlerType<PartBenchScreenHandler>(PartBenchScreenHandler::new));

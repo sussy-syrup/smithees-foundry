@@ -7,7 +7,7 @@ import com.sussysyrup.smitheesfoundry.api.item.ApiPartRegistry;
 public class PostMaterialCommon implements CommonMaterialPost {
     @Override
     public void init() {
-        ApiPartRegistry.init();
-        ApiMoltenFluidRegistry.init();
+        ApiPartRegistry.main();
+        ApiMoltenFluidRegistry.main();
     }
 }

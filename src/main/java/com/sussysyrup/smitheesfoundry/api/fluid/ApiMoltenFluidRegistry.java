@@ -31,7 +31,7 @@ public class ApiMoltenFluidRegistry {
 
     private static List<Identifier> bucketIDs = new ArrayList<>();
 
-    public static void init()
+    public static void main()
     {
         for(String s : fluidRegistry.keySet()) {
             reg(s);

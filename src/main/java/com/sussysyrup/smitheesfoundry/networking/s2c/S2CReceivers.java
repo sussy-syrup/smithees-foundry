@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 
 public class S2CReceivers {
 
-    public static void  init()
+    public static void clientInit()
     {
         ClientPlayNetworking.registerGlobalReceiver(S2CConstants.AlloySmelteryInvSync, (client, handler, buf, packetSender) ->
         {

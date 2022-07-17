@@ -37,7 +37,7 @@ public class ApiPartBenchRegistry {
 
     private static List<Block> partBenchBlocks = new ArrayList<>();
 
-    public static void init()
+    public static void main()
     {
         Block block;
         for(Identifier id :partBenchWoodMap.keySet())

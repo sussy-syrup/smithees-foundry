@@ -15,7 +15,7 @@ public class Client implements ClientModInitializer {
     //Order of loading doesn't matter here so go mad
     @Override
     public void onInitializeClient() {
-        ModScreenRegistry.init();
+        ModScreenRegistry.clientInit();
 
         MaterialRegistry.clientInit();
 
@@ -35,9 +35,9 @@ public class Client implements ClientModInitializer {
 
         EventRegistry.clientInit();
 
-        TextureRegistry.init();
+        TextureRegistry.clientInit();
 
-        S2CReceivers.init();
+        S2CReceivers.clientInit();
     }
 
 }
