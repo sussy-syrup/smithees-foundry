@@ -18,7 +18,7 @@ public class FluidRegistry {
         ApiMoltenFluidRegistry.registerFluid("molten_copper", new FluidProperties("molten_copper", "copper", 150));
         ApiMoltenFluidRegistry.registerFluid("molten_netherite", new FluidProperties("molten_netherite","netherite", 900));
         ApiMoltenFluidRegistry.registerFluid("molten_gold", new FluidProperties("molten_gold",null, 450));
-        ApiMoltenFluidRegistry.registerFluid("molten_rosegold", new FluidProperties("molten_rosegold",null, 300));
+        ApiMoltenFluidRegistry.registerFluid("molten_rosegold", new FluidProperties("molten_rosegold","rosegold", 300));
     }
 
     public static void postInit()

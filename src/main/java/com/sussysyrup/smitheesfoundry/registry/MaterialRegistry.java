@@ -97,7 +97,7 @@ public class MaterialRegistry {
                 createTraitsList(), createTraitsList(ANCIENT_TRAIT), createTraitsList(), createTraitsList(ANCIENT_TRAIT)));
 
         ApiMaterialRegistry.registerMaterial("rosegold", new Material("rosegold", true, "molten_rosegold", MiningLevels.STONE, 56, 1F, 12F, 1.0F,
-                createTraitsList(), createTraitsList(), createTraitsList(), createTraitsList()));
+                createTraitsList(MAGNETIC1_TRAIT), createTraitsList(CORRODING_TRAIT), createTraitsList(CORRODING_TRAIT), createTraitsList(MAGNETIC1_TRAIT)));
 
         ApiMaterialRegistry.registerPreMaterialResource(WOOD_TAG, WOOD);
         ApiMaterialRegistry.registerPreMaterialResource(STONE_TAG, STONE);

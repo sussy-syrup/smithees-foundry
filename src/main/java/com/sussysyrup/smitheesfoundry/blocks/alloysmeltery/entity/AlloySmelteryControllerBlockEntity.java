@@ -14,6 +14,7 @@ import com.sussysyrup.smitheesfoundry.util.records.ScanResult;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -1095,10 +1096,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
     protected void alloyTick() {
 
-        List<Fluid> reduceFluids = new ArrayList<>();
-        List<Long> reduceAmounts = new ArrayList<>();
-        List<Fluid> addFluids = new ArrayList<>();
-        List<Long> addAmounts = new ArrayList<>();
+        List<AlloyContainer> alloyContainers = new ArrayList<>();
 
         for(int i = 0; i < fluidStorage.views.size(); i++)
         {
@@ -1121,6 +1119,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
             for(AlloyResource resource : list)
             {
+                fluids = new ArrayList<>();
+                amounts = new ArrayList<>();
+
                 fluids.add(resource.keyFluid());
                 amounts.add(resource.keyFluidAmount());
 
@@ -1159,6 +1160,12 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
                 for(int z = i; z <= i+iterations; z++)
                 {
+                    if(z >= fluidStorage.views.size())
+                    {
+                        use = false;
+                        break;
+                    }
+
                     if(!fluidStorage.views.get(z).getResource().isOf(fluids.get(z-i)))
                     {
                         use = false;
@@ -1176,6 +1183,9 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                     continue;
                 }
 
+                List<Fluid> reduceFluids = new ArrayList<>();
+                List<Long> reduceAmounts = new ArrayList<>();
+
                 for(int z = 0; z < fluids.size(); z++)
                 {
                     if(reduceFluids.contains(fluids.get(z)))
@@ -1189,18 +1199,153 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                     }
                 }
 
-                if(addFluids.contains(fluidOut))
-                {
-                    addAmounts.set(addAmounts.indexOf(fluidOut), addAmounts.get(addAmounts.indexOf(fluidOut)) + fluidOutAmount);
-                }
-                else
-                {
-                    addFluids.add(fluidOut);
-                    addAmounts.add(fluidOutAmount);
-                }
+                alloyContainers.add(new AlloyContainer(reduceFluids, reduceAmounts, fluidOut, fluidOutAmount));
             }
         }
 
-        //TODO Invert above. Test Inverted. Apply
+        for(int i = fluidStorage.views.size()-1; i >= 0; i--)
+        {
+            if(i <= 0)
+            {
+                continue;
+            }
+
+            List<AlloyResource> list = ApiAlloyRegistry.getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
+
+            if(list == null)
+            {
+                continue;
+            }
+
+            List<Fluid> fluids = new ArrayList();
+            List<Long> amounts = new ArrayList<>();
+            Fluid fluidOut = null;
+            long fluidOutAmount = 0;
+
+            for(AlloyResource resource : list)
+            {
+                fluids = new ArrayList<>();
+                amounts = new ArrayList<>();
+
+                fluids.add(resource.keyFluid());
+                amounts.add(resource.keyFluidAmount());
+
+                boolean valid = true;
+
+                AlloyResource aResource = resource.alloyResourceOut();
+
+                int iterations = 0;
+
+                while(valid)
+                {
+
+                    if(aResource.alloyResourceOut() == null)
+                    {
+                        valid = false;
+                        fluidOut = aResource.fluidOut();
+                        fluidOutAmount = aResource.fluidOutAmount();
+                    }
+
+                    iterations--;
+
+                    if(i + iterations < fluidStorage.views.size()) {
+
+                        fluids.add(aResource.keyFluid());
+                        amounts.add(aResource.keyFluidAmount());
+
+                        aResource = aResource.alloyResourceOut();
+                    }
+                    else
+                    {
+                        aResource = null;
+                    }
+                }
+
+                boolean use = true;
+
+                int counter = 0;
+
+                for(int z = i; z >= i+iterations; z--)
+                {
+                    if(z < 0)
+                    {
+                        use = false;
+                        break;
+                    }
+
+                    if(!fluidStorage.views.get(z).getResource().isOf(fluids.get(counter)))
+                    {
+                        use = false;
+                        break;
+                    }
+                    if(fluidStorage.views.get(z).getAmount() < amounts.get(counter))
+                    {
+                        use = false;
+                        break;
+                    }
+                    counter++;
+                }
+
+                if(!use)
+                {
+                    continue;
+                }
+
+                List<Fluid> reduceFluids = new ArrayList<>();
+                List<Long> reduceAmounts = new ArrayList<>();
+
+                for(int z = 0; z < fluids.size(); z++)
+                {
+                    if(reduceFluids.contains(fluids.get(z)))
+                    {
+                        reduceAmounts.set(reduceAmounts.indexOf(fluids.get(z)), reduceAmounts.get(reduceAmounts.indexOf(fluids.get(z))) + amounts.get(z));
+                    }
+                    else
+                    {
+                        reduceFluids.add(fluids.get(z));
+                        reduceAmounts.add(amounts.get(z));
+                    }
+                }
+
+                alloyContainers.add(new AlloyContainer(reduceFluids, reduceAmounts, fluidOut, fluidOutAmount));
+            }
+        }
+
+        long extractAmount;
+        long reduceAmount;
+        boolean valid;
+
+        for(AlloyContainer container : alloyContainers) {
+            valid = true;
+
+            try (Transaction transaction = Transaction.openOuter()) {
+                for (Fluid fluid : container.reduceFluids()) {
+
+                    reduceAmount = container.reduceAmounts().get(container.reduceFluids().indexOf(fluid));
+
+                    extractAmount = fluidStorage.extract(FluidVariant.of(fluid), reduceAmount, transaction);
+
+                    if (reduceAmount != extractAmount) {
+                        transaction.abort();
+                        valid = false;
+                        break;
+                    }
+                }
+                if(valid)
+                {
+                    transaction.commit();
+                }
+            }
+
+            if (!valid) {
+                continue;
+            }
+
+            try (Transaction transaction = Transaction.openOuter())
+            {
+                fluidStorage.insert(FluidVariant.of(container.addFluid()), container.addAmount(), transaction);
+                transaction.commit();
+            }
+        }
     }
 }
