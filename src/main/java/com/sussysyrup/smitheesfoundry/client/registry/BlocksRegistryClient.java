@@ -1,6 +1,7 @@
-package com.sussysyrup.smitheesfoundry.registry;
+package com.sussysyrup.smitheesfoundry.client.registry;
 
 import com.sussysyrup.smitheesfoundry.client.render.*;
+import com.sussysyrup.smitheesfoundry.registry.BlocksRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;

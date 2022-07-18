@@ -1,6 +1,6 @@
 package com.sussysyrup.smitheesfoundry.client.render;
 
-import com.sussysyrup.smitheesfoundry.api.render.ApiSpriteRendering;
+import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.AlloySmelteryFaucetBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.CastingTableBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryFaucetBlockEntity;

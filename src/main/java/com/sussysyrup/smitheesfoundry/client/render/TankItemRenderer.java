@@ -1,6 +1,6 @@
 package com.sussysyrup.smitheesfoundry.client.render;
 
-import com.sussysyrup.smitheesfoundry.api.render.ApiSpriteRendering;
+import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;

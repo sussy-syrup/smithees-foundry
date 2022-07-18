@@ -1,6 +1,7 @@
-package com.sussysyrup.smitheesfoundry.registry;
+package com.sussysyrup.smitheesfoundry.client.registry;
 
 import com.sussysyrup.smitheesfoundry.client.gui.screen.*;
+import com.sussysyrup.smitheesfoundry.registry.ModScreenHandlerRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;

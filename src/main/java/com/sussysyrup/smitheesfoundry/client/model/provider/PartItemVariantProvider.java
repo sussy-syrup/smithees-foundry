@@ -2,7 +2,7 @@ package com.sussysyrup.smitheesfoundry.client.model.provider;
 
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.item.ApiPartRegistry;
-import com.sussysyrup.smitheesfoundry.util.Util;
+import com.sussysyrup.smitheesfoundry.util.ClientUtil;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
 import net.fabricmc.fabric.api.client.model.ModelProviderException;
 import net.fabricmc.fabric.api.client.model.ModelVariantProvider;
@@ -21,7 +21,7 @@ public class PartItemVariantProvider implements ModelVariantProvider {
                 if (!ApiPartRegistry.getCustomResourcesIdentifiers().contains(modelId.getPath()));
                 {
 
-                    String modelJson = Util.createPartJsonString("partitem", modelId.getPath());
+                    String modelJson = ClientUtil.createPartJsonString("partitem", modelId.getPath());
 
                     if ("".equals(modelJson)) return null;
 

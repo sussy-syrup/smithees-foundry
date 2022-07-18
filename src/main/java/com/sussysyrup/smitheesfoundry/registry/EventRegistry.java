@@ -1,6 +1,5 @@
 package com.sussysyrup.smitheesfoundry.registry;
 
-import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.casting.CastingResource;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.FluidProperties;
@@ -8,20 +7,15 @@ import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiSmelteryResourceRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.SmelteryResource;
 import com.sussysyrup.smitheesfoundry.api.item.ApiPartRegistry;
-import com.sussysyrup.smitheesfoundry.api.item.ApiToolRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.Material;
 import com.sussysyrup.smitheesfoundry.api.material.MaterialResource;
 import com.sussysyrup.smitheesfoundry.api.item.PartItem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -130,19 +124,4 @@ public class EventRegistry {
         }
     }
 
-
-    @Environment(EnvType.CLIENT)
-    public static void clientInit()
-    {
-        ClientSpriteRegistryCallback.event(new Identifier("textures/atlas/blocks.png")).register((spriteAtlasTexture, registry) ->
-        {
-            for(String s : ApiToolRegistry.getToolRenderedParts()) {
-                registry.register(new Identifier(Main.MODID, "item/partrender_" + s));
-            }
-            for(String s : ApiMoltenFluidRegistry.getPreFluidRegistry().keySet())
-            {
-                registry.register(new Identifier(Main.MODID, "block/moltenflow_" + s));
-            }
-        });
-    }
 }

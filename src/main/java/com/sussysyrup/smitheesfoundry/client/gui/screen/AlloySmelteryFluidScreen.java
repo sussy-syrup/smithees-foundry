@@ -2,7 +2,7 @@ package com.sussysyrup.smitheesfoundry.client.gui.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.smitheesfoundry.Main;
-import com.sussysyrup.smitheesfoundry.api.render.ApiSpriteRendering;
+import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.TankBlockEntity;
 import com.sussysyrup.smitheesfoundry.mixin.client.MouseAccessor;
@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.widget.TexturedButtonWidget;
 import net.minecraft.client.render.*;

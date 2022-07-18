@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.api.render;
+package com.sussysyrup.smitheesfoundry.api.client.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.smitheesfoundry.Main;

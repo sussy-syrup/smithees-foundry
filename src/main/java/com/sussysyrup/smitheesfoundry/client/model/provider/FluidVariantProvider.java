@@ -1,7 +1,7 @@
 package com.sussysyrup.smitheesfoundry.client.model.provider;
 
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
-import com.sussysyrup.smitheesfoundry.util.Util;
+import com.sussysyrup.smitheesfoundry.util.ClientUtil;
 import net.fabricmc.fabric.api.client.model.ModelProviderContext;
 import net.fabricmc.fabric.api.client.model.ModelProviderException;
 import net.fabricmc.fabric.api.client.model.ModelVariantProvider;
@@ -19,11 +19,11 @@ public class FluidVariantProvider implements ModelVariantProvider {
 
         if(ApiMoltenFluidRegistry.getPreFluidRegistry().containsKey(id.getPath()))
         {
-            return JsonUnbakedModel.deserialize(Util.createFluidJsonString(id.getPath()));
+            return JsonUnbakedModel.deserialize(ClientUtil.createFluidJsonString(id.getPath()));
         }
         if(ApiMoltenFluidRegistry.getBucketIDs().contains(id))
         {
-            return JsonUnbakedModel.deserialize(Util.createBucketJsonString(id.getPath()));
+            return JsonUnbakedModel.deserialize(ClientUtil.createBucketJsonString(id.getPath()));
         }
 
         return null;

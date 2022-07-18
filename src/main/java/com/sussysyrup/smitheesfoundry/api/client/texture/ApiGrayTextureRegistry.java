@@ -1,6 +1,6 @@
 package com.sussysyrup.smitheesfoundry.api.client.texture;
 
-import com.sussysyrup.smitheesfoundry.util.Util;
+import com.sussysyrup.smitheesfoundry.util.ClientUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
@@ -20,12 +20,12 @@ public class ApiGrayTextureRegistry {
 
     public static BufferedImage getTexture(String name)
     {
-        return Util.copyImage(textureMap.get(name));
+        return ClientUtil.copyImage(textureMap.get(name));
     }
 
     public static void registerTexture(String name, Identifier resourceID)
     {
-        textureMap.put(name, Util.getImageFromID(resourceID));
+        textureMap.put(name, ClientUtil.getImageFromID(resourceID));
     }
 
     public static void removeTexture(String name)

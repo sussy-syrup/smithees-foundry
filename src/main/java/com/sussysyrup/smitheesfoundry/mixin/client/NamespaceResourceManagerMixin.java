@@ -5,7 +5,7 @@ import com.sussysyrup.smitheesfoundry.api.client.texture.ApiGrayTextureRegistry;
 import com.sussysyrup.smitheesfoundry.api.fluid.FluidProperties;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
-import com.sussysyrup.smitheesfoundry.util.Util;
+import com.sussysyrup.smitheesfoundry.util.ClientUtil;
 import net.minecraft.resource.*;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -85,7 +85,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 BufferedImage gray = ApiGrayTextureRegistry.getTexture(toolPart.replaceAll(".png", ""));
 
-                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, Util.colourise(gray, ApiMaterialRegistry.getMaterial(material)), null));
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, ClientUtil.colourise(gray, ApiMaterialRegistry.getMaterial(material)), null));
                 return;
             }
 
@@ -98,7 +98,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 BufferedImage gray = ApiGrayTextureRegistry.getTexture(toolType + "_" + toolPart.replaceAll(".png", ""));
 
-                BufferedInputStream outputStream = Util.colourise(gray, ApiMaterialRegistry.getMaterial(material));
+                BufferedInputStream outputStream = ClientUtil.colourise(gray, ApiMaterialRegistry.getMaterial(material));
 
                 cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, null));
                 return;
@@ -113,7 +113,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 FluidProperties properties = ApiMoltenFluidRegistry.getFluidProperties(fluidName);
 
-                BufferedInputStream outputStream = Util.colourise(gray, properties);
+                BufferedInputStream outputStream = ClientUtil.colourise(gray, properties);
 
                 cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, null));
                 return;
@@ -132,9 +132,9 @@ public abstract class NamespaceResourceManagerMixin {
 
                 BufferedImage gray = ApiGrayTextureRegistry.getTexture("molten_metal_still");
 
-                BufferedInputStream outputStream = Util.colourise(gray, properties);
+                BufferedInputStream outputStream = ClientUtil.colourise(gray, properties);
 
-                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, Util.createStillFluidMeta()));
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, ClientUtil.createStillFluidMeta()));
                 return;
             }
 
@@ -148,9 +148,9 @@ public abstract class NamespaceResourceManagerMixin {
 
                 BufferedImage gray = ApiGrayTextureRegistry.getTexture("molten_metal_flow");
 
-                BufferedInputStream outputStream = Util.colourise(gray, properties);
+                BufferedInputStream outputStream = ClientUtil.colourise(gray, properties);
 
-                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, Util.createFlowFluidMeta()));
+                cir.setReturnValue(new ResourceImpl(Main.MODID, correctResourceLocation, outputStream, ClientUtil.createFlowFluidMeta()));
                 return;
             }
 

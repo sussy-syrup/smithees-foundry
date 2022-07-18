@@ -1,7 +1,7 @@
 package com.sussysyrup.smitheesfoundry.mixin.client;
 
 import com.sussysyrup.smitheesfoundry.api.item.ApiToolRegistry;
-import com.sussysyrup.smitheesfoundry.util.Util;
+import com.sussysyrup.smitheesfoundry.util.ClientUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.model.BakedModel;
@@ -34,7 +34,7 @@ public class ModelLoaderMixin {
 
         if(!ApiToolRegistry.getToolRenderedParts().contains(id.getPath().replaceAll("#inventory", ""))) return;
 
-        JsonUnbakedModel jsonUnbakedModel = JsonUnbakedModel.deserialize(Util.createPartJsonString("partrender", id.getPath()));
+        JsonUnbakedModel jsonUnbakedModel = JsonUnbakedModel.deserialize(ClientUtil.createPartJsonString("partrender", id.getPath()));
 
         cir.setReturnValue(ITEM_MODEL_GENERATOR.create(this.spriteAtlasManager::getSprite, jsonUnbakedModel).bake((ModelLoader) (Object)this, jsonUnbakedModel, this.spriteAtlasManager::getSprite, settings, id, false));
     }

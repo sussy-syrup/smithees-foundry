@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.registry;
+package com.sussysyrup.smitheesfoundry.client.registry;
 
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.client.texture.ApiGrayTextureRegistry;

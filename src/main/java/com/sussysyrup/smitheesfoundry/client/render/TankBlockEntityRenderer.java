@@ -1,6 +1,6 @@
 package com.sussysyrup.smitheesfoundry.client.render;
 
-import com.sussysyrup.smitheesfoundry.api.render.ApiSpriteRendering;
+import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.TankBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.TankBlockEntity;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
