@@ -1,6 +1,6 @@
 ## Smithee's Foundry
 
-## This mod is discontinued, I will fix the remaining issues but I have no intentions to continue adding to this mod as I no longer have the time to work on it
+## This mod is discontinued, I have no intentions to continue adding to this mod as I no longer have the time to work on it
 
 ## Setup
 
