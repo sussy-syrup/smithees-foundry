@@ -1,11 +1,13 @@
 package com.sussysyrup.smitheesfoundry.client.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.AlloySmelteryControllerBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -48,6 +50,8 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
 
             Direction direction = entity.getWorld().getBlockState(entity.getPos()).get(AlloySmelteryControllerBlock.FACING);
 
+            int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), entity.getWorld(), entity.getPos(), 0);
+
             matrices.push();
 
             if (direction.equals(Direction.SOUTH)) {
@@ -65,32 +69,21 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
                 matrices.translate(-1, 0, -1);
             }
 
+            VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE));
+
+            int lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().add(direction.getVector()));
+
             for(int z = 0; z < length; z++) {
                 for (int x = 0; x < width; x++) {
 
                     matrices.push();
 
                     matrices.translate(x + 1, yShift, z - widthCorrect);
-
-                    matrices.scale(0.0625F, 1, 0.0625F);
-
-                    Matrix4f matrix4f;
-
-                    matrix4f = matrices.peek().getPositionMatrix();
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                    RenderSystem.enableDepthTest();
-                    RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-
-                    BufferBuilder builder = Tessellator.getInstance().getBuffer();
-                    builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-                    builder.vertex(matrix4f, 0, 0, 16).texture(sprite.getMinU(), sprite.getMaxV()).next();
-                    builder.vertex(matrix4f, 16, 0, 16).texture(sprite.getMaxU(), sprite.getMaxV()).next();
-                    builder.vertex(matrix4f, 16, 0, 0).texture(sprite.getMaxU(), sprite.getMinV()).next();
-                    builder.vertex(matrix4f, 0, 0, 0).texture(sprite.getMinU(), sprite.getMinV()).next();
-                    builder.end();
-                    BufferRenderer.draw(builder);
+                    
+                    ApiSpriteRendering.renderConsumerSpriteUp(matrices, sprite, consumer, 0, 1, 0, 1, colour, overlay, lightCor, 1);
 
                     matrices.pop();
+
                 }
             }
 
