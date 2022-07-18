@@ -1,9 +1,9 @@
 package com.sussysyrup.smitheesfoundry;
 
-import com.sussysyrup.smitheesfoundry.api.block.ApiPartBenchRegistry;
-import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
-import com.sussysyrup.smitheesfoundry.api.item.ApiPartRegistry;
-import com.sussysyrup.smitheesfoundry.api.item.ApiToolRegistry;
+import com.sussysyrup.smitheesfoundry.api.client.block.ApiPartBenchRegistryClient;
+import com.sussysyrup.smitheesfoundry.api.client.fluid.ApiMoltenFluidRegistryClient;
+import com.sussysyrup.smitheesfoundry.api.client.item.ApiPartItemClient;
+import com.sussysyrup.smitheesfoundry.api.client.item.ApiToolRegistryClient;
 import com.sussysyrup.smitheesfoundry.networking.s2c.S2CReceivers;
 import com.sussysyrup.smitheesfoundry.registry.*;
 import net.fabricmc.api.ClientModInitializer;
@@ -19,19 +19,19 @@ public class Client implements ClientModInitializer {
 
         MaterialRegistry.clientInit();
 
-        ApiPartRegistry.clientInit();
+        ApiPartItemClient.clientInit();
 
-        ApiToolRegistry.itemRenderingInit();
+        ApiToolRegistryClient.itemRenderingInit();
 
-        ApiPartBenchRegistry.clientInit();
+        ApiPartBenchRegistryClient.clientInit();
 
-        ApiMoltenFluidRegistry.clientInit();
+        ApiMoltenFluidRegistryClient.clientInit();
 
         FluidRegistry.clientInit();
 
-        ItemsRegistry.clientInit();
+        ItemsRegistryClient.clientInit();
 
-        BlocksRegistry.clientInit();
+        BlocksRegistryClient.clientInit();
 
         EventRegistry.clientInit();
 

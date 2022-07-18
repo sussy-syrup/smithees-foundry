@@ -3,11 +3,7 @@ package com.sussysyrup.smitheesfoundry.api.item;
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.itemgroup.ItemGroups;
 import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
-import com.sussysyrup.smitheesfoundry.client.model.provider.PartItemVariantProvider;
 import com.sussysyrup.smitheesfoundry.api.material.Material;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -24,12 +20,6 @@ public class ApiPartRegistry {
         generateParts();
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void clientInit()
-    {
-        //Variant called during loadBakedModelJson. Resource called afterwards hence we go with variant
-        ModelLoadingRegistry.INSTANCE.registerVariantProvider(resourceManager -> new PartItemVariantProvider());
-    }
     private static void register(String name, Item item)
     {
         Registry.register(Registry.ITEM, new Identifier(Main.MODID, name), item);

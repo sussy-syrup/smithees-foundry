@@ -9,11 +9,6 @@ import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.*;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.*;
 import com.sussysyrup.smitheesfoundry.blocks.entity.ForgeBlockEntity;
 import com.sussysyrup.smitheesfoundry.blocks.entity.RepairAnvilBlockEntity;
-import com.sussysyrup.smitheesfoundry.client.render.*;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import  net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -21,7 +16,6 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
@@ -98,19 +92,6 @@ public class BlocksRegistry {
     {
         Registry.register(Registry.BLOCK, new Identifier(Main.MODID, name), block);
         Registry.register(Registry.ITEM, new Identifier(Main.MODID, name), new BlockItem(block, new FabricItemSettings().group(ItemGroups.BLOCK_GROUP)));
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void clientInit()
-    {
-        BlockEntityRendererRegistry.register(FORGE_BLOCK_ENTITY, ForgeBlockEntityRender::new);
-        BlockEntityRendererRegistry.register(REPAIR_ANVIL_BLOCK_ENTITY, RepairAnvilBlockEntityRender::new);
-        BlockEntityRendererRegistry.register(ALLOY_SMELTERY_CONTROLLER_BLOCK_ENTITY, AlloySmelteryBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(TANK_BLOCK_ENTITY, TankBlockEntityRenderer::new);
-        BlockEntityRendererRegistry.register(ALLOY_SMELTERY_FAUCET_BLOCK_ENTITY, AlloySmelteryFaucetRenderer::new);
-        BlockEntityRendererRegistry.register(CASTING_TABLE_ENTITY, CastingTableBlockEntityRender::new);
-
-        BlockRenderLayerMap.INSTANCE.putBlock(TANK_BLOCK, RenderLayer.getCutout());
     }
 
 }

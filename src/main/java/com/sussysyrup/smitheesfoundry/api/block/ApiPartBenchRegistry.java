@@ -6,14 +6,8 @@ import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.itemgroup.ItemGroups;
 import com.sussysyrup.smitheesfoundry.blocks.PartBenchBlock;
 import com.sussysyrup.smitheesfoundry.blocks.entity.PartBenchBlockEntity;
-import com.sussysyrup.smitheesfoundry.client.model.provider.PartBenchVariantProvider;
-import com.sussysyrup.smitheesfoundry.client.render.PartBenchEntityRender;
 import com.sussysyrup.smitheesfoundry.items.PartBenchBlockItem;
 import com.sussysyrup.smitheesfoundry.util.Util;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -63,14 +57,6 @@ public class ApiPartBenchRegistry {
         }
 
         PART_BENCH_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "part_bench"), FabricBlockEntityTypeBuilder.create(PartBenchBlockEntity::new, partBenchBlocks.stream().toArray(Block[]::new)).build());
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void clientInit()
-    {
-        ModelLoadingRegistry.INSTANCE.registerVariantProvider(resourceManager -> new PartBenchVariantProvider());
-
-        BlockEntityRendererRegistry.INSTANCE.register(PART_BENCH_BLOCK_ENTITY, PartBenchEntityRender::new);
     }
 
     public static HashMap<Identifier, Identifier> getPartBenchWoodMap()

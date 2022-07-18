@@ -5,15 +5,9 @@ import com.sussysyrup.smitheesfoundry.api.item.CastItem;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
 import com.sussysyrup.smitheesfoundry.api.item.ApiToolRegistry;
 import com.sussysyrup.smitheesfoundry.api.itemgroup.ItemGroups;
-import com.sussysyrup.smitheesfoundry.api.client.model.ApiToolTypeModelRegistry;
 import com.sussysyrup.smitheesfoundry.api.recipe.ApiToolRecipeRegistry;
-import com.sussysyrup.smitheesfoundry.client.model.toolmodels.*;
-import com.sussysyrup.smitheesfoundry.client.render.TankItemRenderer;
 import com.sussysyrup.smitheesfoundry.items.*;
 import com.sussysyrup.smitheesfoundry.recipe.ThreePartToolRecipe;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -104,15 +98,4 @@ public class ItemsRegistry {
         Registry.register(Registry.ITEM, new Identifier(Main.MODID, name), item);
     }
 
-    @Environment(EnvType.CLIENT)
-    public static void clientInit()
-    {
-        ApiToolTypeModelRegistry.addToolTypeModel("pickaxe", new PickaxeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("axe", new AxeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("hoe", new HoeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("shovel", new ShovelToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("sword", new SwordToolTypeModel());
-
-        BuiltinItemRendererRegistry.INSTANCE.register(Registry.ITEM.get(new Identifier(Main.MODID, "tank_block")), new TankItemRenderer());
-    }
 }
