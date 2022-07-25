@@ -90,9 +90,6 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
     }
 
     private void renderFluid(MatrixStack matrices, int x, int y) {
-
-        long capacity = be.fluidStorage.maxCapacity;
-        int currentHeight;
         Function<Identifier, Sprite> atlas = MinecraftClient.getInstance().getSpriteAtlas(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
         Sprite sprite;
 
@@ -133,7 +130,7 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                     yScalingFac = ((float) yOffset) / ((float) imageHeight);
                     matrices.push();
                     matrices.translate(0, yTrans, 0);
-                    renderRow(matrices, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
+                    renderRow(matrices, fluid, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
                     matrices.pop();
                     yShift +=16;
                     yTrans +=16;
@@ -142,40 +139,36 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                 yScalingFac = ((float) yOffset) / ((float) imageHeight);
                 matrices.push();
                 matrices.translate(0, yTrans, 0);
-                renderRow(matrices, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
+                renderRow(matrices, fluid, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
                 matrices.pop();
             }
             else
             {
-                renderRow(matrices, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
+                renderRow(matrices, fluid, heights, i, sprite, yOffset, yScalingFac, xScalingFac);
             }
         }
     }
 
-    private void renderRow(MatrixStack matrices, List<Integer> heights, int i, Sprite sprite, int yOffset, float yScalingFac, float xScalingFac)
+    private void renderRow(MatrixStack matrices, Fluid fluid, List<Integer> heights, int i, Sprite sprite, int yOffset, float yScalingFac, float xScalingFac)
     {
         Matrix4f matrix4f;
+
+        int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), 0);
+
         for (int t = 0; t < 8; t++) {
 
             matrices.push();
 
             if (!(t == 7)) {
                 matrices.translate(x + 7 + (t * 16), y + 69 - heights.get(i + 1), 0);
-                matrix4f = matrices.peek().getPositionMatrix();
-                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
-
-                BufferBuilder builder = Tessellator.getInstance().getBuffer();
-                builder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
-                builder.vertex(matrix4f, 0, 16 - yOffset, 0).texture(sprite.getMinU(), sprite.getMaxV() - yScalingFac).next();
-                builder.vertex(matrix4f, 16, 16 - yOffset, 0).texture(sprite.getMaxU(), sprite.getMaxV() - yScalingFac).next();
-                builder.vertex(matrix4f, 16, 0, 0).texture(sprite.getMaxU(), sprite.getMinV()).next();
-                builder.vertex(matrix4f, 0, 0, 0).texture(sprite.getMinU(), sprite.getMinV()).next();
-                builder.end();
-                BufferRenderer.draw(builder);
+                matrices.push();
+                matrices.scale(16, 16, 1);
+                ApiSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 1, 0, 1 - (((float) yOffset) / 16F), colour, 1F);
+                matrices.pop();
 
             } else {
                 matrices.translate(x + 7 + (t * 16), y + 69 - heights.get(i + 1), 0);
+                /**
                 matrix4f = matrices.peek().getPositionMatrix();
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderTexture(0, SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE);
@@ -187,8 +180,12 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
                 builder.vertex(matrix4f, 14, 0, 0).texture(sprite.getMaxU() - xScalingFac, sprite.getMinV()).next();
                 builder.vertex(matrix4f, 0, 0, 0).texture(sprite.getMinU(), sprite.getMinV()).next();
                 builder.end();
-                BufferRenderer.draw(builder);
+                BufferRenderer.draw(builder);**/
 
+                matrices.push();
+                matrices.scale(16, 16, 1);
+                ApiSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 0.875F, 0, 1 - (((float) yOffset) / 16F), colour, 1F);
+                matrices.pop();
             }
 
             matrices.pop();
@@ -200,6 +197,8 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
         Sprite sprite;
 
         Fluid fluid;
+
+        int colour;
 
         for(int i = 0; i < 3; i++) {
 
@@ -221,7 +220,10 @@ public class AlloySmelteryFluidScreen extends HandledScreen<AlloySmelteryFluidSc
             matrices.translate(x, y, 0);
             matrices.translate(146, 15 + (i * 19), 0);
             matrices.scale(16, 16, 0);
-            ApiSpriteRendering.renderSpriteTile(matrices, sprite, 0, 1, 0, 1);
+
+            colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), 0);
+
+            ApiSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0, 1, 0, 1, colour, 1F);
 
             matrices.pop();
 

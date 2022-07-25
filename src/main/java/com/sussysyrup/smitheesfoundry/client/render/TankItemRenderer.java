@@ -64,6 +64,11 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
 
     private static void renderContents(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
     {
+        if(MinecraftClient.getInstance().player == null)
+        {
+            return;
+        }
+
         NbtCompound compound = stack.getNbt();
 
         if(compound == null)

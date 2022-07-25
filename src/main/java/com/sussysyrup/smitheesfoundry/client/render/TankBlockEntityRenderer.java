@@ -75,7 +75,7 @@ public class TankBlockEntityRenderer implements BlockEntityRenderer<TankBlockEnt
 
             int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), entity.getWorld(), entity.getPos(), 0);
 
-            int lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos());
+            int lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().add(direction.getVector()));
 
             if(fluid.getRegistryEntry().isIn(FluidTags.LAVA))
             {
