@@ -13,11 +13,13 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
@@ -31,13 +33,8 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
     public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
 
         BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
-        boolean leftHanded = false;
 
         BakedModel model = MinecraftClient.getInstance().getBlockRenderManager().getModel(state);
-
-        if(mode.equals(ModelTransformation.Mode.THIRD_PERSON_LEFT_HAND) || mode.equals(ModelTransformation.Mode.FIRST_PERSON_LEFT_HAND)) {
-            leftHanded = true;
-        }
 
         RenderLayer renderLayer = RenderLayers.getItemLayer(stack, false);
 
@@ -60,12 +57,12 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
 
         renderBakedItemModel(model, light, overlay, matrices, consumer);
 
-        renderContents(stack, matrices, vertexConsumers);
+        renderContents(stack, matrices, vertexConsumers, light, overlay);
 
         matrices.pop();
     }
 
-    private static void renderContents(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers)
+    private static void renderContents(ItemStack stack, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay)
     {
         NbtCompound compound = stack.getNbt();
 
@@ -104,12 +101,21 @@ public class TankItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
 
         int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), MinecraftClient.getInstance().world, MinecraftClient.getInstance().player.getBlockPos(), 0);
 
-        ApiSpriteRendering.renderColouredTileUp(matrices, sprite, 0.001F, 0.998F, 0.001F, 0.998F, colour, 1);
+        int lightCor = light;
+
+        if(fluid.getRegistryEntry().isIn(FluidTags.LAVA))
+        {
+            lightCor = 15728832;
+        }
+
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE));
+
+        ApiSpriteRendering.renderConsumerSpriteUp(matrices, sprite, consumer, 0.001F, 0.998F, 0.001F, 0.998F, colour, overlay, lightCor, 1);
 
         matrices.translate(0, -height, 0.01F);
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
         matrices.translate(-1, 0, -0.95);
-        ApiSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, 1);
+        ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, overlay, lightCor, 1);
 
         matrices.pop();
     }

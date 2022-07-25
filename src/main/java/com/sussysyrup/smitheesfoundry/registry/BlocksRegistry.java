@@ -14,21 +14,26 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
+
+import java.util.function.ToIntFunction;
 
 public class BlocksRegistry {
 
     public static Block FORGE_BLOCK = new ForgeBlock(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
     public static Block REPAIR_ANVIL_BLOCK = new RepairAnvilBlock(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0f, 1200.0f).sounds(BlockSoundGroup.ANVIL));
 
-    public static Block ALLOY_SMELTERY_CONTROLLER = new AlloySmelteryControllerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block ALLOY_SMELTERY_CONTROLLER = new AlloySmelteryControllerBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F).luminance(createLightLevelFromLitBlockState(13)));
     public static Block ALLOY_SMELTERY_DRAIN = new AlloySmelteryDrainBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
     public static Block ALLOY_SMELTERY_FAUCET = new AlloySmelteryFaucetBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
     public static Block TANK_BLOCK = new TankBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
@@ -94,4 +99,7 @@ public class BlocksRegistry {
         Registry.register(Registry.ITEM, new Identifier(Main.MODID, name), new BlockItem(block, new FabricItemSettings().group(ItemGroups.BLOCK_GROUP)));
     }
 
+    private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
+        return state -> state.get(Properties.LIT) != false ? litLevel : 0;
+    }
 }

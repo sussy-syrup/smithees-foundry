@@ -206,6 +206,8 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             }
             e.itemSmeltTick();
             e.alloyTick();
+
+            //e.lightTick();
         }
         else
         {
@@ -217,6 +219,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         }
 
         e.count5++;
+    }
+
+    protected void lightTick() {
+        //TODO smeltery lights, lights in minecraft are expensive despite it being simple so this is consideration. Options so far are: no fluid lights, fluid lights with render optimisation mods or fluid lights unconditionally
+        //world.getLightingProvider().addLightSource(pos, level);
     }
 
     @javax.annotation.Nullable

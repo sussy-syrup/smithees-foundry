@@ -1,6 +1,5 @@
 package com.sussysyrup.smitheesfoundry.client.render;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.AlloySmelteryControllerBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryControllerBlockEntity;
@@ -15,8 +14,9 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.tag.FluidTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 
 public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<AlloySmelteryControllerBlockEntity> {
@@ -69,12 +69,24 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
                 matrices.translate(-1, 0, -1);
             }
 
+
             VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE));
 
-            int lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos().add(direction.getVector()));
+            int lightCor;
+
+            BlockPos pos;
 
             for(int z = 0; z < length; z++) {
                 for (int x = 0; x < width; x++) {
+
+                    pos = new BlockPos(x + entity.getPos().getX() + 1, entity.getPos().getY() + yShift, z + entity.getPos().getZ() - widthCorrect);
+
+                    lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), pos);
+
+                    if(fluid.getRegistryEntry().isIn(FluidTags.LAVA))
+                    {
+                        lightCor = 15728832;
+                    }
 
                     matrices.push();
 
@@ -90,4 +102,7 @@ public class AlloySmelteryBlockEntityRenderer implements BlockEntityRenderer<All
             matrices.pop();
         }
     }
+
+    //LIGHT MAX: 15728832
+    //OVERLAY: 655360 seems to always be that
 }

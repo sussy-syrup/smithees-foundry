@@ -9,8 +9,10 @@ import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.texture.Sprite;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3f;
 
@@ -73,10 +75,19 @@ public class TankBlockEntityRenderer implements BlockEntityRenderer<TankBlockEnt
 
             int colour = MinecraftClient.getInstance().getBlockColors().getColor(fluid.getDefaultState().getBlockState(), entity.getWorld(), entity.getPos(), 0);
 
-            ApiSpriteRendering.renderColouredTileUp(matrices, sprite, 0.001F, 0.998F, 0.001F, 0.998F, colour, 1);
+            int lightCor = WorldRenderer.getLightmapCoordinates(entity.getWorld(), entity.getPos());
+
+            if(fluid.getRegistryEntry().isIn(FluidTags.LAVA))
+            {
+                lightCor = 15728832;
+            }
+
+            VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE));
+
+            ApiSpriteRendering.renderConsumerSpriteUp(matrices, sprite, consumer, 0.001F, 0.998F, 0.001F, 0.998F, colour, overlay, lightCor, 1);
 
             matrices.translate(0, -height, 0.05F);
-            ApiSpriteRendering.renderColouredSpriteTile(matrices, sprite, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, 1);
+            ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0.001F, 0.998F, 0.001F, height - 0.001F, colour, overlay, lightCor, 1);
 
             matrices.pop();
             matrices.pop();
