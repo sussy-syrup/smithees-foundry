@@ -13,7 +13,7 @@ public class SetupCommon implements CommonSetup {
         //Creates Default Parts
         PartRegistry.main();
 
-        //Makes all the necessary calls for ForgePartBenchRegistry. multiple calls like this can exist as long as its before ForgePartBenchRegistry
+        //Makes all the necessary calls for ApiPartBenchRegistry. multiple calls like this can exist as long as it's before ApiPartBenchRegistry
         PartBenchRegistry.main();
 
         //Fluids
