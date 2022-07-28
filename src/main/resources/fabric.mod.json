@@ -19,7 +19,8 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.sussysyrup.smitheesfoundry.Main"
+      "com.sussysyrup.smitheesfoundry.Main",
+      "com.sussysyrup.smcompat.SMCompatMain"
     ],
     "client": [
       "com.sussysyrup.smitheesfoundry.Client"
@@ -38,6 +39,14 @@
     ],
     "smitheesfoundry:setupPostFluids": [
       "com.sussysyrup.smitheesfoundry.PostFluidCommon"
+    ],
+    "rei_client":
+    [
+      "com.sussysyrup.smcompat.rei.SmitheeFoundryReiClient"
+    ],
+    "rei_server":
+    [
+      "com.sussysyrup.smcompat.rei.ReiServer"
     ]
   },
   "mixins": [

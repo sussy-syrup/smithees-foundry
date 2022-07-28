@@ -9,8 +9,8 @@ import java.util.Map;
 public class ApiCastingRegistry {
 
     private static Map<String, CastItem> typeCastItemMap = new HashMap<>();
-    private static Map<Item, String> itemTypeMap = new HashMap<>();
-    private static Map<String, CastingResource> typeCastingResourceMap = new HashMap<>();
+    public static Map<Item, String> itemTypeMap = new HashMap<>();
+    public static Map<String, CastingResource> typeCastingResourceMap = new HashMap<>();
 
     public static void addCastItem(String type, CastItem item)
     {

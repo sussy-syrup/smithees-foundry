@@ -8,7 +8,7 @@ import com.sussysyrup.smitheesfoundry.registry.EventRegistry;
 import com.sussysyrup.smitheesfoundry.registry.ItemsRegistry;
 import com.sussysyrup.smitheesfoundry.registry.ModScreenHandlerRegistry;
 
-public class PostCommon  implements CommonPost {
+public class PostCommon implements CommonPost {
 
     @Override
     public void init() {
