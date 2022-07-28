@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "smitheesfoundry:netherite_nugget"
+    }
+  },
+  "result": {
+    "item": "minecraft:netherite_ingot",
+    "count": 1
+  }
+}

@@ -28,6 +28,8 @@ public class CastingRegistry {
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_NUGGET);
+        nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), ItemsRegistry.COPPER_NUGGET);
+        nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), ItemsRegistry.NETHERITE_NUGGET);
     }
 
     public static void init()

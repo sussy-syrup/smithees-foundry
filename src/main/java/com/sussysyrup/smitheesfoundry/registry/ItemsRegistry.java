@@ -31,9 +31,10 @@ public class ItemsRegistry {
 
     public static Item COMPOUND_CLAY = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
     public static Item REINFORCED_BRICK = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP));
-
     public static Item ROSEGOLD_INGOT = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
     public static Item ROSEGOLD_NUGGET = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
+    public static Item NETHERITE_NUGGET = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
+    public static Item COPPER_NUGGET = new Item((new FabricItemSettings().group(ItemGroups.ITEM_GROUP)));
 
 
     public static CastItem BLANK_CAST = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), "blank");
@@ -48,9 +49,10 @@ public class ItemsRegistry {
 
         register("compound_clay", COMPOUND_CLAY);
         register("reinforced_brick", REINFORCED_BRICK);
-
         register("rosegold_ingot", ROSEGOLD_INGOT);
         register("rosegold_nugget", ROSEGOLD_NUGGET);
+        register("netherite_nugget", NETHERITE_NUGGET);
+        register("copper_nugget", COPPER_NUGGET);
 
         ApiToolRegistry.registerTool("pickaxe", FORGE_PICKAXE);
         ApiToolRegistry.addPreToolRenderedPart("pickaxe_head");

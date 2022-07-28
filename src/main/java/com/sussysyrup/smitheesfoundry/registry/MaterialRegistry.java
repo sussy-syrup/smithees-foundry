@@ -44,6 +44,8 @@ public class MaterialRegistry {
     private static final TagKey<Item> COPPERING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/coppering_resource_material"));
     private static final MaterialResource COPPERBLOCK = new MaterialResource("copper", 9);
     private static final TagKey<Item> COPPERBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/copperblock_resource_material"));
+    private static final MaterialResource COPPERNUG = new MaterialResource("copper", 1/9F);
+    private static final TagKey<Item> COPPERNUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/coppernug_resource_material"));
 
     private static final MaterialResource DIAMOND = new MaterialResource("diamond", 1);
     private static final TagKey<Item> DIAMOND_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/diamond_resource_material"));
@@ -53,6 +55,8 @@ public class MaterialRegistry {
     private static final TagKey<Item> NETHERITEING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteing_resource_material"));
     private static final MaterialResource NETHERITEBLOCK = new MaterialResource("netherite", 9);
     private static final TagKey<Item> NETHERITEBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteblock_resource_material"));
+    private static final MaterialResource NETHERITENUG = new MaterialResource("netherite", 1/9F);
+    private static final TagKey<Item> NETHERITENUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheritenug_resource_material"));
 
     private static final MaterialResource ROSEGOLDNUG = new MaterialResource("rosegold", 1F/9F);
     private static final TagKey<Item> ROSEGOLDNUG_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/rosegoldnug_resource_material"));
@@ -117,6 +121,8 @@ public class MaterialRegistry {
         ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDNUG_TAG, ROSEGOLDNUG);
         ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDING_TAG, ROSEGOLDING);
         ApiMaterialRegistry.registerPreMaterialResource(ROSEGOLDBLOCK_TAG, ROSEGOLDBLOCK);
+        ApiMaterialRegistry.registerPreMaterialResource(COPPERNUG_TAG, COPPERNUG);
+        ApiMaterialRegistry.registerPreMaterialResource(NETHERITENUG_TAG, NETHERITENUG);
     }
 
     private static void registerTraits()
