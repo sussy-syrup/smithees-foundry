@@ -1,15 +1,13 @@
 package com.sussysyrup.smcompat.rei;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.sussysyrup.smcompat.rei.display.AlloyingCategory;
-import com.sussysyrup.smcompat.rei.display.AlloyingDisplay;
-import com.sussysyrup.smcompat.rei.display.CastingCategory;
-import com.sussysyrup.smcompat.rei.display.CastingDisplay;
+import com.sussysyrup.smcompat.rei.display.*;
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
 import com.sussysyrup.smitheesfoundry.api.casting.CastingResource;
 import com.sussysyrup.smitheesfoundry.api.fluid.AlloyResource;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiAlloyRegistry;
+import com.sussysyrup.smitheesfoundry.api.item.PartItem;
 import com.sussysyrup.smitheesfoundry.registry.BlocksRegistry;
 import com.sussysyrup.smitheesfoundry.registry.ItemsRegistry;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
@@ -24,9 +22,12 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.DefaultedRegistry;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class SmitheeFoundryReiClient implements REIClientPlugin {
@@ -41,16 +42,23 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
             "alloying"
     );
 
+    public final static CategoryIdentifier<PartDisplay> PART = CategoryIdentifier.of(
+            Main.MODID,
+            "part"
+    );
+
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         registerCasting(registry);
         registerAlloying(registry);
+        registerPart(registry);
     }
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
         registry.add(new CastingCategory());
         registry.add(new AlloyingCategory());
+        registry.add(new PartCategory());
 
         registry.addWorkstations(CASTING, EntryStacks.of(BlocksRegistry.CASTING_TABLE_BLOCK.asItem()));
         registry.addWorkstations(ALLOYING, EntryStacks.of(BlocksRegistry.ALLOY_SMELTERY_CONTROLLER.asItem()));
@@ -118,6 +126,19 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
                 }
 
                 registry.add(new AlloyingDisplay(input, output));
+            }
+        }
+    }
+
+    private void registerPart(DisplayRegistry registry)
+    {
+        DefaultedRegistry<Item> itemsReg = Registry.ITEM;
+
+        for(Item item : itemsReg)
+        {
+            if(item instanceof PartItem partItem)
+            {
+                registry.add(new PartDisplay(Collections.singletonList(EntryIngredients.of(partItem)), Collections.emptyList()));
             }
         }
     }

@@ -3,7 +3,6 @@ package com.sussysyrup.smcompat.rei.display;
 import com.sussysyrup.smcompat.SMCompatMain;
 import com.sussysyrup.smcompat.rei.SmitheeFoundryReiClient;
 import com.sussysyrup.smitheesfoundry.registry.BlocksRegistry;
-import com.sussysyrup.smitheesfoundry.registry.ItemsRegistry;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.DisplayRenderer;

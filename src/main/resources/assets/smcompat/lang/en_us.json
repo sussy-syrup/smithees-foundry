@@ -1,4 +1,7 @@
 {
   "rei.smitheesfoundry.casting": "Casting",
-  "rei.smitheesfoundry.alloying": "Alloying"
+  "rei.smitheesfoundry.alloying": "Alloying",
+  "rei.smitheesfoundry.part": "Material",
+
+  "tool.smitheesfoundry.durability_mult": "Durability Multiplier: %d"
 }
