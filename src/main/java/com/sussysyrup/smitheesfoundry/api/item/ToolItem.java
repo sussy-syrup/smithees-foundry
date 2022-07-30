@@ -150,7 +150,7 @@ public abstract class ToolItem extends Item {
 
     @Override
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
-        if(ItemGroups.ITEM_GROUP.equals(group)) {
+        if(ItemGroups.TOOL_GROUP.equals(group)) {
 
             ApiToolRecipe recipe = ApiToolRecipeRegistry.getRecipeByType(toolType);
             List<Material> materialsList = ApiMaterialRegistry.getMaterials();
@@ -211,6 +211,17 @@ public abstract class ToolItem extends Item {
 
     @Override
     public boolean isItemBarVisible(ItemStack stack) {
+        if(stack.getNbt() == null)
+        {
+            return false;
+        }
+        if(getDurability(stack) == getMaxDurability(stack)) {
+        return false;
+        }
+        if(getDurability(stack) <= 0)
+        {
+            return false;
+        }
         return true;
     }
 

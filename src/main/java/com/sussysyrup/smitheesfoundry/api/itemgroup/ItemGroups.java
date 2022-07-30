@@ -19,6 +19,10 @@ public class ItemGroups {
             new Identifier(Main.MODID, "items"),
             () -> new ItemStack(ItemsRegistry.CRUDE_CHISEL));
 
+    public static final ItemGroup TOOL_GROUP = FabricItemGroupBuilder.build(
+            new Identifier(Main.MODID, "tool"),
+            () -> new ItemStack(ItemsRegistry.FORGE_PICKAXE));
+
     public static final ItemGroup BLOCK_GROUP = FabricItemGroupBuilder.build(
             new Identifier(Main.MODID, "blocks"),
             () -> new ItemStack(BlocksRegistry.FORGE_BLOCK));

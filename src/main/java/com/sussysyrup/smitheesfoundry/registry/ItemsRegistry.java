@@ -20,11 +20,11 @@ public class ItemsRegistry {
 
     public static final TagKey<Block> SWORD_MINEABLE = TagKey.of(Registry.BLOCK_KEY, new Identifier("c", "mineable/sword"));
 
-    public static Item FORGE_PICKAXE = new PickaxeToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "pickaxe", BlockTags.PICKAXE_MINEABLE);
-    public static Item FORGE_AXE = new AxeToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "axe", BlockTags.AXE_MINEABLE);
-    public static Item FORGE_HOE = new HoeToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "hoe", BlockTags.HOE_MINEABLE);
-    public static Item FORGE_SHOVEL = new ShovelToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "shovel", BlockTags.SHOVEL_MINEABLE);
-    public static Item FORGE_SWORD = new SwordToolItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1), "sword", SWORD_MINEABLE);
+    public static Item FORGE_PICKAXE = new PickaxeToolItem(new FabricItemSettings().group(ItemGroups.TOOL_GROUP).maxCount(1), "pickaxe", BlockTags.PICKAXE_MINEABLE);
+    public static Item FORGE_AXE = new AxeToolItem(new FabricItemSettings().group(ItemGroups.TOOL_GROUP).maxCount(1), "axe", BlockTags.AXE_MINEABLE);
+    public static Item FORGE_HOE = new HoeToolItem(new FabricItemSettings().group(ItemGroups.TOOL_GROUP).maxCount(1), "hoe", BlockTags.HOE_MINEABLE);
+    public static Item FORGE_SHOVEL = new ShovelToolItem(new FabricItemSettings().group(ItemGroups.TOOL_GROUP).maxCount(1), "shovel", BlockTags.SHOVEL_MINEABLE);
+    public static Item FORGE_SWORD = new SwordToolItem(new FabricItemSettings().group(ItemGroups.TOOL_GROUP).maxCount(1), "sword", SWORD_MINEABLE);
 
     public static Item CRUDE_CHISEL = new Item(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1).maxDamage(128));
     public static Item GUIDE_BOOK_ITEM = new GuideBookItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP).maxCount(1));
