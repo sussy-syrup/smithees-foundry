@@ -41,6 +41,17 @@
   "item.smitheesfoundry.compound_clay": "Compound Clay",
   "item.smitheesfoundry.reinforced_brick": "Reinforced Brick",
 
+  "material.smitheesfoundry.empty": "",
+  "material.smitheesfoundry.wood": "Wood",
+  "material.smitheesfoundry.stone": "Stone",
+  "material.smitheesfoundry.flint": "Flint",
+  "material.smitheesfoundry.iron": "Iron",
+  "material.smitheesfoundry.copper": "Copper",
+  "material.smitheesfoundry.diamond": "Diamond",
+  "material.smitheesfoundry.netherite": "Netherite",
+  "material.smitheesfoundry.gold": "Gold",
+  "material.smitheesfoundry.rosegold": "Rose Gold",
+
   "material.smitheesfoundry.wood.adj": "Wooden",
   "material.smitheesfoundry.stone.adj": "Stone",
   "material.smitheesfoundry.flint.adj": "Flint",
@@ -63,6 +74,7 @@
   "tool.smitheesfoundry.durability": "durability: %d",
   "tool.smitheesfoundry.miningspeed": "mining speed: %d",
   "tool.smitheesfoundry.mininglevel": "mining level: %d",
+  "tool.smitheesfoundry.expandtooltip":  "press %d to expand tooltip",
 
   "part.smitheesfoundry.cost": "Material Value: %d",
 
@@ -91,5 +103,9 @@
   "itemGroup.smitheesfoundry.parts": "Tool Parts",
   "itemGroup.smitheesfoundry.items": "Smithee's Foundry (Items)",
   "itemGroup.smitheesfoundry.blocks": "Smithee's Foundry (Blocks)",
-  "itemGroup.smitheesfoundry.tool": "Smithee's Foundry (Tools)"
+  "itemGroup.smitheesfoundry.tool": "Smithee's Foundry (Tools)",
+
+  "key.smitheesfoundry.tooltipexpand": "Expand Tooltips",
+
+  "category.smitheesfoundry.keybinds": "Smithee's Foundry"
 }

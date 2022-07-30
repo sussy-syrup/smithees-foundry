@@ -12,7 +12,8 @@
   "client": [
     "client.ModelLoaderMixin",
     "client.NamespaceResourceManagerMixin",
-    "client.MouseAccessor"
+    "client.MouseAccessor",
+    "client.KeybindingAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
