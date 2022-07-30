@@ -38,6 +38,7 @@ public class BlocksRegistry {
     public static Block ALLOY_SMELTERY_FAUCET = new AlloySmelteryFaucetBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
     public static Block TANK_BLOCK = new TankBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
     public static Block CASTING_TABLE_BLOCK = new CastingTableBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
+    public static Block CASTING_BASIN_BLOCK = new CastingBasinBlock(FabricBlockSettings.of(Material.STONE).requiresTool().strength(4.0F));
 
     public static BlockEntityType<ForgeBlockEntity> FORGE_BLOCK_ENTITY;
     public static BlockEntityType<RepairAnvilBlockEntity> REPAIR_ANVIL_BLOCK_ENTITY;
@@ -47,6 +48,7 @@ public class BlocksRegistry {
     public static BlockEntityType<AlloySmelteryFaucetBlockEntity> ALLOY_SMELTERY_FAUCET_BLOCK_ENTITY;
     public static BlockEntityType<TankBlockEntity> TANK_BLOCK_ENTITY;
     public static BlockEntityType<CastingTableBlockEntity> CASTING_TABLE_ENTITY;
+    public static BlockEntityType<CastingBasinBlockEntity> CASTING_BASIN_ENTITY;
 
     public static Block REINFORCED_BRICKS = new Block(FabricBlockSettings.of(Material.STONE).strength(4.0f).requiresTool());
     public static Block ROSEGOLD_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).requiresTool().strength(5.0F));
@@ -60,6 +62,7 @@ public class BlocksRegistry {
         register(ALLOY_SMELTERY_FAUCET, "alloy_smeltery_faucet");
         register(TANK_BLOCK, "tank_block");
         register(CASTING_TABLE_BLOCK, "casting_table_block");
+        register(CASTING_BASIN_BLOCK, "casting_basin_block");
 
         FORGE_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "forge_block"), FabricBlockEntityTypeBuilder.create(ForgeBlockEntity::new, FORGE_BLOCK).build());
         REPAIR_ANVIL_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "repair_anvil_block"), FabricBlockEntityTypeBuilder.create(RepairAnvilBlockEntity::new, REPAIR_ANVIL_BLOCK).build());
@@ -68,6 +71,7 @@ public class BlocksRegistry {
         ALLOY_SMELTERY_FAUCET_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "alloy_smeltery_faucet"), FabricBlockEntityTypeBuilder.create(AlloySmelteryFaucetBlockEntity::new, ALLOY_SMELTERY_FAUCET).build());
         TANK_BLOCK_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "tank"), FabricBlockEntityTypeBuilder.create(TankBlockEntity::new, TANK_BLOCK).build());
         CASTING_TABLE_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "casting_table"), FabricBlockEntityTypeBuilder.create(CastingTableBlockEntity::new, CASTING_TABLE_BLOCK).build());
+        CASTING_BASIN_ENTITY = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Main.MODID, "casting_basin"), FabricBlockEntityTypeBuilder.create(CastingBasinBlockEntity::new, CASTING_BASIN_BLOCK).build());
 
         register(REINFORCED_BRICKS, "reinforced_bricks");
         register(ROSEGOLD_BLOCK, "rosegold_block");

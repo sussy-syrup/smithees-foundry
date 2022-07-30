@@ -43,10 +43,6 @@
     "rei_client":
     [
       "com.sussysyrup.smcompat.rei.SmitheeFoundryReiClient"
-    ],
-    "rei_server":
-    [
-      "com.sussysyrup.smcompat.rei.ReiServer"
     ]
   },
   "mixins": [
