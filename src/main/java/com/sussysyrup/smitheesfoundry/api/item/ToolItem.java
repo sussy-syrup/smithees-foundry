@@ -11,18 +11,13 @@ import com.sussysyrup.smitheesfoundry.api.recipe.ApiToolRecipe;
 import com.sussysyrup.smitheesfoundry.api.trait.IActiveTrait;
 import com.sussysyrup.smitheesfoundry.api.trait.IStatTrait;
 import com.sussysyrup.smitheesfoundry.api.trait.TraitContainer;
-import com.sussysyrup.smitheesfoundry.client.registry.KeybindRegistry;
-import com.sussysyrup.smitheesfoundry.mixin.client.KeybindingAccessor;
 import com.sussysyrup.smitheesfoundry.util.ToolUtil;
 import com.sussysyrup.smitheesfoundry.util.Util;
-import me.shedaniel.rei.api.client.gui.widgets.Tooltip;
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -51,7 +46,6 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -219,9 +213,8 @@ public abstract class ToolItem extends Item {
 
         if(world.isClient)
         {
-            InputUtil.Key boundKey = ((KeybindingAccessor) KeybindRegistry.keyBinding).getBoundKey();
 
-            if(InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), boundKey.getCode())) {
+            if(InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), InputUtil.GLFW_KEY_LEFT_SHIFT)) {
 
                 addMaterialToTooltip(tooltip, stack.getNbt().getString(HEAD_KEY));
                 addMaterialToTooltip(tooltip, stack.getNbt().getString(BINDING_KEY));
@@ -231,7 +224,7 @@ public abstract class ToolItem extends Item {
             }
             else
             {
-                tooltip.add(new TranslatableText("tool.smitheesfoundry.expandtooltip", new TranslatableText(boundKey.getTranslationKey()).formatted(Formatting.GREEN)));
+                tooltip.add(new TranslatableText("tool.smitheesfoundry.expandtooltip", new TranslatableText("key.keyboard.left.shift").formatted(Formatting.GREEN)));
             }
         }
     }

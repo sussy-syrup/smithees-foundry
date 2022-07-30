@@ -27,35 +27,31 @@ public class AlloySmelteryFaucetBlock extends BlockWithEntity {
 
     private static VoxelShape composeShape(BlockState state) {
         if(state.get(FACING).equals(Direction.NORTH)) {
-            VoxelShape voxelShape = VoxelShapes.cuboid(0.3125, 0.5, 0, 0.375, 0.625, 0.125);
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.625, 0.5, 0, 0.6875, 0.625, 0.125));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.375, 0.4375, 0, 0.4375, 0.5, 0.125));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.5625, 0.4375, 0, 0.625, 0.5, 0.125));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.4375, 0.375, 0, 0.5625, 0.4375, 0.125));
+            VoxelShape voxelShape = VoxelShapes.cuboid(0.25, 0.4375, 0, 0.375, 0.625, 0.25);
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.625, 0.4375, 0, 0.75, 0.625, 0.25));
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.25, 0.3125, 0, 0.75, 0.4375, 0.25));
+
             return voxelShape;
         }
         if(state.get(FACING).equals(Direction.SOUTH)) {
-            VoxelShape voxelShape = VoxelShapes.cuboid(0.3125, 0.5, 0.875, 0.375, 0.625, 1);
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.625, 0.5, 0.875, 0.6875, 0.625, 1));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.375, 0.4375, 0.875, 0.4375, 0.5, 1));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.5625, 0.4375, 0.875, 0.625, 0.5, 1));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.4375, 0.375, 0.875, 0.5625, 0.4375, 1));
+            VoxelShape voxelShape = VoxelShapes.cuboid(0.25, 0.4375, 0.75, 0.375, 0.625, 1);
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.625, 0.4375, 0.75, 0.75, 0.625, 1));
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.25, 0.3125, 0.75, 0.75, 0.4375, 1));
+
             return voxelShape;
         }
         if(state.get(FACING).equals(Direction.EAST)) {
-            VoxelShape voxelShape = VoxelShapes.cuboid(0.875, 0.5, 0.3125, 1, 0.625, 0.375);
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.875, 0.5, 0.625, 1, 0.625, 0.6875));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.875, 0.4375, 0.375, 1, 0.5, 0.4375));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.875, 0.4375, 0.5625, 1, 0.5, 0.625));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.875, 0.375, 0.4375, 1, 0.4375, 0.5625));
+            VoxelShape voxelShape = VoxelShapes.cuboid(0.75, 0.4375, 0.25, 1, 0.625, 0.375);
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.75, 0.4375, 0.625, 1, 0.625, 0.75));
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0.75, 0.3125, 0.25, 1, 0.4375, 0.75));
+
             return voxelShape;
         }
         else {
-            VoxelShape voxelShape = VoxelShapes.cuboid(0, 0.5, 0.3125, 0.125, 0.625, 0.375);
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.5, 0.625, 0.125, 0.625, 0.6875));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.4375, 0.375, 0.125, 0.5, 0.4375));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.4375, 0.5625, 0.125, 0.5, 0.625));
-            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.375, 0.4375, 0.125, 0.4375, 0.5625));
+            VoxelShape voxelShape = VoxelShapes.cuboid(0, 0.4375, 0.25, 0.25, 0.625, 0.375);
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.4375, 0.625, 0.25, 0.625, 0.75));
+            voxelShape = VoxelShapes.union(voxelShape, VoxelShapes.cuboid(0, 0.3125, 0.25, 0.25, 0.4375, 0.75));
+
             return voxelShape;
         }
     }

@@ -38,8 +38,6 @@ public class Client implements ClientModInitializer {
         TextureRegistry.clientInit();
 
         S2CReceivers.clientInit();
-
-        KeybindRegistry.clientInit();
     }
 
 }
