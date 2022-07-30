@@ -19,6 +19,7 @@ public class BlocksRegistryClient {
         BlockEntityRendererRegistry.register(BlocksRegistry.TANK_BLOCK_ENTITY, TankBlockEntityRenderer::new);
         BlockEntityRendererRegistry.register(BlocksRegistry.ALLOY_SMELTERY_FAUCET_BLOCK_ENTITY, AlloySmelteryFaucetRenderer::new);
         BlockEntityRendererRegistry.register(BlocksRegistry.CASTING_TABLE_ENTITY, CastingTableBlockEntityRender::new);
+        BlockEntityRendererRegistry.register(BlocksRegistry.CASTING_BASIN_ENTITY, CastingBasinBlockEntityRender::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlocksRegistry.TANK_BLOCK, RenderLayer.getCutout());
     }

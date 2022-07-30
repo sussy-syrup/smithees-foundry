@@ -1,5 +1,8 @@
 package com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity;
 
+import com.sussysyrup.smitheesfoundry.Main;
+import com.sussysyrup.smitheesfoundry.api.casting.ApiBlockCastingRegistry;
+import com.sussysyrup.smitheesfoundry.api.casting.BlockCastingResource;
 import com.sussysyrup.smitheesfoundry.registry.BlocksRegistry;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
@@ -8,16 +11,20 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class CastingBasinBlockEntity extends BlockEntity {
@@ -122,19 +129,35 @@ public class CastingBasinBlockEntity extends BlockEntity {
         world.updateListeners(pos, blockState, blockState, Block.NOTIFY_LISTENERS);
     }
 
-    protected void startCasting(FluidVariant variant)
-    {
-        if(inventory.get(0).isEmpty() || inventory.get(1).isEmpty()) {
-            isCasting = true;
+    protected void startCasting(FluidVariant variant) {
+        isCasting = true;
 
-            if(inventory.get(0).isEmpty())
-            {
+        BlockCastingResource resource;
 
+        if (inventory.get(0).isEmpty()) {
+            resource = ApiBlockCastingRegistry.getCastingResource(Items.AIR);
+
+            for (Fluid fluid : resource.fluidItemMap().keySet()) {
+                if (variant.isOf(fluid)) {
+                    capacity = FluidConstants.BLOCK;
+                    castingStack = resource.fluidItemMap().get(fluid).getDefaultStack();
+                }
             }
-            else
-            {
+        } else {
+            resource = ApiBlockCastingRegistry.getCastingResource(inventory.get(0).getItem());
 
+            if (resource != null) {
+                for (Fluid fluid : resource.fluidItemMap().keySet()) {
+                    if (variant.isOf(fluid)) {
+                        capacity = FluidConstants.BLOCK;
+                        castingStack = resource.fluidItemMap().get(fluid).getDefaultStack();
+                    }
+                }
             }
+        }
+
+        if (capacity == 0) {
+            isCasting = false;
         }
     }
 
@@ -154,14 +177,7 @@ public class CastingBasinBlockEntity extends BlockEntity {
         if(solidifyTick >= (((float) fluidStorage.amount) / ((float) FluidConstants.INGOT)) * 60F)
         {
 
-            if(inventory.get(0).isEmpty())
-            {
-
-            }
-            else
-            {
-
-            }
+            inventory.set(0, castingStack);
 
             finishCasting();
         }

@@ -12,9 +12,6 @@ public class PostCommon implements CommonPost {
 
     @Override
     public void init() {
-        BlocksRegistry.main();
-        ApiPartBenchRegistry.main();
-        ItemsRegistry.main();
         EventRegistry.main();
         ModScreenHandlerRegistry.main();
         C2SReceivers.main();

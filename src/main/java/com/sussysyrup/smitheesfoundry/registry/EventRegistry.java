@@ -29,9 +29,7 @@ public class EventRegistry {
         {
             List<Item> items = Registry.ITEM.stream().toList();
 
-            //Casting - Depends on materials and parts existing
-            CastingRegistry.preInit();
-            CastingRegistry.init();
+            ApiCastingRegistry.init();
 
             for(Item item : items)
             {

@@ -3,7 +3,9 @@ package com.sussysyrup.smcompat.rei;
 import com.google.common.collect.ArrayListMultimap;
 import com.sussysyrup.smcompat.rei.display.*;
 import com.sussysyrup.smitheesfoundry.Main;
+import com.sussysyrup.smitheesfoundry.api.casting.ApiBlockCastingRegistry;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
+import com.sussysyrup.smitheesfoundry.api.casting.BlockCastingResource;
 import com.sussysyrup.smitheesfoundry.api.casting.CastingResource;
 import com.sussysyrup.smitheesfoundry.api.fluid.AlloyResource;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiAlloyRegistry;
@@ -41,6 +43,11 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
             "casting"
     );
 
+    public final static CategoryIdentifier<CastingBlockDisplay> CASTING_BLOCK = CategoryIdentifier.of(
+            Main.MODID,
+            "casting_block"
+    );
+
     public final static CategoryIdentifier<AlloyingDisplay> ALLOYING = CategoryIdentifier.of(
             Main.MODID,
             "alloying"
@@ -63,9 +70,11 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
         registry.add(new CastingCategory());
         registry.add(new AlloyingCategory());
         registry.add(new PartCategory());
+        registry.add(new CastingBlockCategory());
 
         registry.addWorkstations(CASTING, EntryStacks.of(BlocksRegistry.CASTING_TABLE_BLOCK.asItem()));
         registry.addWorkstations(ALLOYING, EntryStacks.of(BlocksRegistry.ALLOY_SMELTERY_CONTROLLER.asItem()));
+        registry.addWorkstations(CASTING_BLOCK, EntryStacks.of(BlocksRegistry.CASTING_BASIN_BLOCK));
     }
 
     @Override
@@ -99,6 +108,16 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
                 castingDisplay = new CastingDisplay(ApiCastingRegistry.getCastItem(ApiCastingRegistry.getTypeFromItem(item)), fluid, item, fluidValue);
 
                 registry.add(castingDisplay);
+            }
+        }
+
+        for(Item item : ApiBlockCastingRegistry.castingResourceHashMap.keySet())
+        {
+            BlockCastingResource resource = ApiBlockCastingRegistry.getCastingResource(item);
+
+            for(Fluid fluid : resource.fluidItemMap().keySet())
+            {
+                registry.add(new CastingBlockDisplay(item, fluid, resource.fluidItemMap().get(fluid), FluidConstants.BLOCK));
             }
         }
 

@@ -2,6 +2,7 @@ package com.sussysyrup.smitheesfoundry.client.render;
 
 import com.sussysyrup.smitheesfoundry.api.client.render.ApiSpriteRendering;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.AlloySmelteryFaucetBlock;
+import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.CastingBasinBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.CastingTableBlock;
 import com.sussysyrup.smitheesfoundry.blocks.alloysmeltery.entity.AlloySmelteryFaucetBlockEntity;
 import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
@@ -76,6 +77,8 @@ public class AlloySmelteryFaucetRenderer implements BlockEntityRenderer<AlloySme
 
             if(entity.getWorld().getBlockState(entity.getPos().add(0, -1, 0)).getBlock() instanceof CastingTableBlock)
             {
+                matrices.push();
+
                 ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0, 0.75F, colour, overlay, lightCor,1);
 
                 matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
@@ -89,8 +92,52 @@ public class AlloySmelteryFaucetRenderer implements BlockEntityRenderer<AlloySme
                 matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
                 matrices.translate(-0.125F, 0, -0.25F);
                 ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 0.75F, colour, overlay, lightCor, 1);
-            }
-            else {
+
+                matrices.pop();
+
+            } else if (entity.getWorld().getBlockState(entity.getPos().add(0, -1, 0)).getBlock() instanceof CastingBasinBlock) {
+
+                matrices.push();
+
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0, 1F, colour, overlay, lightCor,1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.25F, 0, -0.125F);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0.125F, 0.875F, colour, overlay, lightCor, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.translate(-0.125F, 0, 0);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 1F, colour, overlay, lightCor, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.125F, 0, -0.25F);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 1F, colour, overlay, lightCor, 1);
+
+                matrices.pop();
+
+                matrices.push();
+
+                matrices.translate(0, 1F, 0);
+
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0, 0.5F, colour, overlay, lightCor,1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.25F, 0, -0.125F);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0F, 0.5F, colour, overlay, lightCor, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
+                matrices.translate(-0.125F, 0, 0);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 0.5F, colour, overlay, lightCor, 1);
+
+                matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
+                matrices.translate(-0.125F, 0, -0.25F);
+                ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 0.5F, colour, overlay, lightCor, 1);
+
+                matrices.pop();
+
+            } else {
+                matrices.push();
+
                 ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.25F, 0, 0.625F, colour, overlay, lightCor, 1);
 
                 matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
@@ -104,6 +151,8 @@ public class AlloySmelteryFaucetRenderer implements BlockEntityRenderer<AlloySme
                 matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
                 matrices.translate(-0.125F, 0, -0.25F);
                 ApiSpriteRendering.renderConsumerSpriteTile(matrices, sprite, consumer, 0, 0.125F, 0, 0.625F, colour, overlay, lightCor, 1);
+
+                matrices.pop();
             }
             matrices.pop();
             matrices.pop();

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "G G",
+    "G G",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "smitheesfoundry:reinforced_brick"
+    }
+  },
+  "result": {
+    "item": "smitheesfoundry:casting_basin_block",
+    "count": 1
+  }
+}

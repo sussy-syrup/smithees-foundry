@@ -95,6 +95,13 @@ public class BlocksRegistry {
             }
             return null;
         }), CASTING_TABLE_ENTITY);
+        FluidStorage.SIDED.registerForBlockEntity(((blockEntity, direction) -> {
+            if(direction.equals(Direction.UP))
+            {
+                return blockEntity.fluidStorage;
+            }
+            return null;
+        }), CASTING_BASIN_ENTITY);
     }
 
     private static void register(Block block, String name)

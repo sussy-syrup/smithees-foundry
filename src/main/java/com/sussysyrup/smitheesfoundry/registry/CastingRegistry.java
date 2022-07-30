@@ -1,9 +1,8 @@
 package com.sussysyrup.smitheesfoundry.registry;
 
 import com.sussysyrup.smitheesfoundry.Main;
-import com.sussysyrup.smitheesfoundry.api.casting.CastingResource;
+import com.sussysyrup.smitheesfoundry.api.casting.ApiBlockCastingRegistry;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -14,38 +13,36 @@ import java.util.HashMap;
 
 public class CastingRegistry {
 
-    public static HashMap<Fluid, Item> ingotFluidMap = new HashMap<>();
-    public static HashMap<Fluid, Item> nuggetFluidMap = new HashMap<>();
-
     public static void preInit()
     {
+        HashMap<Fluid, Item> ingotFluidMap = ApiCastingRegistry.ingotFluidMap;
+        HashMap<Fluid, Item> nuggetFluidMap = ApiCastingRegistry.nuggetFluidMap;
+        HashMap<Fluid, Item> blockFluidMap = ApiBlockCastingRegistry.blockFluidMap;
+
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), Items.COPPER_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), Items.NETHERITE_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_INGOT);
 
+        ApiCastingRegistry.ingotFluidMap = ingotFluidMap;
+
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), ItemsRegistry.COPPER_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), ItemsRegistry.NETHERITE_NUGGET);
-    }
 
-    public static void init()
-    {
-        ApiCastingRegistry.addCastingResource("ingot", new CastingResource(FluidConstants.INGOT, ingotFluidMap));
-        ApiCastingRegistry.addCastingResource("nugget", new CastingResource(FluidConstants.NUGGET, nuggetFluidMap));
+        ApiCastingRegistry.nuggetFluidMap = nuggetFluidMap;
 
-        for(Item item : ingotFluidMap.values())
-        {
-            ApiCastingRegistry.addItemToType("ingot", item);
-        }
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_BLOCK);
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_BLOCK);
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), Registry.ITEM.get(new Identifier(Main.MODID, "rosegold_block")));
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), Items.COPPER_BLOCK);
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), Items.NETHERITE_BLOCK);
+        blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_BLOCK);
 
-        for(Item item : nuggetFluidMap.values())
-        {
-            ApiCastingRegistry.addItemToType("nugget", item);
-        }
+        ApiBlockCastingRegistry.blockFluidMap = blockFluidMap;
     }
 
 }

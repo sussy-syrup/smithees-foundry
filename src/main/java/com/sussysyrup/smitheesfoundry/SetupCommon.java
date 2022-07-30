@@ -1,5 +1,6 @@
 package com.sussysyrup.smitheesfoundry;
 
+import com.sussysyrup.smitheesfoundry.api.block.ApiPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonSetup;
 import com.sussysyrup.smitheesfoundry.registry.*;
 
@@ -21,5 +22,10 @@ public class SetupCommon implements CommonSetup {
 
         //Smelting
         SmelteryResourceRegistry.main();
+
+        //Technically doesn't need to be here but easier to work around some calls like that
+        BlocksRegistry.main();
+        ApiPartBenchRegistry.main();
+        ItemsRegistry.main();
     }
 }

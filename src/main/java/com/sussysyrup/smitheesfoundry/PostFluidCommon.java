@@ -2,6 +2,7 @@ package com.sussysyrup.smitheesfoundry;
 
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonFluidPost;
 import com.sussysyrup.smitheesfoundry.registry.AlloyRegistry;
+import com.sussysyrup.smitheesfoundry.registry.CastingRegistry;
 import com.sussysyrup.smitheesfoundry.registry.FluidRegistry;
 
 public class PostFluidCommon implements CommonFluidPost {
@@ -9,5 +10,6 @@ public class PostFluidCommon implements CommonFluidPost {
     public void init() {
         FluidRegistry.postInit();
         AlloyRegistry.main();
+        CastingRegistry.preInit();
     }
 }

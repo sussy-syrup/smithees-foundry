@@ -35,18 +35,24 @@ public class CastingBasinBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
 
     private static VoxelShape composeShape(BlockState state) {
-        VoxelShape shape = VoxelShapes.cuboid(0, 0, 0, 0.1875, 0.8125, 0.1875);
+        VoxelShape shape = VoxelShapes.cuboid(0.0625, 0.0625, 0.0625, 0.125, 0.9375, 0.9375);
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.875, 0.0625, 0.0625, 0.9375, 0.9375, 0.9375));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.0625, 0.0625, 0.0625, 0.9375, 0.9375, 0.125));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.0625, 0.0625, 0.875, 0.9375, 0.9375, 0.9375));
 
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.8125, 0, 0.8125, 1, 0.8125, 1));
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.8125, 0, 0, 1, 0.8125, 0.1875));
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0, 0, 0.8125, 0.1875, 0.8125, 1));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.0625, 0.0625, 0.0625, 0.9375, 0.125, 0.9375));
 
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0, 0.8125, 0, 1, 1, 0.0625));
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0, 0.8125, 0.9375, 1, 1, 1));
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0, 0.8125, 0, 0.0625, 1, 1));
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.9375, 0.8125, 0, 1, 1, 1));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.125, 0, 0.125, 0.1875, 0.0625, 0.25));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.125, 0, 0.125, 0.25, 0.0625, 0.1875));
 
-        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0, 0.8125, 0, 1, 0.875, 1));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.8125, 0, 0.125, 0.875, 0.0625, 0.25));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.75, 0, 0.125, 0.875, 0.0625, 0.1875));
+
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.8125, 0, 0.75, 0.875, 0.0625, 0.875));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.75, 0, 0.8125, 0.875, 0.0625, 0.875));
+
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.125, 0, 0.75, 0.1875, 0.0625, 0.875));
+        shape = VoxelShapes.union(shape, VoxelShapes.cuboid(0.125, 0, 0.8125, 0.25, 0.0625, 0.875));
 
         return shape;
     }
@@ -54,7 +60,7 @@ public class CastingBasinBlock extends BlockWithEntity {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 
-        return super.getOutlineShape(state, world, pos, context);
+        return composeShape(state);
     }
 
     public CastingBasinBlock(Settings settings) {
