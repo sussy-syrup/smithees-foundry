@@ -14,7 +14,6 @@ import com.sussysyrup.smitheesfoundry.util.records.ScanResult;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -261,7 +260,14 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
         //Scanning front
         //right
-        result = scanInitialSide(world, remaining - 1, scanPos.add(direction.rotateYClockwise().getVector()), direction.rotateYClockwise());
+        //result = scanInitialSide(world, remaining - 1, scanPos.add(direction.rotateYClockwise().getVector()), direction.rotateYClockwise());
+
+        result = specialScanRight(world, remaining - 1, scanPos, direction.rotateYClockwise());
+
+        if(result == null)
+        {
+            result = scanInitialSide(world, remaining - 1, scanPos.add(direction.rotateYClockwise().getVector()), direction.rotateYClockwise());
+        }
 
         if(result.endPos() == null || result.nextPos() == null)
         {
@@ -274,7 +280,13 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         BlockPos saveScanPos = result.nextPos();
 
         //left
-        result = specialScanLeft(world, remaining, scanPos.add(direction.rotateYCounterclockwise().getVector()), direction.rotateYCounterclockwise());
+
+        result = specialSpecialScanLeft(world, remaining, scanPos, direction.rotateYCounterclockwise());
+
+        if(result == null)
+        {
+            result = specialScanLeft(world, remaining, scanPos.add(direction.rotateYCounterclockwise().getVector()), direction.rotateYCounterclockwise());
+        }
 
         if(result.endPos() == null || result.nextPos() == null)
         {
@@ -478,6 +490,26 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         }
 
         return new ScanResult(lengthOut, pos, endPos);
+    }
+
+    public ScanResult specialScanRight(World world, int length, BlockPos startPos, Direction direction)
+    {
+        if(dummyBlockCheck(world, startPos.add(direction.getVector().add(direction.rotateYCounterclockwise().getVector()))))
+        {
+            return new ScanResult(0, startPos, startPos.add(direction.getVector().add(direction.rotateYCounterclockwise().getVector())));
+        }
+
+        return null;
+    }
+
+    public ScanResult specialSpecialScanLeft(World world, int length, BlockPos startPos, Direction direction)
+    {
+        if(dummyBlockCheck(world, startPos.add(direction.getVector().add(direction.rotateYClockwise().getVector()))))
+        {
+            return new ScanResult(0, startPos, startPos.add(direction.getVector().add(direction.rotateYClockwise().getVector())));
+        }
+
+        return null;
     }
     public ScanResult specialScanLeft(World world, int length, BlockPos startPos, Direction direction)
     {

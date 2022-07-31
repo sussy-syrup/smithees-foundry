@@ -77,6 +77,7 @@ public class BlocksRegistry {
         register(ROSEGOLD_BLOCK, "rosegold_block");
 
         ApiAlloySmelteryRegistry.addStructureBlock(REINFORCED_BRICKS);
+        ApiAlloySmelteryRegistry.addStructureBlock(ALLOY_SMELTERY_CONTROLLER);
         ApiAlloySmelteryRegistry.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
         ApiAlloySmelteryRegistry.addTankBlock(TANK_BLOCK);
         ApiAlloySmelteryRegistry.addFuelFluid(Fluids.LAVA, 1);
