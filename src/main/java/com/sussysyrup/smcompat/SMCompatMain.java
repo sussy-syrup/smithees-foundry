@@ -11,6 +11,5 @@ public class SMCompatMain implements ModInitializer {
 
     @Override
     public void onInitialize() {
-
     }
 }

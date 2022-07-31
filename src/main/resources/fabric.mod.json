@@ -23,22 +23,28 @@
       "com.sussysyrup.smcompat.SMCompatMain"
     ],
     "client": [
-      "com.sussysyrup.smitheesfoundry.Client"
+      "com.sussysyrup.smitheesfoundry.Client",
+      "com.sussysyrup.smcompat.SMCompatClient"
     ],
     "preLaunch": [
-      "com.sussysyrup.smitheesfoundry.PreLaunch"
+      "com.sussysyrup.smitheesfoundry.PreLaunch",
+      "com.sussysyrup.smcompat.SMCompatPreLaunch"
     ],
     "smitheesfoundry:setup": [
-      "com.sussysyrup.smitheesfoundry.SetupCommon"
+      "com.sussysyrup.smitheesfoundry.SetupCommon",
+      "com.sussysyrup.smcompat.SMCompatSetupCommon"
     ],
     "smitheesfoundry:setupPost": [
-      "com.sussysyrup.smitheesfoundry.PostCommon"
+      "com.sussysyrup.smitheesfoundry.PostCommon",
+      "com.sussysyrup.smcompat.SMCompatSetupPost"
     ],
     "smitheesfoundry:setupPostMaterials": [
-      "com.sussysyrup.smitheesfoundry.PostMaterialCommon"
+      "com.sussysyrup.smitheesfoundry.PostMaterialCommon",
+      "com.sussysyrup.smcompat.SMCompatPostMaterial"
     ],
     "smitheesfoundry:setupPostFluids": [
-      "com.sussysyrup.smitheesfoundry.PostFluidCommon"
+      "com.sussysyrup.smitheesfoundry.PostFluidCommon",
+      "com.sussysyrup.smcompat.SMCompatPostFluid"
     ],
     "rei_client":
     [

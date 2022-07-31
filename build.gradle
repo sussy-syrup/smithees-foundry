@@ -33,6 +33,13 @@ dependencies {
 	modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:8.2.471"
 
 	modImplementation "vazkii.patchouli:Patchouli:1.18.2-70-FABRIC"
+
+	/*
+	Contains:
+	BetterEnd
+	BCLib
+	 */
+	modCompileOnly fileTree(dir: 'libs', include: '*.jar')
 }
 
 loom {
