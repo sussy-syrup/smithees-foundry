@@ -43,14 +43,14 @@ public abstract class NamespaceResourceManagerMixin {
     List<ResourcePack> packList;
 
     @Inject(method = "getResource", at = @At("HEAD"), cancellable = true)
-     private void getResource(Identifier identifier, CallbackInfoReturnable<Resource> cir)
+    private void getResource(Identifier identifier, CallbackInfoReturnable<Resource> cir)
     {
 
         if(!identifier.getNamespace().equals(Main.MODID)) return;
 
         /**
          * This ugly block of vanilla code ensures that parts and items with a texture are loaded normally before moving to texture-gen
-         * to use existing textures used in datagen you can just pop them into forge:textures/item and name them something like partrender or partitem followed by _material_ 
+         * to use existing textures used in datagen you can just pop them into forge:textures/item and name them something like partrender or partitem followed by _material_
          * and finally the part type
          */
         shadow$validate(identifier);

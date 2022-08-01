@@ -10,22 +10,25 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.FlowableFluid;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.awt.*;
-import java.util.HashMap;
+import java.util.List;
 
 public class ApiMoltenFluidRegistry {
 
     private static HashMap<String, FluidProperties> fluidRegistry = new HashMap<>();
     private static HashMap<String, FluidProperties> fluidRegistryPost = new HashMap<>();
 
-    private static List<Identifier> bucketIDs = new ArrayList<>();
+    public static Set<RegistryEntry<Fluid>> moltenFluidSet = new HashSet<>();
+
+    private static Set<Identifier> bucketIDs = new HashSet<>();
 
     public static void main()
     {
@@ -116,6 +119,16 @@ public class ApiMoltenFluidRegistry {
 
     public static List<Identifier> getBucketIDs()
     {
-        return bucketIDs;
+        return bucketIDs.stream().toList();
+    }
+
+    public static void addFluidToTag(Fluid fluid)
+    {
+        moltenFluidSet.add(Registry.FLUID.getEntry(Registry.FLUID.getKey(fluid).get()).get());
+    }
+
+    public static void removeFluidFromTag(Fluid fluid)
+    {
+        moltenFluidSet.remove(Registry.FLUID.getEntry(Registry.FLUID.getKey(fluid).get()).get());
     }
 }

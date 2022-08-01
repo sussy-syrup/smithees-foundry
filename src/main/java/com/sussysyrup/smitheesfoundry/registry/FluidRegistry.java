@@ -24,6 +24,17 @@ public class FluidRegistry {
         ApiMoltenFluidRegistry.getFluidProperties("molten_netherite").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")));
         ApiMoltenFluidRegistry.getFluidProperties("molten_gold").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")));
         ApiMoltenFluidRegistry.getFluidProperties("molten_rosegold").setFluid(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")));
+
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "flowing_molten_iron")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "flowing_molten_copper")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "flowing_molten_netherite")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "flowing_molten_gold")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")));
+        ApiMoltenFluidRegistry.addFluidToTag(Registry.FLUID.get(new Identifier(Main.MODID, "flowing_molten_rosegold")));
     }
 
 }

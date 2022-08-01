@@ -1,4 +1,18 @@
 {
+  "block.smitheesfoundry.molten_terminite": "Molten Terminite",
+  "block.smitheesfoundry.molten_aeternium": "Molten Aeternium",
+  "block.smitheesfoundry.molten_thallasium": "Molten Thallasium",
+
+  "material.smitheesfoundry.eternalcrystal.adj": "Eternal Crystal",
+  "material.smitheesfoundry.aeternium.adj": "Aeternium",
+  "material.smitheesfoundry.thallasium.adj": "Thallasium",
+  "material.smitheesfoundry.terminite.adj": "Terminite",
+
+  "material.smitheesfoundry.eternalcrystal": "Eternal Crystal",
+  "material.smitheesfoundry.aeternium": "Aeternium",
+  "material.smitheesfoundry.thallasium": "Thallasium",
+  "material.smitheesfoundry.terminite": "Terminite",
+
   "rei.smitheesfoundry.casting": "Casting",
   "rei.smitheesfoundry.alloying": "Alloying",
   "rei.smitheesfoundry.part": "Material",

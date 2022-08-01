@@ -39,7 +39,6 @@ public class MaterialRegistry {
     private static final MaterialResource IRONBLOCK = new MaterialResource("iron", 9);
     private static final TagKey<Item> IRONBLOCK_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/ironblock_resource_material"));
 
-    //copper nuggets don't exist, yet
     private static final MaterialResource COPPERING = new MaterialResource("copper", 1);
     private static final TagKey<Item> COPPERING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/coppering_resource_material"));
     private static final MaterialResource COPPERBLOCK = new MaterialResource("copper", 9);
@@ -50,7 +49,6 @@ public class MaterialRegistry {
     private static final MaterialResource DIAMOND = new MaterialResource("diamond", 1);
     private static final TagKey<Item> DIAMOND_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/diamond_resource_material"));
 
-    //nether nugs don't exist either, yet
     private static final MaterialResource NETHERITEING = new MaterialResource("netherite", 1);
     private static final TagKey<Item> NETHERITEING_TAG = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "resource/netheriteing_resource_material"));
     private static final MaterialResource NETHERITEBLOCK = new MaterialResource("netherite", 9);
