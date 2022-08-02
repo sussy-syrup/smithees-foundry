@@ -29,7 +29,7 @@ public class LootManagerMixin {
     @Inject(method = "apply", at = @At(value = "INVOKE", target = "Ljava/util/Map;remove(Ljava/lang/Object;)Ljava/lang/Object;"), locals = LocalCapture.CAPTURE_FAILHARD)
     public void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo callbackInfo, ImmutableMap.Builder builderIn) {
         HashMap<Identifier, Identifier> poolIDMap = new HashMap<>();
-        List<Identifier> list = ApiPartBenchRegistry.getPartBenchWoodMap().keySet().stream().toList();
+        List<Identifier> list = ApiPartBenchRegistry.getInstance().getPartBenchWoodMap().keySet().stream().toList();
         list.forEach(identifier -> poolIDMap.put(new Identifier(identifier.getNamespace(), "blocks/" + identifier.getPath()), identifier));
 
         FabricLootPoolBuilder poolBuilder;

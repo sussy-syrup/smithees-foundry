@@ -18,9 +18,9 @@ public class RecipeManagerMixin {
 
     @Inject(method = "apply", at = @At("HEAD"))
     public void interceptApply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo info) {
-        for(Identifier id : ApiPartBenchRegistry.getRecipes().keySet())
+        for(Identifier id : ApiPartBenchRegistry.getInstance().getRecipes().keySet())
         {
-            map.put(id, ApiPartBenchRegistry.getRecipe(id));
+            map.put(id, ApiPartBenchRegistry.getInstance().getRecipe(id));
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.sussysyrup.smitheesfoundry.api.client.block;
 
-import com.sussysyrup.smitheesfoundry.api.block.ApiPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.client.model.provider.PartBenchVariantProvider;
 import com.sussysyrup.smitheesfoundry.client.render.PartBenchEntityRender;
+import com.sussysyrup.smitheesfoundry.impl.block.ImplPartBenchRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -15,6 +15,6 @@ public class ApiPartBenchRegistryClient {
     {
         ModelLoadingRegistry.INSTANCE.registerVariantProvider(resourceManager -> new PartBenchVariantProvider());
 
-        BlockEntityRendererRegistry.INSTANCE.register(ApiPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchEntityRender::new);
+        BlockEntityRendererRegistry.INSTANCE.register(ImplPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchEntityRender::new);
     }
 }

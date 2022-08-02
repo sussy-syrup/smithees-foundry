@@ -25,7 +25,6 @@ public class SetupCommon implements CommonSetup {
 
         //Technically doesn't need to be here but easier to work around some calls like that
         BlocksRegistry.main();
-        ApiPartBenchRegistry.main();
         ItemsRegistry.main();
     }
 }

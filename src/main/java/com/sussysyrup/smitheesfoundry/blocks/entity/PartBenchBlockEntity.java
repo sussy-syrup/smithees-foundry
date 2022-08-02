@@ -1,7 +1,7 @@
 package com.sussysyrup.smitheesfoundry.blocks.entity;
 
-import com.sussysyrup.smitheesfoundry.api.block.ApiPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.api.blockentity.InventoryCraftingBlockEntity;
+import com.sussysyrup.smitheesfoundry.impl.block.ImplPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.screen.PartBenchScreenHandler;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,11 +14,11 @@ public class PartBenchBlockEntity extends InventoryCraftingBlockEntity {
 
     public PartBenchBlockEntity(BlockPos blockPos, BlockState blockState, int size)
     {
-        super(ApiPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, blockPos, blockState, size);
+        super(ImplPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, blockPos, blockState, size);
     }
 
     public PartBenchBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(ApiPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, blockPos, blockState);
+        super(ImplPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, blockPos, blockState);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class LootUtilMixin {
         {
             return;
         }
-        if(ApiPartBenchRegistry.getPartBenchWoodMap().keySet().contains(new Identifier(packSource.getNamespace(), packSource.getPath().replaceAll("blocks/", ""))))
+        if(ApiPartBenchRegistry.getInstance().getPartBenchWoodMap().keySet().contains(new Identifier(packSource.getNamespace(), packSource.getPath().replaceAll("blocks/", ""))))
         {
             cir.setReturnValue(LootTableSource.MOD);
         }

@@ -16,17 +16,17 @@ public class PartBenchVariantProvider implements ModelVariantProvider {
     public @Nullable UnbakedModel loadModelVariant(ModelIdentifier modelId, ModelProviderContext context) throws ModelProviderException {
         Identifier id = new Identifier(modelId.getNamespace(), modelId.getPath());
 
-        if(ApiPartBenchRegistry.getPartBenchWoodMap().containsKey(id))
+        if(ApiPartBenchRegistry.getInstance().getPartBenchWoodMap().containsKey(id))
         {
             if(modelId.getVariant().equals("inventory"))
             {
-                Identifier wood = ApiPartBenchRegistry.getPartBenchWood(id);
+                Identifier wood = ApiPartBenchRegistry.getInstance().getPartBenchWood(id);
 
                 return new PartBenchModel(wood.getNamespace(), wood.getPath());
             }
             else
             {
-                Identifier wood = ApiPartBenchRegistry.getPartBenchWood(id);
+                Identifier wood = ApiPartBenchRegistry.getInstance().getPartBenchWood(id);
 
                 return new PartBenchModel(wood.getNamespace(), wood.getPath());
             }

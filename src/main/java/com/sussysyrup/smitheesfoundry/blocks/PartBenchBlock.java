@@ -1,8 +1,8 @@
 package com.sussysyrup.smitheesfoundry.blocks;
 
 import com.sussysyrup.smitheesfoundry.Main;
-import com.sussysyrup.smitheesfoundry.api.block.ApiPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.blocks.entity.PartBenchBlockEntity;
+import com.sussysyrup.smitheesfoundry.impl.block.ImplPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.util.Util;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -84,7 +84,7 @@ public class PartBenchBlock extends BlockWithEntity {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
-        return world.isClient() ? checkType(type, ApiPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchBlockEntity::clientTicker) : checkType(type, ApiPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchBlockEntity::serverTicker);
+        return world.isClient() ? checkType(type, ImplPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchBlockEntity::clientTicker) : checkType(type, ImplPartBenchRegistry.PART_BENCH_BLOCK_ENTITY, PartBenchBlockEntity::serverTicker);
     }
 
     @Override
