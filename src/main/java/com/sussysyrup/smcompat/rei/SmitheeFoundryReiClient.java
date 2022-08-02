@@ -111,9 +111,9 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
             }
         }
 
-        for(Item item : ApiBlockCastingRegistry.castingResourceHashMap.keySet())
+        for(Item item : ApiBlockCastingRegistry.getInstance().getCastingResourceHashmap().keySet())
         {
-            BlockCastingResource resource = ApiBlockCastingRegistry.getCastingResource(item);
+            BlockCastingResource resource = ApiBlockCastingRegistry.getInstance().getCastingResource(item);
 
             for(Fluid fluid : resource.fluidItemMap().keySet())
             {

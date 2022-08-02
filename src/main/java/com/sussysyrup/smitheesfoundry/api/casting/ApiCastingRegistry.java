@@ -75,7 +75,5 @@ public class ApiCastingRegistry {
         {
             addItemToType("nugget", item);
         }
-
-        ApiBlockCastingRegistry.init();
     }
 }

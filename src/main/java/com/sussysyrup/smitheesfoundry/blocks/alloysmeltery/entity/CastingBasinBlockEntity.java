@@ -135,7 +135,7 @@ public class CastingBasinBlockEntity extends BlockEntity {
         BlockCastingResource resource;
 
         if (inventory.get(0).isEmpty()) {
-            resource = ApiBlockCastingRegistry.getCastingResource(Items.AIR);
+            resource = ApiBlockCastingRegistry.getInstance().getCastingResource(Items.AIR);
 
             for (Fluid fluid : resource.fluidItemMap().keySet()) {
                 if (variant.isOf(fluid)) {
@@ -144,7 +144,7 @@ public class CastingBasinBlockEntity extends BlockEntity {
                 }
             }
         } else {
-            resource = ApiBlockCastingRegistry.getCastingResource(inventory.get(0).getItem());
+            resource = ApiBlockCastingRegistry.getInstance().getCastingResource(inventory.get(0).getItem());
 
             if (resource != null) {
                 for (Fluid fluid : resource.fluidItemMap().keySet()) {

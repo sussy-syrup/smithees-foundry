@@ -1,30 +1,27 @@
 package com.sussysyrup.smitheesfoundry.api.casting;
 
 
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 
 import java.util.HashMap;
 
-public class ApiBlockCastingRegistry {
+public interface ApiBlockCastingRegistry {
 
-    public static HashMap<Fluid, Item> blockFluidMap = new HashMap<>();
-
-    public static HashMap<Item,BlockCastingResource> castingResourceHashMap = new HashMap<>();
-
-    public static void addCastingResource(Item item, BlockCastingResource castingResource)
-    {
-       castingResourceHashMap.put(item, castingResource);
+    static ApiBlockCastingRegistry getInstance() {
+        return RegistryInstances.blockCastingRegistry;
     }
 
-    public static BlockCastingResource getCastingResource(Item item)
-    {
-        return castingResourceHashMap.get(item);
-    }
+    HashMap<Item, BlockCastingResource> getCastingResourceHashmap();
 
-    public static void init()
-    {
-        addCastingResource(Items.AIR, new BlockCastingResource(blockFluidMap));
-    }
+    HashMap<Fluid, Item> preBlockFluidMap();
+
+    void setPreBlockFluidMap(HashMap<Fluid, Item> map);
+
+    void addCastingResource(Item item, BlockCastingResource castingResource);
+
+    BlockCastingResource getCastingResource(Item item);
+
+    void reload();
 }
