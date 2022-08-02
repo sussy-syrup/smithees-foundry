@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.registry;
+package com.sussysyrup.smitheesfoundry.impl.registry;
 
 import com.sussysyrup.smitheesfoundry.api.casting.CastingResource;
 import com.sussysyrup.smitheesfoundry.api.casting.ApiCastingRegistry;
@@ -11,7 +11,6 @@ import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.Material;
 import com.sussysyrup.smitheesfoundry.api.material.MaterialResource;
 import com.sussysyrup.smitheesfoundry.api.item.PartItem;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
@@ -21,15 +20,11 @@ import net.minecraft.util.registry.Registry;
 import java.util.HashMap;
 import java.util.List;
 
-public class EventRegistry {
+public class Reloader {
 
-    public static void main()
+    public static void reload()
     {
-        ServerLifecycleEvents.SERVER_STARTED.register((server) ->
-        {
             List<Item> items = Registry.ITEM.stream().toList();
-
-            ApiCastingRegistry.init();
 
             for(Item item : items)
             {
@@ -37,7 +32,6 @@ public class EventRegistry {
                 setupSmelteryMelting(item);
                 setupCasting(item);
             }
-        });
     }
 
     private static void setupMaterials(Item item)
@@ -87,7 +81,7 @@ public class EventRegistry {
                 {
                     ApiSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ApiPartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT));
 
-                    castingResource = ApiCastingRegistry.getCastingResource(partItem.getPartName());
+                    castingResource = ApiCastingRegistry.getInstance().getCastingResource(partItem.getPartName());
                     if(castingResource == null)
                     {
                         FluidProperties finalFluidProperties = fluidProperties;
@@ -95,7 +89,7 @@ public class EventRegistry {
                         castingResource = new CastingResource(((long) ApiPartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT, new HashMap<Fluid,Item>(){{
                             put(finalFluidProperties.getFluid() ,partItem);
                         }});
-                        ApiCastingRegistry.addCastingResource(partItem.getPartName(), castingResource);
+                        ApiCastingRegistry.getInstance().addCastingResource(partItem.getPartName(), castingResource);
                     }
                     else
                     {
@@ -118,7 +112,9 @@ public class EventRegistry {
     {
         if(item instanceof PartItem partItem)
         {
-            ApiCastingRegistry.addItemToType(partItem.getPartName(), partItem);
+            ApiCastingRegistry.getInstance().addItemToType(partItem.getPartName(), partItem);
+
+
         }
     }
 

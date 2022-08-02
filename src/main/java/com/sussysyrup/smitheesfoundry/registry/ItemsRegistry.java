@@ -86,13 +86,13 @@ public class ItemsRegistry {
         ApiToolRegistry.addSweepWeapon("sword");
 
         register("blank_cast", BLANK_CAST);
-        ApiCastingRegistry.addCastItem("blank", BLANK_CAST);
+        ApiCastingRegistry.getInstance().addCastItem("blank", BLANK_CAST);
 
         register("ingot_cast", INGOT_CAST);
-        ApiCastingRegistry.addCastItem("ingot", INGOT_CAST);
+        ApiCastingRegistry.getInstance().addCastItem("ingot", INGOT_CAST);
 
         register("nugget_cast", NUGGET_CAST);
-        ApiCastingRegistry.addCastItem("nugget", NUGGET_CAST);
+        ApiCastingRegistry.getInstance().addCastItem("nugget", NUGGET_CAST);
     }
 
     private static void register(String name, Item item)

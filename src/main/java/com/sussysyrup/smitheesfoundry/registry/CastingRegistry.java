@@ -15,8 +15,8 @@ public class CastingRegistry {
 
     public static void preInit()
     {
-        HashMap<Fluid, Item> ingotFluidMap = ApiCastingRegistry.ingotFluidMap;
-        HashMap<Fluid, Item> nuggetFluidMap = ApiCastingRegistry.nuggetFluidMap;
+        HashMap<Fluid, Item> ingotFluidMap = ApiCastingRegistry.getInstance().getPreIngotFluidMap();
+        HashMap<Fluid, Item> nuggetFluidMap = ApiCastingRegistry.getInstance().getPreNuggetFluidMap();
         HashMap<Fluid, Item> blockFluidMap = ApiBlockCastingRegistry.getInstance().preBlockFluidMap();
 
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_INGOT);
@@ -25,7 +25,7 @@ public class CastingRegistry {
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_INGOT);
         ingotFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), ItemsRegistry.ROSEGOLD_INGOT);
 
-        ApiCastingRegistry.ingotFluidMap = ingotFluidMap;
+        ApiCastingRegistry.getInstance().setPreIngotFluidMap(ingotFluidMap);
 
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_NUGGET);
@@ -33,7 +33,7 @@ public class CastingRegistry {
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper")), ItemsRegistry.COPPER_NUGGET);
         nuggetFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_netherite")), ItemsRegistry.NETHERITE_NUGGET);
 
-        ApiCastingRegistry.nuggetFluidMap = nuggetFluidMap;
+        ApiCastingRegistry.getInstance().setPreNuggetFluidMap(nuggetFluidMap);
 
         blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_iron")), Items.IRON_BLOCK);
         blockFluidMap.put(Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")), Items.GOLD_BLOCK);

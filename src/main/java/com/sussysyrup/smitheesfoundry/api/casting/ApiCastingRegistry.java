@@ -1,79 +1,49 @@
 package com.sussysyrup.smitheesfoundry.api.casting;
 
 import com.sussysyrup.smitheesfoundry.api.item.CastItem;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidConstants;
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApiCastingRegistry {
+public interface ApiCastingRegistry {
 
-    public static HashMap<Fluid, Item> ingotFluidMap = new HashMap<>();
-    public static HashMap<Fluid, Item> nuggetFluidMap = new HashMap<>();
-    private static Map<String, CastItem> typeCastItemMap = new HashMap<>();
-    public static Map<Item, String> itemTypeMap = new HashMap<>();
-    public static Map<String, CastingResource> typeCastingResourceMap = new HashMap<>();
-
-    public static void addCastItem(String type, CastItem item)
+    static ApiCastingRegistry getInstance()
     {
-        typeCastItemMap.put(type, item);
+        return RegistryInstances.castingRegistry;
     }
 
-    public static void removeCastItem(String type)
-    {
-        typeCastItemMap.remove(type);
-    }
+    HashMap<Fluid, Item> getPreIngotFluidMap();
+    HashMap<Fluid, Item> getPreNuggetFluidMap();
 
-    public static void addItemToType(String type, Item item)
-    {
-        itemTypeMap.put(item, type);
-    }
+    Map<Item, String> getItemTypeMap();
 
-    public static void removeItemToType(Item item)
-    {
-        itemTypeMap.remove(item);
-    }
+    Map<String, CastingResource> getTypeCastingMap();
 
-    public static String getTypeFromItem(Item item)
-    {
-        return itemTypeMap.get(item);
-    }
+    void setPreIngotFluidMap(HashMap<Fluid, Item> map);
 
-    public static CastItem getCastItem(String type)
-    {
-        return typeCastItemMap.get(type);
-    }
+    void setPreNuggetFluidMap(HashMap<Fluid, Item> map);
+    void addCastItem(String type, CastItem item);
 
-    public static void addCastingResource(String type, CastingResource castingResource)
-    {
-        typeCastingResourceMap.put(type, castingResource);
-    }
+    void removeCastItem(String type);
 
-    public static void removeCastingResource(String type)
-    {
-        typeCastingResourceMap.remove(type);
-    }
+    void addItemToType(String type, Item item);
 
-    public static CastingResource getCastingResource(String type)
-    {
-        return typeCastingResourceMap.get(type);
-    }
+    void removeItemToType(Item item);
 
-    public static void init()
-    {
-        addCastingResource("ingot", new CastingResource(FluidConstants.INGOT, ingotFluidMap));
-        addCastingResource("nugget", new CastingResource(FluidConstants.NUGGET, nuggetFluidMap));
+    String getTypeFromItem(Item item);
 
-        for(Item item : ingotFluidMap.values())
-        {
-            addItemToType("ingot", item);
-        }
+    CastItem getCastItem(String type);
 
-        for(Item item : nuggetFluidMap.values())
-        {
-            addItemToType("nugget", item);
-        }
-    }
+    void addCastingResource(String type, CastingResource castingResource);
+
+    void removeCastingResource(String type);
+
+    CastingResource getCastingResource(String type);
+
+    void preReload();
+
+    void reload();
 }

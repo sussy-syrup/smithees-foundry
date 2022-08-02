@@ -149,7 +149,7 @@ public class CastingTableBlockEntity extends BlockEntity {
                         return;
                     }
 
-                    castingResource = ApiCastingRegistry.getCastingResource(type);
+                    castingResource = ApiCastingRegistry.getInstance().getCastingResource(type);
 
                     for(Fluid fluid : castingResource.fluidItemMap().keySet())
                     {
@@ -171,13 +171,13 @@ public class CastingTableBlockEntity extends BlockEntity {
             if(!inventory.get(1).isEmpty() && inventory.get(0).isEmpty())
             {
                 if(variant.isOf(fluid)) {
-                    type = ApiCastingRegistry.getTypeFromItem(inventory.get(1).getItem());
+                    type = ApiCastingRegistry.getInstance().getTypeFromItem(inventory.get(1).getItem());
                     if(type == null)
                     {
                         isCasting = false;
                         return;
                     }
-                    castingStack = ApiCastingRegistry.getCastItem(type).getDefaultStack();
+                    castingStack = ApiCastingRegistry.getInstance().getCastItem(type).getDefaultStack();
                     capacity = FluidConstants.INGOT * 2;
                 }
                 if(castingStack.isEmpty())
@@ -195,7 +195,7 @@ public class CastingTableBlockEntity extends BlockEntity {
                         isCasting = false;
                         return;
                     }
-                    castingStack = ApiCastingRegistry.getCastItem(type).getDefaultStack();
+                    castingStack = ApiCastingRegistry.getInstance().getCastItem(type).getDefaultStack();
                     capacity = FluidConstants.INGOT * 2;
                 }
                 if(castingStack.isEmpty())

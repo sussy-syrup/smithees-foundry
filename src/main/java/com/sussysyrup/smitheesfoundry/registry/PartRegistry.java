@@ -31,6 +31,6 @@ public class PartRegistry {
         Item cast = new CastItem(new FabricItemSettings().group(ItemGroups.ITEM_GROUP), name);
 
         Registry.register(Registry.ITEM, new Identifier(Main.MODID, name + "_cast"), cast);
-        ApiCastingRegistry.addCastItem(name, (CastItem) cast);
+        ApiCastingRegistry.getInstance().addCastItem(name, (CastItem) cast);
     }
 }

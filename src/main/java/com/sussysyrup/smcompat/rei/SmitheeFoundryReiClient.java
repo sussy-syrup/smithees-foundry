@@ -95,7 +95,7 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
 
     private void registerCasting(DisplayRegistry registry)
     {
-        for(CastingResource resource : ApiCastingRegistry.typeCastingResourceMap.values())
+        for(CastingResource resource : ApiCastingRegistry.getInstance().getTypeCastingMap().values())
         {
             long fluidValue = resource.fluidValue();
 
@@ -105,7 +105,7 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
             for(Fluid fluid : resource.fluidItemMap().keySet())
             {
                 item = resource.fluidItemMap().get(fluid);
-                castingDisplay = new CastingDisplay(ApiCastingRegistry.getCastItem(ApiCastingRegistry.getTypeFromItem(item)), fluid, item, fluidValue);
+                castingDisplay = new CastingDisplay(ApiCastingRegistry.getInstance().getCastItem(ApiCastingRegistry.getInstance().getTypeFromItem(item)), fluid, item, fluidValue);
 
                 registry.add(castingDisplay);
             }
@@ -123,9 +123,9 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
 
         Fluid goldFluid = Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold"));
 
-        for(Item item : ApiCastingRegistry.itemTypeMap.keySet())
+        for(Item item : ApiCastingRegistry.getInstance().getItemTypeMap().keySet())
         {
-            registry.add(new CastingDisplay(item, goldFluid, ApiCastingRegistry.getCastItem(ApiCastingRegistry.getTypeFromItem(item)), FluidConstants.INGOT * 2));
+            registry.add(new CastingDisplay(item, goldFluid, ApiCastingRegistry.getInstance().getCastItem(ApiCastingRegistry.getInstance().getTypeFromItem(item)), FluidConstants.INGOT * 2));
         }
 
         registry.add(new CastingDisplay(Items.AIR, goldFluid, ItemsRegistry.BLANK_CAST, FluidConstants.INGOT * 2));

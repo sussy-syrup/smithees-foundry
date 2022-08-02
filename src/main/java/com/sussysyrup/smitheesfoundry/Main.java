@@ -25,7 +25,8 @@ public class Main implements ModInitializer {
 		processing();
 		post();
 
-		RegistryInstances.reload();
+		RegistryInstances.registerReloader();
+		RegistryInstances.preReloadData();
 	}
 
 	private static void setup()
