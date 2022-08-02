@@ -4,10 +4,10 @@ import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonFluidPost;
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonMaterialPost;
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonPost;
 import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonSetup;
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import com.sussysyrup.smitheesfoundry.util.Cache;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +19,13 @@ public class Main implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		RegistryInstances.flushAndCreate();
+
 		setup();
 		processing();
 		post();
+
+		RegistryInstances.reload();
 	}
 
 	private static void setup()

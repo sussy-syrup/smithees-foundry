@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.fluid.Fluids;
@@ -76,11 +75,11 @@ public class BlocksRegistry {
         register(REINFORCED_BRICKS, "reinforced_bricks");
         register(ROSEGOLD_BLOCK, "rosegold_block");
 
-        ApiAlloySmelteryRegistry.addStructureBlock(REINFORCED_BRICKS);
-        ApiAlloySmelteryRegistry.addStructureBlock(ALLOY_SMELTERY_CONTROLLER);
-        ApiAlloySmelteryRegistry.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
-        ApiAlloySmelteryRegistry.addTankBlock(TANK_BLOCK);
-        ApiAlloySmelteryRegistry.addFuelFluid(Fluids.LAVA, 1);
+        ApiAlloySmelteryRegistry.INSTANCE.addStructureBlock(REINFORCED_BRICKS);
+        ApiAlloySmelteryRegistry.INSTANCE.addStructureBlock(ALLOY_SMELTERY_CONTROLLER);
+        ApiAlloySmelteryRegistry.INSTANCE.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
+        ApiAlloySmelteryRegistry.INSTANCE.addTankBlock(TANK_BLOCK);
+        ApiAlloySmelteryRegistry.INSTANCE.addFuelFluid(Fluids.LAVA, 1);
 
         FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> {
             if(entity.master != null) {

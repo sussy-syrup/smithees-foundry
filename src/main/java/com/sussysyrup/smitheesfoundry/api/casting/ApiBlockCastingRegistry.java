@@ -26,6 +26,5 @@ public class ApiBlockCastingRegistry {
     public static void init()
     {
         addCastingResource(Items.AIR, new BlockCastingResource(blockFluidMap));
-
     }
 }

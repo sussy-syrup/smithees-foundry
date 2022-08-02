@@ -773,11 +773,11 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
 
     protected void removeSlave(World world, BlockPos pos)
     {
-        if(ApiAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
         {
             slaves.remove(pos);
         }
-        if(ApiAlloySmelteryRegistry.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
         {
             if(tanks.contains(pos)) {
                 tanks.remove(pos);
@@ -789,15 +789,15 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
     {
         boolean valid = false;
 
-        if(ApiAlloySmelteryRegistry.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
+        if(ApiAlloySmelteryRegistry.INSTANCE.getStructureBlocks().contains(world.getBlockState(pos).getBlock())) {
             valid = true;
         }
-        if(ApiAlloySmelteryRegistry.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getFunctionalBlocks().contains(world.getBlockState(pos).getBlock()))
         {
             valid = true;
         }
 
-        if(ApiAlloySmelteryRegistry.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getTankBlocks().contains(world.getBlockState(pos).getBlock()))
         {
             valid = true;
         }
@@ -810,19 +810,19 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
         boolean valid = false;
         Block block = world.getBlockState(pos).getBlock();
 
-        if(ApiAlloySmelteryRegistry.getStructureBlocks().contains(block)) {
+        if(ApiAlloySmelteryRegistry.INSTANCE.getStructureBlocks().contains(block)) {
             valid = true;
         }
-        if(ApiAlloySmelteryRegistry.getFunctionalBlocks().contains(block))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getFunctionalBlocks().contains(block))
         {
             slaves.add(pos);
             valid = true;
         }
-        if(ApiAlloySmelteryRegistry.getTankBlocks().contains(block))
+        if(ApiAlloySmelteryRegistry.INSTANCE.getTankBlocks().contains(block))
         {
             TankBlockEntity blockEntity = (TankBlockEntity) world.getBlockEntity(pos);
 
-            Map<Fluid, Integer> fuelMap = ApiAlloySmelteryRegistry.getFuelFluids();
+            Map<Fluid, Integer> fuelMap = ApiAlloySmelteryRegistry.INSTANCE.getFuelFluids();
 
             if(fuelMap.keySet().contains(blockEntity.fluidStorage.getResource().getFluid())) {
                 if(currentFuels.contains(blockEntity.fluidStorage.getResource().getFluid())) {
@@ -1038,7 +1038,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             return;
         }
 
-        int tickStep = ApiAlloySmelteryRegistry.getFuelValue(fuel.getFluid());
+        int tickStep = ApiAlloySmelteryRegistry.INSTANCE.getFuelValue(fuel.getFluid());
 
         ItemStack stack;
         Item item;

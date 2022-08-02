@@ -1,83 +1,53 @@
 package com.sussysyrup.smitheesfoundry.api.block;
 
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class ApiAlloySmelteryRegistry {
+public interface ApiAlloySmelteryRegistry {
 
-    private final static List<Block> structureBlocks = new ArrayList<>();
+    ApiAlloySmelteryRegistry INSTANCE = RegistryInstances.alloySmelteryRegistry;
 
-    public static List<Block> getStructureBlocks() {
-        return structureBlocks;
-    }
+    /**
+     * Returns structure blocks which are subject to reloads
+     * @return
+     */
+    Set<Block> getStructureBlocks();
 
-    public static void addStructureBlock(Block block)
-    {
-        structureBlocks.add(block);
-    }
+    void addStructureBlock(Block block);
 
-    public static void removeStructureBlock(Block block)
-    {
-        structureBlocks.remove(block);
-    }
+    void removeStructureBlock(Block block);
 
-    private final static List<Block> functionalBlocks = new ArrayList<>();
+    void clearStructureBlocks();
 
-    public static List<Block> getFunctionalBlocks() {
-        return functionalBlocks;
-    }
+    Set<Block> getFunctionalBlocks();
 
-    public static void addFunctionalBlock(Block block)
-    {
-        functionalBlocks.add(block);
-    }
+    void addFunctionalBlock(Block block);
 
-    public static void removeFunctionalBlock(Block block)
-    {
-        functionalBlocks.remove(block);
-    }
+    void removeFunctionalBlock(Block block);
 
-    private final static List<Block> tankBlocks = new ArrayList<>();
+    void clearFunctionalBlocks();
 
-    public static List<Block> getTankBlocks()
-    {
-        return tankBlocks;
-    }
+    Set<Block> getTankBlocks();
 
-    public static void addTankBlock(Block block)
-    {
-        tankBlocks.add(block);
-    }
+    void addTankBlock(Block block);
 
-    public static void removeTankBlock(Block block)
-    {
-        tankBlocks.remove(block);
-    }
+    void removeTankBlock(Block block);
 
-    private final static Map<Fluid, Integer> fuelFluids = new HashMap<>();
+    void clearTankBlocks();
 
-    public static Map<Fluid, Integer> getFuelFluids()
-    {
-        return fuelFluids;
-    }
+    Map<Fluid, Integer> getFuelFluids();
 
-    public static void addFuelFluid(Fluid fluid, int fuelValue)
-    {
-        fuelFluids.put(fluid, fuelValue);
-    }
+    void addFuelFluid(Fluid fluid, int fuelValue);
 
-    public static void removeFuelFluid(Fluid fluid)
-    {
-        fuelFluids.remove(fluid);
-    }
+    void removeFuelFluid(Fluid fluid);
 
-    public static int getFuelValue(Fluid fluid)
-    {
-        return fuelFluids.get(fluid);
-    }
+    void clearFuelFluids(Fluid fluid);
+
+    int getFuelValue(Fluid fluid);
+
+    void reload();
 }
