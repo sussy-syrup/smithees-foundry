@@ -75,11 +75,11 @@ public class BlocksRegistry {
         register(REINFORCED_BRICKS, "reinforced_bricks");
         register(ROSEGOLD_BLOCK, "rosegold_block");
 
-        ApiAlloySmelteryRegistry.INSTANCE.addStructureBlock(REINFORCED_BRICKS);
-        ApiAlloySmelteryRegistry.INSTANCE.addStructureBlock(ALLOY_SMELTERY_CONTROLLER);
-        ApiAlloySmelteryRegistry.INSTANCE.addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
-        ApiAlloySmelteryRegistry.INSTANCE.addTankBlock(TANK_BLOCK);
-        ApiAlloySmelteryRegistry.INSTANCE.addFuelFluid(Fluids.LAVA, 1);
+        ApiAlloySmelteryRegistry.getInstance().addStructureBlock(REINFORCED_BRICKS);
+        ApiAlloySmelteryRegistry.getInstance().addStructureBlock(ALLOY_SMELTERY_CONTROLLER);
+        ApiAlloySmelteryRegistry.getInstance().addFunctionalBlock(ALLOY_SMELTERY_DRAIN);
+        ApiAlloySmelteryRegistry.getInstance().addTankBlock(TANK_BLOCK);
+        ApiAlloySmelteryRegistry.getInstance().addFuelFluid(Fluids.LAVA, 1);
 
         FluidStorage.SIDED.registerForBlockEntity((entity, direction) -> {
             if(entity.master != null) {

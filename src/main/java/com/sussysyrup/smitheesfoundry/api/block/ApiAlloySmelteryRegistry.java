@@ -9,7 +9,9 @@ import java.util.Set;
 
 public interface ApiAlloySmelteryRegistry {
 
-    ApiAlloySmelteryRegistry INSTANCE = RegistryInstances.alloySmelteryRegistry;
+    static ApiAlloySmelteryRegistry getInstance() {
+        return RegistryInstances.alloySmelteryRegistry;
+    }
 
     /**
      * Returns structure blocks which are subject to reloads
