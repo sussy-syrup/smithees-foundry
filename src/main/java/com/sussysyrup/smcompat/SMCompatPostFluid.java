@@ -6,7 +6,7 @@ import com.sussysyrup.smitheesfoundry.api.entrypoints.CommonFluidPost;
 public class SMCompatPostFluid implements CommonFluidPost {
     @Override
     public void init() {
-        if(SMCompatPreLaunch.modidList.contains("betterend"))
+        if(SMCompatPreLaunch.betterEnd)
         {
             SMBetterEndPostFluid.initialise();
 

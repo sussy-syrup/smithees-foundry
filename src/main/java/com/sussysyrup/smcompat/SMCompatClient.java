@@ -6,7 +6,7 @@ import net.fabricmc.api.ClientModInitializer;
 public class SMCompatClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        if(SMCompatPreLaunch.modidList.contains("betterend"))
+        if(SMCompatPreLaunch.betterEnd)
         {
             SMBetterEndClient.initialise();
         }

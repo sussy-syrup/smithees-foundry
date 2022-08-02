@@ -46,14 +46,14 @@ public class ApiMaterialRegistry {
         material.setColours(first, second, third, fourth, fifth, sixth, seventh);
     }
 
-    public static HashMap<String, MaterialResource> materialResourceMap = new HashMap<>();
+    public static HashMap<Item, MaterialResource> materialResourceMap = new HashMap<>();
 
-    public static MaterialResource getMaterialResource(String item)
+    public static MaterialResource getMaterialResource(Item item)
     {
         return materialResourceMap.get(item);
     }
 
-    public static void registerMaterialResource(String item, MaterialResource partRecipe)
+    public static void registerMaterialResource(Item item, MaterialResource partRecipe)
     {
         materialResourceMap.put(item, partRecipe);
     }

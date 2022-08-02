@@ -110,7 +110,7 @@ public class RepairAnvilScreenHandler extends ScreenHandler {
 
             String material = nbt.getString(ToolItem.HEAD_KEY);
 
-            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(1).getItem()).toString());
+            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(1).getItem());
 
             if(materialResource == null)
             {
@@ -217,7 +217,7 @@ public class RepairAnvilScreenHandler extends ScreenHandler {
 
             int durabilityFac = ((int) Math.ceil(((float) durabilityDif) / 500F));
 
-            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(1).getItem()).toString());
+            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(1).getItem());
 
             float materialValue = materialResource.materialValue() * inventory.getStack(1).getCount();
 
@@ -255,7 +255,7 @@ public class RepairAnvilScreenHandler extends ScreenHandler {
 
             int durabilityFac = ((int) Math.ceil(((float) durabilityDif) / 500F));
 
-            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(1).getItem()).toString());
+            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(1).getItem());
 
             float materialValue = materialResource.materialValue() * inventory.getStack(1).getCount();
 

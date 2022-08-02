@@ -7,7 +7,7 @@ public class SMCompatSetupCommon implements CommonSetup {
 
     @Override
     public void init() {
-        if(SMCompatPreLaunch.modidList.contains("betterend"))
+        if(SMCompatPreLaunch.betterEnd)
         {
             SMBetterEndSetupCommon.initialise();
         }

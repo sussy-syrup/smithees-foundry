@@ -128,7 +128,7 @@ public class PartBenchScreenHandler extends ScreenHandler {
     @Override
     public void onContentChanged(Inventory inventory) {
 
-        MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(0).getItem()).toString());
+        MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(0).getItem());
 
         List<String> partNames = ApiPartRegistry.getPrePartNames();
 
@@ -221,7 +221,7 @@ public class PartBenchScreenHandler extends ScreenHandler {
             super.onTakeItem(player, stack);
             ItemStack stack1 = inventory.getStack(0);
 
-            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(0).getItem()).toString());
+            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(0).getItem());
 
             String[] strings = stack.getItem().toString().split("_");
 
@@ -250,7 +250,7 @@ public class PartBenchScreenHandler extends ScreenHandler {
 
             ItemStack stack1 = inventory.getStack(0);
 
-            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(Registry.ITEM.getId(inventory.getStack(0).getItem()).toString());
+            MaterialResource materialResource = ApiMaterialRegistry.getMaterialResource(inventory.getStack(0).getItem());
 
             String[] strings = newItem.getItem().toString().split("_");
 

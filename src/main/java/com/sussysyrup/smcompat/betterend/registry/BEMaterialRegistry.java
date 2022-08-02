@@ -3,7 +3,6 @@ package com.sussysyrup.smcompat.betterend.registry;
 import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.Material;
 import com.sussysyrup.smitheesfoundry.api.trait.TraitContainer;
-
 import java.util.Arrays;
 import java.util.List;
 

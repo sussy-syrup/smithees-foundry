@@ -12,8 +12,15 @@ public class SMCompatPreLaunch implements PreLaunchEntrypoint {
 
     //betterEnd = betterend
 
+
+    public static boolean betterEnd = false;
     @Override
     public void onPreLaunch() {
         FabricLoader.getInstance().getAllMods().forEach(modContainer -> modidList.add(modContainer.getMetadata().getId()));
+
+        if(SMCompatPreLaunch.modidList.contains("betterend"))
+        {
+            betterEnd = true;
+        }
     }
 }

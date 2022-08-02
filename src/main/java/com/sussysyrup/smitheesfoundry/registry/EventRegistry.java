@@ -50,7 +50,7 @@ public class EventRegistry {
 
             if(item.getRegistryEntry().isIn(tag))
             {
-                ApiMaterialRegistry.registerMaterialResource(Registry.ITEM.getId(item).toString(), recipe);
+                ApiMaterialRegistry.registerMaterialResource(item, recipe);
 
                 Material material = ApiMaterialRegistry.getMaterial(recipe.materialId());
 
