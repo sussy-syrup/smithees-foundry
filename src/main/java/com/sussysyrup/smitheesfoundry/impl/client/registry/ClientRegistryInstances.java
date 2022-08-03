@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.impl.client.registryInstances;
+package com.sussysyrup.smitheesfoundry.impl.client.registry;
 
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.impl.client.block.ImplPartBenchRegistryClient;

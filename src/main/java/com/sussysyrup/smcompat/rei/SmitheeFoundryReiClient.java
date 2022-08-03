@@ -133,7 +133,7 @@ public class SmitheeFoundryReiClient implements REIClientPlugin {
 
     private void registerAlloying(DisplayRegistry registry)
     {
-        ArrayListMultimap<Fluid, AlloyResource> alloyMap = ApiAlloyRegistry.multimap;
+        ArrayListMultimap<Fluid, AlloyResource> alloyMap = ApiAlloyRegistry.getInstance().getAlloyMap();
 
         for(Fluid fluid : alloyMap.keySet())
         {

@@ -10,7 +10,7 @@ public class AlloyRegistry {
 
     public static void main()
     {
-        ApiAlloyRegistry.addAlloy(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), 20,
+        ApiAlloyRegistry.getInstance().addAlloy(Registry.FLUID.get(new Identifier(Main.MODID, "molten_rosegold")), 20,
                 new Fluid[]{Registry.FLUID.get(new Identifier(Main.MODID, "molten_gold")),
                             Registry.FLUID.get(new Identifier(Main.MODID, "molten_copper"))}, new long[]{15,5});
     }

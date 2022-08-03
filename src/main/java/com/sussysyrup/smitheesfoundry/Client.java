@@ -1,7 +1,7 @@
 package com.sussysyrup.smitheesfoundry;
 
 import com.sussysyrup.smitheesfoundry.client.registry.*;
-import com.sussysyrup.smitheesfoundry.impl.client.registryInstances.ClientRegistryInstances;
+import com.sussysyrup.smitheesfoundry.impl.client.registry.ClientRegistryInstances;
 import com.sussysyrup.smitheesfoundry.networking.s2c.S2CReceivers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

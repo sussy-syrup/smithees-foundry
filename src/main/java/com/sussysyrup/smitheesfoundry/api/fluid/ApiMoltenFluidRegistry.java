@@ -36,10 +36,7 @@ public class ApiMoltenFluidRegistry {
             reg(s);
         }
 
-        for(String s : fluidRegistry.keySet())
-        {
-            fluidRegistryPost.put(s, fluidRegistry.get(s));
-        }
+        fluidRegistryPost.putAll(fluidRegistry);
     }
 
     private static void reg(String fluidName)

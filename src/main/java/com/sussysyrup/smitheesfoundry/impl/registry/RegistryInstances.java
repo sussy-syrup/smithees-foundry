@@ -5,6 +5,7 @@ import com.sussysyrup.smitheesfoundry.impl.block.ImplAlloySmelteryRegistry;
 import com.sussysyrup.smitheesfoundry.impl.block.ImplPartBenchRegistry;
 import com.sussysyrup.smitheesfoundry.impl.casting.ImplBlockCastingRegistry;
 import com.sussysyrup.smitheesfoundry.impl.casting.ImplCastingRegistry;
+import com.sussysyrup.smitheesfoundry.impl.fluid.ImplAlloyRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
@@ -17,6 +18,7 @@ public class RegistryInstances {
     public static ImplPartBenchRegistry partBenchRegistry;
     public static ImplBlockCastingRegistry blockCastingRegistry;
     public static ImplCastingRegistry castingRegistry;
+    public static ImplAlloyRegistry alloyRegistry;
 
     public static void flushAndCreate()
     {
@@ -24,6 +26,7 @@ public class RegistryInstances {
         partBenchRegistry = new ImplPartBenchRegistry();
         blockCastingRegistry = new ImplBlockCastingRegistry();
         castingRegistry = new ImplCastingRegistry();
+        alloyRegistry = new ImplAlloyRegistry();
     }
 
 
@@ -67,5 +70,8 @@ public class RegistryInstances {
         castingRegistry = new ImplCastingRegistry();
         castingRegistry.preReload();
         castingRegistry.reload();
+
+        alloyRegistry = new ImplAlloyRegistry();
+        alloyRegistry.reload();
     }
 }

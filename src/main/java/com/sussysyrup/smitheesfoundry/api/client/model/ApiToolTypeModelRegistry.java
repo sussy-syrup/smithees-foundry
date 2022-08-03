@@ -1,11 +1,9 @@
 package com.sussysyrup.smitheesfoundry.api.client.model;
 
 import com.sussysyrup.smitheesfoundry.client.model.toolmodels.IToolTypeModel;
-import com.sussysyrup.smitheesfoundry.impl.client.registryInstances.ClientRegistryInstances;
+import com.sussysyrup.smitheesfoundry.impl.client.registry.ClientRegistryInstances;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
-import java.util.HashMap;
 
 @Environment(EnvType.CLIENT)
 public interface ApiToolTypeModelRegistry {

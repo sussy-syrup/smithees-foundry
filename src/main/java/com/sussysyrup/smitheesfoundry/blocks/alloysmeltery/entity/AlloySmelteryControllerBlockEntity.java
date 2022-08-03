@@ -1143,7 +1143,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 continue;
             }
 
-            List<AlloyResource> list = ApiAlloyRegistry.getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
+            List<AlloyResource> list = ApiAlloyRegistry.getInstance().getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
 
             if(list == null)
             {
@@ -1248,7 +1248,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 continue;
             }
 
-            List<AlloyResource> list = ApiAlloyRegistry.getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
+            List<AlloyResource> list = ApiAlloyRegistry.getInstance().getAlloyResources(fluidStorage.views.get(i).getResource().getFluid());
 
             if(list == null)
             {
