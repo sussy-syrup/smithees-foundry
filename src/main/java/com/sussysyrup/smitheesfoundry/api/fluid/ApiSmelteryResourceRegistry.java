@@ -1,44 +1,33 @@
 package com.sussysyrup.smitheesfoundry.api.fluid;
 
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApiSmelteryResourceRegistry {
-
-    private static Map<Item, SmelteryResource> smelteryResourceMap = new HashMap<>();
-
-    public static Map<Item, SmelteryResource> getSmelteryResourceMap()
+public interface ApiSmelteryResourceRegistry {
+    
+    static ApiSmelteryResourceRegistry getInstance()
     {
-        return smelteryResourceMap;
+        return RegistryInstances.smelteryResourceRegistry;
     }
+    Map<Item, SmelteryResource> getSmelteryResourceMap();
 
-    public static void registerSmelteryResource(Item item, SmelteryResource smelteryResource)
-    {
-        smelteryResourceMap.put(item, smelteryResource);
-    }
+    void registerSmelteryResource(Item item, SmelteryResource smelteryResource);
 
-    public static void removeSmelteryResource(Item item)
-    {
-        smelteryResourceMap.remove(item);
-    }
+    void removeSmelteryResource(Item item);
 
-    public static SmelteryResource getSmelteryResource(Item item)
-    {
-        return smelteryResourceMap.get(item);
-    }
+    SmelteryResource getSmelteryResource(Item item);
 
-    private static Map<TagKey<Item>,SmelteryResource> preSmelteryResourceMap = new HashMap<>();
+    Map<TagKey<Item>,SmelteryResource> preSmelteryResourceMap = new HashMap<>();
 
-    public static Map<TagKey<Item>,SmelteryResource> getPreSmelteryResourceMap()
-    {
-        return preSmelteryResourceMap;
-    }
+    Map<TagKey<Item>,SmelteryResource> getTagSmelteryResourceMap();
 
-    public static void addPreSmelteryResource(TagKey<Item> tag,SmelteryResource resource)
-    {
-        preSmelteryResourceMap.put(tag, resource);
-    }
+    void addTagSmelteryResource(TagKey<Item> tag, SmelteryResource resource);
+
+    void preReload();
+
+    void reload();
 }

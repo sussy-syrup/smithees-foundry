@@ -7,6 +7,7 @@ import com.sussysyrup.smitheesfoundry.impl.casting.ImplBlockCastingRegistry;
 import com.sussysyrup.smitheesfoundry.impl.casting.ImplCastingRegistry;
 import com.sussysyrup.smitheesfoundry.impl.fluid.ImplAlloyRegistry;
 import com.sussysyrup.smitheesfoundry.impl.fluid.ImplMoltenFluidRegistry;
+import com.sussysyrup.smitheesfoundry.impl.fluid.ImplSmelteryResourceRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
@@ -21,6 +22,7 @@ public class RegistryInstances {
     public static ImplCastingRegistry castingRegistry;
     public static ImplAlloyRegistry alloyRegistry;
     public static ImplMoltenFluidRegistry moltenFluidRegistry;
+    public static ImplSmelteryResourceRegistry smelteryResourceRegistry;
 
     public static void flushAndCreate()
     {
@@ -30,6 +32,7 @@ public class RegistryInstances {
         castingRegistry = new ImplCastingRegistry();
         alloyRegistry = new ImplAlloyRegistry();
         moltenFluidRegistry = new ImplMoltenFluidRegistry();
+        smelteryResourceRegistry = new ImplSmelteryResourceRegistry();
     }
 
 
@@ -58,6 +61,9 @@ public class RegistryInstances {
         partBenchRegistry.reload();
         partBenchRegistry.postReload();
 
+        smelteryResourceRegistry = new ImplSmelteryResourceRegistry();
+        smelteryResourceRegistry.preReload();
+
         moltenFluidRegistry = new ImplMoltenFluidRegistry();
         moltenFluidRegistry.preReload();
     }
@@ -77,10 +83,14 @@ public class RegistryInstances {
         castingRegistry.preReload();
         castingRegistry.reload();
 
-        alloyRegistry = new ImplAlloyRegistry();
-        alloyRegistry.reload();
+        smelteryResourceRegistry = new ImplSmelteryResourceRegistry();
+        smelteryResourceRegistry.preReload();
+        smelteryResourceRegistry.reload();
 
         moltenFluidRegistry = new ImplMoltenFluidRegistry();
         moltenFluidRegistry.reload();
+
+        alloyRegistry = new ImplAlloyRegistry();
+        alloyRegistry.reload();
     }
 }

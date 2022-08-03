@@ -1060,7 +1060,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
             }
             item = stack.getItem();
 
-            if(!ApiSmelteryResourceRegistry.getSmelteryResourceMap().containsKey(item))
+            if(!ApiSmelteryResourceRegistry.getInstance().getSmelteryResourceMap().containsKey(item))
             {
                 smeltTicks.set(i, 0);
                 continue;
@@ -1071,7 +1071,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 smeltTicks.set(i, 0);
             }
 
-            smelteryResource = ApiSmelteryResourceRegistry.getSmelteryResource(item);
+            smelteryResource = ApiSmelteryResourceRegistry.getInstance().getSmelteryResource(item);
 
             if(smelteryResource == null)
             {

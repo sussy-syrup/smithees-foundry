@@ -48,24 +48,24 @@ public class SmelteryResourceRegistry {
     private static final TagKey<Item> ROSEGOLD_NUG_SMELTING = TagKey.of(Registry.ITEM_KEY, new Identifier(Main.MODID, "smelting/rosegold_nug"));
     public static void main()
     {
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_1_SMELTING, COPPER_1);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_2_SMELTING, COPPER_2);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(COPPER_9_SMELTING, COPPER_9);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(COPPER_1_SMELTING, COPPER_1);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(COPPER_2_SMELTING, COPPER_2);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(COPPER_9_SMELTING, COPPER_9);
 
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_1_SMELTING, GOLD_1);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_2_SMELTING, GOLD_2);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_9_SMELTING, GOLD_9);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(GOLD_NUG_SMELTING, GOLD_NUG);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(GOLD_1_SMELTING, GOLD_1);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(GOLD_2_SMELTING, GOLD_2);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(GOLD_9_SMELTING, GOLD_9);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(GOLD_NUG_SMELTING, GOLD_NUG);
 
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(IRON_1_SMELTING, IRON_1);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(IRON_2_SMELTING, IRON_2);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(IRON_9_SMELTING, IRON_9);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(IRON_1_SMELTING, IRON_1);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(IRON_2_SMELTING, IRON_2);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(IRON_9_SMELTING, IRON_9);
 
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(NETHERITE_1_SMELTING, NETHERITE_1);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(NETHERITE_9_SMELTING, NETHERITE_9);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(NETHERITE_1_SMELTING, NETHERITE_1);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(NETHERITE_9_SMELTING, NETHERITE_9);
 
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_1_SMELTING, ROSEGOLD_1);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_9_SMELTING, ROSEGOLD_9);
-        ApiSmelteryResourceRegistry.addPreSmelteryResource(ROSEGOLD_NUG_SMELTING, ROSEGOLD_NUG);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(ROSEGOLD_1_SMELTING, ROSEGOLD_1);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(ROSEGOLD_9_SMELTING, ROSEGOLD_9);
+        ApiSmelteryResourceRegistry.getInstance().addTagSmelteryResource(ROSEGOLD_NUG_SMELTING, ROSEGOLD_NUG);
     }
 }

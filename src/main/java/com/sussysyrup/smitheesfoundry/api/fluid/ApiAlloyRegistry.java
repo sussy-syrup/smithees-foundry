@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ public interface ApiAlloyRegistry {
     }
 
     ArrayListMultimap<Fluid, AlloyResource> getAlloyMap();
-    void addAlloy(Fluid output, long outputAmount, Fluid[] fluids, long[] amount);
+    void addAlloy(Identifier output, long outputAmount, Identifier[] fluids, long[] amount);
 
-    void removeAlloyResource(Fluid firstFluid);
+    void removeAlloyResource(Identifier fluidID);
 
     void clear();
     List<AlloyResource> getAlloyResources(Fluid firstFluid);

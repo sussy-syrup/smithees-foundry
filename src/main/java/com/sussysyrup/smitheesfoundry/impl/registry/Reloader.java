@@ -52,7 +52,7 @@ public class Reloader {
                 {
                     fluidID = material.getFluidID();
 
-                    ApiSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(fluidID, (long) (recipe.materialValue() * FluidConstants.INGOT)));
+                    ApiSmelteryResourceRegistry.getInstance().registerSmelteryResource(item, new SmelteryResource(fluidID, (long) (recipe.materialValue() * FluidConstants.INGOT)));
                 }
                 break;
             }
@@ -61,11 +61,11 @@ public class Reloader {
 
     private static void setupSmelteryMelting(Item item)
     {
-        for(TagKey<Item> tag : ApiSmelteryResourceRegistry.getPreSmelteryResourceMap().keySet())
+        for(TagKey<Item> tag : ApiSmelteryResourceRegistry.getInstance().getTagSmelteryResourceMap().keySet())
         {
             if(item.getRegistryEntry().isIn(tag))
             {
-                ApiSmelteryResourceRegistry.registerSmelteryResource(item, ApiSmelteryResourceRegistry.getPreSmelteryResourceMap().get(tag));
+                ApiSmelteryResourceRegistry.getInstance().registerSmelteryResource(item, ApiSmelteryResourceRegistry.getInstance().getTagSmelteryResourceMap().get(tag));
                 break;
             }
         }
@@ -79,7 +79,7 @@ public class Reloader {
                 fluidProperties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(key);
                 if(partItem.getMaterialId().equals(fluidProperties.getMaterialID()))
                 {
-                    ApiSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ApiPartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT));
+                    ApiSmelteryResourceRegistry.getInstance().registerSmelteryResource(item, new SmelteryResource(key, ((long) ApiPartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT));
 
                     castingResource = ApiCastingRegistry.getInstance().getCastingResource(partItem.getPartName());
                     if(castingResource == null)
