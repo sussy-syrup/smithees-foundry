@@ -18,7 +18,7 @@ public class EventRegistryClient {
             for(String s : ApiToolRegistry.getToolRenderedParts()) {
                 registry.register(new Identifier(Main.MODID, "item/partrender_" + s));
             }
-            for(String s : ApiMoltenFluidRegistry.getPreFluidRegistry().keySet())
+            for(String s : ApiMoltenFluidRegistry.getInstance().getFluidPropertiesRegistry().keySet())
             {
                 registry.register(new Identifier(Main.MODID, "block/moltenflow_" + s));
             }

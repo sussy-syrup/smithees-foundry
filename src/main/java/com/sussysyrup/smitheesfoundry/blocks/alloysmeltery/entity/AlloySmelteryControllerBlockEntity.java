@@ -1079,7 +1079,7 @@ public class AlloySmelteryControllerBlockEntity extends BlockEntity implements E
                 continue;
             }
 
-            fluidProperties = ApiMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
+            fluidProperties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(smelteryResource.fluidID());
             cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
 
             if(smeltTicks.get(i) < cookTime) {

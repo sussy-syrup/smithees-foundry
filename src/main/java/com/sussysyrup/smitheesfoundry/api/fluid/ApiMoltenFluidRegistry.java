@@ -1,131 +1,47 @@
 package com.sussysyrup.smitheesfoundry.api.fluid;
 
-import com.sussysyrup.smitheesfoundry.Main;
-import com.sussysyrup.smitheesfoundry.api.itemgroup.ItemGroups;
-import com.sussysyrup.smitheesfoundry.items.FluidBucketItem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FluidBlock;
-import net.minecraft.fluid.FlowableFluid;
+import com.sussysyrup.smitheesfoundry.impl.registry.RegistryInstances;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryEntry;
 
-import java.util.*;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
-public class ApiMoltenFluidRegistry {
+public interface ApiMoltenFluidRegistry {
 
-    private static HashMap<String, FluidProperties> fluidRegistry = new HashMap<>();
-    private static HashMap<String, FluidProperties> fluidRegistryPost = new HashMap<>();
-
-    public static Set<RegistryEntry<Fluid>> moltenFluidSet = new HashSet<>();
-
-    private static Set<Identifier> bucketIDs = new HashSet<>();
-
-    public static void main()
+    static ApiMoltenFluidRegistry getInstance()
     {
-        for(String s : fluidRegistry.keySet()) {
-            reg(s);
-        }
-
-        fluidRegistryPost.putAll(fluidRegistry);
+        return RegistryInstances.moltenFluidRegistry;
     }
 
-    private static void reg(String fluidName)
-    {
-        FlowableFluid STILL_FLUID = Registry.register(Registry.FLUID, new Identifier(Main.MODID, fluidName), new AbstractMoltenMetalFluid.Still(fluidName));
-        FlowableFluid FLOWING_FLUID = Registry.register(Registry.FLUID, new Identifier(Main.MODID, "flowing_"+fluidName), new AbstractMoltenMetalFluid.Flowing(fluidName));
+    void registerCreateFluid(String fluidName, FluidProperties fluidProperties);
 
-        ((AbstractMoltenMetalFluid) STILL_FLUID).setStill(STILL_FLUID);
-        ((AbstractMoltenMetalFluid) STILL_FLUID).setFlowing(FLOWING_FLUID);
+    void removeCreateFluid(String fluidName);
 
-        ((AbstractMoltenMetalFluid) FLOWING_FLUID).setStill(STILL_FLUID);
-        ((AbstractMoltenMetalFluid) FLOWING_FLUID).setFlowing(FLOWING_FLUID);
+    void clearCreateFluids();
 
-        Identifier id = new Identifier(Main.MODID, "fluidbucket_" + fluidName);
+    void registerExternalFluidProperties(String fluidName, FluidProperties fluidProperties);
 
-        bucketIDs.add(id);
+    void removeExternalFluidProperties(String fluidName);
 
-        Item FLUID_BUCKET = Registry.register(Registry.ITEM, id,
-                new FluidBucketItem(STILL_FLUID, new Item.Settings().recipeRemainder(Items.BUCKET).maxCount(1).group(ItemGroups.ITEM_GROUP), fluidName));
+    void clearExternalFluidProperties();
 
-        ((AbstractMoltenMetalFluid) STILL_FLUID).setBucketItem(FLUID_BUCKET);
-        ((AbstractMoltenMetalFluid) FLOWING_FLUID).setBucketItem(FLUID_BUCKET);
+    HashMap<String, FluidProperties> getCreateFluidRegistry();
 
-        Block FLUID_BLOCK = Registry.register(Registry.BLOCK, new Identifier(Main.MODID, fluidName), new FluidBlock(STILL_FLUID, FabricBlockSettings.copy(Blocks.LAVA)){});
+    HashMap<String, FluidProperties> getFluidPropertiesRegistry();
 
-        ((AbstractMoltenMetalFluid) STILL_FLUID).setFluidBlock(FLUID_BLOCK);
-        ((AbstractMoltenMetalFluid) FLOWING_FLUID).setFluidBlock(FLUID_BLOCK);
-    }
+    FluidProperties getFluidProperties(String fluidName);
 
-    public static void registerFluid(String fluidName, FluidProperties fluidProperties)
-    {
-        fluidRegistry.put(fluidName, fluidProperties);
-    }
+    List<Identifier> getBucketIDs();
 
-    public static void removeFluid(String fluidName)
-    {
-        fluidRegistry.remove(fluidName);
-    }
+    Set<RegistryEntry<Fluid>> getCreateFluidEntries();
 
-    public static FluidProperties getFluidProperties(String fluidName)
-    {
-        return fluidRegistryPost.get(fluidName);
-    }
+    void registerColours(String fluidKey, Color first, Color second, Color third, Color fourth, Color fifth, Color sixth, Color seventh);
 
-    public static HashMap<String, FluidProperties> getPreFluidRegistry()
-    {
-        return fluidRegistry;
-    }
+    void preReload();
 
-    public static HashMap<String, FluidProperties> getFluidRegistry()
-    {
-        return fluidRegistryPost;
-    }
-
-    @Environment(EnvType.CLIENT)
-    public static void registerColours(String fluidKey, Color first, Color second, Color third, Color fourth, Color fifth, Color sixth, Color seventh)
-    {
-        FluidProperties fluidProperties = fluidRegistryPost.get(fluidKey);
-
-        fluidProperties.setColours(first, second, third, fourth, fifth, sixth, seventh);
-    }
-
-    /**
-     * Post Fluid registry is for assigning fluidProperties to existing fluids which already exist.
-     * @param fluidName
-     * @param fluidProperties
-     */
-    public static void registerPostFluid(String fluidName, FluidProperties fluidProperties)
-    {
-        fluidRegistryPost.put(fluidName, fluidProperties);
-    }
-
-    public static void removePostFluid(String fluidName)
-    {
-        fluidRegistryPost.remove(fluidName);
-    }
-
-    public static List<Identifier> getBucketIDs()
-    {
-        return bucketIDs.stream().toList();
-    }
-
-    public static void addFluidToTag(Fluid fluid)
-    {
-        moltenFluidSet.add(Registry.FLUID.getEntry(Registry.FLUID.getKey(fluid).get()).get());
-    }
-
-    public static void removeFluidFromTag(Fluid fluid)
-    {
-        moltenFluidSet.remove(Registry.FLUID.getEntry(Registry.FLUID.getKey(fluid).get()).get());
-    }
+    void reload();
 }

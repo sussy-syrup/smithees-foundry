@@ -111,7 +111,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 BufferedImage gray = ApiTemplateTextureRegistry.getInstance().getTexture("fluidbucket");
 
-                FluidProperties properties = ApiMoltenFluidRegistry.getFluidProperties(fluidName);
+                FluidProperties properties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(fluidName);
 
                 BufferedInputStream outputStream = ClientUtil.colourise(gray, properties);
 
@@ -128,7 +128,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "fluid" + "/" + parsing[2]);
 
-                FluidProperties properties = ApiMoltenFluidRegistry.getFluidProperties(key);
+                FluidProperties properties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(key);
 
                 BufferedImage gray = ApiTemplateTextureRegistry.getInstance().getTexture("molten_metal_still");
 
@@ -144,7 +144,7 @@ public abstract class NamespaceResourceManagerMixin {
 
                 Identifier correctResourceLocation = new Identifier(Main.MODID, string_parts[0] + "/" + "fluid" + "/" + parsing[2]);
 
-                FluidProperties properties = ApiMoltenFluidRegistry.getFluidProperties(key);
+                FluidProperties properties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(key);
 
                 BufferedImage gray = ApiTemplateTextureRegistry.getInstance().getTexture("molten_metal_flow");
 

@@ -63,9 +63,9 @@ public class PartCategory implements DisplayCategory<PartDisplay> {
         widgets.add(Widgets.createLabel(new Point(bounds.x + 75, bounds.y + 40), new TranslatableText("tool.smitheesfoundry.miningspeed", material.getMiningSpeed())));
         widgets.add(Widgets.createLabel(new Point(bounds.x + 75, bounds.y + 52), new TranslatableText("tool.smitheesfoundry.mininglevel", material.getMiningLevel())));
 
-        if(ApiMoltenFluidRegistry.getFluidRegistry().containsKey(material.getFluidID()))
+        if(ApiMoltenFluidRegistry.getInstance().getFluidPropertiesRegistry().containsKey(material.getFluidID()))
         {
-            Fluid fluid = ApiMoltenFluidRegistry.getFluidProperties(material.getFluidID()).getFluid();
+            Fluid fluid = ApiMoltenFluidRegistry.getInstance().getFluidProperties(material.getFluidID()).getFluid();
 
             widgets.add(Widgets.createSlot(new Point(bounds.x +130, bounds.y + 4)).entry(EntryStacks.of(fluid)));
         }

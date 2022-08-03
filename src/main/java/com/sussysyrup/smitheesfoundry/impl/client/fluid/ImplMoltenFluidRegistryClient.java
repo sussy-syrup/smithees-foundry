@@ -25,7 +25,7 @@ public class ImplMoltenFluidRegistryClient {
 
     public static void clientInit()
     {
-        for(String s : ApiMoltenFluidRegistry.getFluidRegistry().keySet()) {
+        for(String s : ApiMoltenFluidRegistry.getInstance().getFluidPropertiesRegistry().keySet()) {
             regClient(s);
         }
 

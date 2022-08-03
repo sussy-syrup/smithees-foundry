@@ -17,11 +17,11 @@ public class FluidVariantProvider implements ModelVariantProvider {
     public @Nullable UnbakedModel loadModelVariant(ModelIdentifier modelId, ModelProviderContext context) throws ModelProviderException {
         Identifier id = new Identifier(modelId.getNamespace(), modelId.getPath());
 
-        if(ApiMoltenFluidRegistry.getPreFluidRegistry().containsKey(id.getPath()))
+        if(ApiMoltenFluidRegistry.getInstance().getCreateFluidRegistry().containsKey(id.getPath()))
         {
             return JsonUnbakedModel.deserialize(ClientUtil.createFluidJsonString(id.getPath()));
         }
-        if(ApiMoltenFluidRegistry.getBucketIDs().contains(id))
+        if(ApiMoltenFluidRegistry.getInstance().getBucketIDs().contains(id))
         {
             return JsonUnbakedModel.deserialize(ClientUtil.createBucketJsonString(id.getPath()));
         }

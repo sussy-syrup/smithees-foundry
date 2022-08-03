@@ -74,9 +74,9 @@ public class Reloader {
         CastingResource castingResource;
         if(item instanceof PartItem partItem)
         {
-            for(String key : ApiMoltenFluidRegistry.getFluidRegistry().keySet())
+            for(String key : ApiMoltenFluidRegistry.getInstance().getFluidPropertiesRegistry().keySet())
             {
-                fluidProperties = ApiMoltenFluidRegistry.getFluidProperties(key);
+                fluidProperties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(key);
                 if(partItem.getMaterialId().equals(fluidProperties.getMaterialID()))
                 {
                     ApiSmelteryResourceRegistry.registerSmelteryResource(item, new SmelteryResource(key, ((long) ApiPartRegistry.getPartCost(partItem.getPartName()).floatValue()) * FluidConstants.INGOT));

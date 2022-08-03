@@ -110,7 +110,7 @@ public class AlloySmelteryInvScreen extends HandledScreen<AlloySmelteryInvScreen
                 y1 = y + 17;
 
                 smelteryResource = ApiSmelteryResourceRegistry.getSmelteryResource(item);
-                fluidProperties = ApiMoltenFluidRegistry.getFluidProperties(smelteryResource.fluidID());
+                fluidProperties = ApiMoltenFluidRegistry.getInstance().getFluidProperties(smelteryResource.fluidID());
                 cookTime = (int) (fluidProperties.getCookTime() * (smelteryResource.fluidValue() / FluidConstants.INGOT));
                 unitSize = Math.round((((float) be.smeltTicks.get(i)) / ((float) cookTime)) * 16F);
 

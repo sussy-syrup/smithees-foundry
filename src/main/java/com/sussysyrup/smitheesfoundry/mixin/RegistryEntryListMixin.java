@@ -32,7 +32,7 @@ public class RegistryEntryListMixin {
         {
             List<RegistryEntry<?>> copyList = new ArrayList<>(this.entries);
 
-            copyList.addAll(ApiMoltenFluidRegistry.moltenFluidSet);
+            copyList.addAll(ApiMoltenFluidRegistry.getInstance().getCreateFluidEntries());
 
             this.entries = List.copyOf(copyList);
         }

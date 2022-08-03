@@ -8,7 +8,6 @@ import com.sussysyrup.smitheesfoundry.registry.FluidRegistry;
 public class PostFluidCommon implements CommonFluidPost {
     @Override
     public void init() {
-        FluidRegistry.postInit();
         AlloyRegistry.main();
         CastingRegistry.preInit();
     }
