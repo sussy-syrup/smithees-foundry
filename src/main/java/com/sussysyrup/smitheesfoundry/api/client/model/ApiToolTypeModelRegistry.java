@@ -1,28 +1,27 @@
 package com.sussysyrup.smitheesfoundry.api.client.model;
 
 import com.sussysyrup.smitheesfoundry.client.model.toolmodels.IToolTypeModel;
+import com.sussysyrup.smitheesfoundry.impl.client.registryInstances.ClientRegistryInstances;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
 import java.util.HashMap;
 
 @Environment(EnvType.CLIENT)
-public class ApiToolTypeModelRegistry {
+public interface ApiToolTypeModelRegistry {
 
-    private static HashMap<String, IToolTypeModel> toolTypeMap = new HashMap<>();
-
-    public static void addToolTypeModel(String key, IToolTypeModel model)
+    static ApiToolTypeModelRegistry getInstance()
     {
-        toolTypeMap.put(key, model);
+        return ClientRegistryInstances.toolTypeModelRegistry;
     }
 
-    public static void removeToolTypeModel(String key)
-    {
-        toolTypeMap.remove(key);
-    }
+    void addToolTypeModel(String key, IToolTypeModel model);
 
-    public static IToolTypeModel getToolTypeModel(String key)
-    {
-        return toolTypeMap.get(key);
-    }
+    void removeToolTypeModel(String key);
+
+    void clearToolTypeModels();
+
+    IToolTypeModel getToolTypeModel(String key);
+
+    void reload();
 }

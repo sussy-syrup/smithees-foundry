@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.api.client.fluid;
+package com.sussysyrup.smitheesfoundry.impl.client.fluid;
 
 import com.sussysyrup.smitheesfoundry.Main;
 import com.sussysyrup.smitheesfoundry.api.fluid.ApiMoltenFluidRegistry;
@@ -12,8 +12,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
-public class ApiMoltenFluidRegistryClient {
-    @Environment(EnvType.CLIENT)
+public class ImplMoltenFluidRegistryClient {
+
     public static void regClient(String fluidName)
     {
         FluidRenderHandlerRegistry.INSTANCE.register(Registry.FLUID.get(new Identifier(Main.MODID, fluidName)), Registry.FLUID.get(new Identifier(Main.MODID, "flowing_"+fluidName)
@@ -23,7 +23,6 @@ public class ApiMoltenFluidRegistryClient {
         ));
     }
 
-    @Environment(EnvType.CLIENT)
     public static void clientInit()
     {
         for(String s : ApiMoltenFluidRegistry.getFluidRegistry().keySet()) {

@@ -15,11 +15,11 @@ public class ItemsRegistryClient {
     @Environment(EnvType.CLIENT)
     public static void clientInit()
     {
-        ApiToolTypeModelRegistry.addToolTypeModel("pickaxe", new PickaxeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("axe", new AxeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("hoe", new HoeToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("shovel", new ShovelToolTypeModel());
-        ApiToolTypeModelRegistry.addToolTypeModel("sword", new SwordToolTypeModel());
+        ApiToolTypeModelRegistry.getInstance().addToolTypeModel("pickaxe", new PickaxeToolTypeModel());
+        ApiToolTypeModelRegistry.getInstance().addToolTypeModel("axe", new AxeToolTypeModel());
+        ApiToolTypeModelRegistry.getInstance().addToolTypeModel("hoe", new HoeToolTypeModel());
+        ApiToolTypeModelRegistry.getInstance().addToolTypeModel("shovel", new ShovelToolTypeModel());
+        ApiToolTypeModelRegistry.getInstance().addToolTypeModel("sword", new SwordToolTypeModel());
 
         BuiltinItemRendererRegistry.INSTANCE.register(Registry.ITEM.get(new Identifier(Main.MODID, "tank_block")), new TankItemRenderer());
     }

@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.api.client.block;
+package com.sussysyrup.smitheesfoundry.impl.client.block;
 
 import com.sussysyrup.smitheesfoundry.client.model.provider.PartBenchVariantProvider;
 import com.sussysyrup.smitheesfoundry.client.render.PartBenchEntityRender;
@@ -9,7 +9,7 @@ import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
 
 @Environment(EnvType.CLIENT)
-public class ApiPartBenchRegistryClient {
+public class ImplPartBenchRegistryClient {
     @Environment(EnvType.CLIENT)
     public static void clientInit()
     {

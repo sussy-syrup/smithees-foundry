@@ -1,4 +1,4 @@
-package com.sussysyrup.smitheesfoundry.api.client.item;
+package com.sussysyrup.smitheesfoundry.impl.client.item;
 
 import com.sussysyrup.smitheesfoundry.api.item.ApiToolRegistry;
 import com.sussysyrup.smitheesfoundry.api.material.ApiMaterialRegistry;
@@ -8,7 +8,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 
 @Environment(EnvType.CLIENT)
-public class ApiToolRegistryClient {
+public class ImplToolRegistryClient {
     @Environment(EnvType.CLIENT)
     public static void itemRenderingInit()
     {

@@ -1,7 +1,7 @@
 package com.sussysyrup.smitheesfoundry.client.registry;
 
 import com.sussysyrup.smitheesfoundry.Main;
-import com.sussysyrup.smitheesfoundry.api.client.texture.ApiGrayTextureRegistry;
+import com.sussysyrup.smitheesfoundry.api.client.texture.ApiTemplateTextureRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
@@ -40,18 +40,18 @@ public class TextureRegistry {
         registerRenderPart("handle", "sword");
         registerRenderPart("guard", "sword");
 
-        ApiGrayTextureRegistry.registerTexture("molten_metal_flow", new Identifier(Main.MODID, "textures/block/molten_metal_flow.png"));
-        ApiGrayTextureRegistry.registerTexture("molten_metal_still", new Identifier(Main.MODID, "textures/block/molten_metal_still.png"));
-        ApiGrayTextureRegistry.registerTexture("fluidbucket", new Identifier(Main.MODID, "textures/item/fluidbucket.png"));
+        ApiTemplateTextureRegistry.getInstance().registerTexture("molten_metal_flow", new Identifier(Main.MODID, "textures/block/molten_metal_flow.png"));
+        ApiTemplateTextureRegistry.getInstance().registerTexture("molten_metal_still", new Identifier(Main.MODID, "textures/block/molten_metal_still.png"));
+        ApiTemplateTextureRegistry.getInstance().registerTexture("fluidbucket", new Identifier(Main.MODID, "textures/item/fluidbucket.png"));
     }
 
     private static void registerPart(String name)
     {
-        ApiGrayTextureRegistry.registerTexture(name, new Identifier(Main.MODID, "textures/item/" + name + ".png"));
+        ApiTemplateTextureRegistry.getInstance().registerTexture(name, new Identifier(Main.MODID, "textures/item/" + name + ".png"));
     }
 
     private static void registerRenderPart(String name, String tool)
     {
-        ApiGrayTextureRegistry.registerTexture(tool + "_" + name, new Identifier(Main.MODID, "textures/tool/" + tool + "/" + name + ".png"));
+        ApiTemplateTextureRegistry.getInstance().registerTexture(tool + "_" + name, new Identifier(Main.MODID, "textures/tool/" + tool + "/" + name + ".png"));
     }
 }

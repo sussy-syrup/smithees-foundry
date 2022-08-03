@@ -53,7 +53,7 @@ public class ToolModel implements UnbakedModel, BakedModel, FabricBakedModel {
     public void emitItemQuads(ItemStack stack, Supplier<Random> randomSupplier, RenderContext context) {
         String toolType = ((ToolItem) stack.getItem()).getToolType();
 
-        ApiToolTypeModelRegistry.getToolTypeModel(toolType).render(PART_MODELS, stack, context);
+        ApiToolTypeModelRegistry.getInstance().getToolTypeModel(toolType).render(PART_MODELS, stack, context);
     }
 
     @Nullable
